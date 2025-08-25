@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-stone-50);
+  --foreground: var(--color-stone-950);
+  --light: var(--color-stone-500);
+  --primary: var(--color-amber-600);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-light: var(--light);
+  --color-primary: var(--primary);
+  --font-serif: var(--font-noto-sans);
+  --font-family-serif: var(--font-noto-serif), Georgia, "Times New Roman", Times,
+    serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Major Third Scale (1.25 ratio) for headings */
+  --font-size-h6: 1rem; /* 16px - base */
+  --font-size-h5: 1.25rem; /* 20px - base * 1.25 */
+  --font-size-h4: 1.563rem; /* 25px - base * 1.25^2 */
+  --font-size-h3: 1.953rem; /* 31.25px - base * 1.25^3 */
+  --font-size-h2: 2.441rem; /* 39px - base * 1.25^4 */
+  --font-size-h1: 3.052rem; /* 48.8px - base * 1.25^5 */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-noto-sans), Arial, Helvetica, sans-serif;
+}
+
+article a {
+  text-decoration: underline;
+}
+
+p {
+  margin: 1em 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.5em 0;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0.6em 0;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0.7em 0;
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0.8em 0;
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0.9em 0;
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 1em 0;
 }
