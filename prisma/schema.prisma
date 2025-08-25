@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -15,23 +9,25 @@ datasource db {
 }
 
 model Book {
-  id            String    @id @default(cuid())
-  title         String
-  yearReleased  Int?
-  yearOfContent Int?
-  chapters      Chapter[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                  String    @id @default(cuid())
+  title               String
+  originalReleaseYear Int?
+  originalNotes       String?
+  yearOfRewrite       Int?
+  rewriteNotes        String?
+  chapters            Chapter[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }
 
 model Chapter {
   id        String   @id @default(cuid())
   title     String
+  quote     String?
   content   String   @db.Text
+  date      DateTime @db.Date
   bookId    String
-  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  book      Book     @relation(fields: [bookId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([bookId])
 }
