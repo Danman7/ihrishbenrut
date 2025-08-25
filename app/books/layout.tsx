@@ -1,12 +1,12 @@
-import "@/app/globals.css";
-import { Anchor } from "@/app/ui/Anchor";
-import Breadcrumbs from "@/app/ui/Breadcrumbs";
-import Link from "next/link";
+import '@/app/globals.css'
+import { Anchor } from '@/app/ui/Anchor'
+import Breadcrumbs from '@/app/ui/Breadcrumbs'
+import Link from 'next/link'
 
 export default function Layout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <div className="flex">
@@ -32,5 +32,5 @@ export default function Layout({
         {children}
       </div>
     </div>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import { Anchor } from "@/app/ui/Anchor";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { IoMdClose, IoMdMenu } from "react-icons/io";
-import { IoTriangleOutline } from "react-icons/io5";
+import { Anchor } from '@/app/ui/Anchor'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { IoMdClose, IoMdMenu } from 'react-icons/io'
+import { IoTriangleOutline } from 'react-icons/io5'
 
-const navigation = [{ name: "Книги", href: "/books" }];
+const navigation = [{ name: 'Книги', href: '/books' }]
 
 export const Nav = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   // Close mobile menu when route changes
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+    setIsMobileMenuOpen(false)
+  }, [pathname])
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen((prev) => !prev);
-  };
+    setIsMobileMenuOpen((prev) => !prev)
+  }
 
   return (
     <header className="p-4 shadow-md mb-14">
@@ -61,5 +61,5 @@ export const Nav = () => {
         </nav>
       )}
     </header>
-  );
-};
+  )
+}

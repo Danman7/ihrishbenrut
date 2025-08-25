@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: var(--color-stone-50);
@@ -13,8 +13,8 @@
   --color-light: var(--light);
   --color-primary: var(--primary);
   --font-serif: var(--font-noto-sans);
-  --font-family-serif: var(--font-noto-serif), Georgia, "Times New Roman", Times,
-    serif;
+  --font-family-serif:
+    var(--font-noto-serif), Georgia, 'Times New Roman', Times, serif;
 
   /* Major Third Scale (1.25 ratio) for headings */
   --font-size-h6: 1rem; /* 16px - base */

@@ -8,5 +8,5 @@ export default function Page() {
         not in there, then these pages are for you.
       </p>
     </article>
-  );
+  )
 }

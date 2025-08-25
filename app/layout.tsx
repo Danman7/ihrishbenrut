@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
-import "./globals.css";
-import { Nav } from "@/app/ui/Nav";
+import type { Metadata } from 'next'
+import { Noto_Sans } from 'next/font/google'
+import './globals.css'
+import { Nav } from '@/app/ui/Nav'
 
 const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["cyrillic"],
-});
+  variable: '--font-noto-sans',
+  subsets: ['cyrillic'],
+})
 
 export const metadata: Metadata = {
-  title: "Само Твоята Воля",
-  description: "Все що е писано",
-};
+  title: 'Само Твоята Воля',
+  description: 'Все що е писано',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -28,5 +28,5 @@ export default function RootLayout({
         <main className="mx-auto max-w-4xl my-4">{children}</main>
       </body>
     </html>
-  );
+  )
 }

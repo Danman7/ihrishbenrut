@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import "@/app/globals.css";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { IoIosArrowForward } from "react-icons/io";
+import '@/app/globals.css'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { IoIosArrowForward } from 'react-icons/io'
 
 export default function Breadcrumbs() {
-  const pathname = usePathname();
-  const segments = pathname.split("/").filter(Boolean);
+  const pathname = usePathname()
+  const segments = pathname.split('/').filter(Boolean)
 
   const breadcrumbs = [
     ...segments.slice(1).map((seg, idx) => {
-      const href = "/docs/" + segments.slice(1, idx + 2).join("/");
+      const href = '/docs/' + segments.slice(1, idx + 2).join('/')
 
       const name = seg
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase())
 
-      return { name, href };
+      return { name, href }
     }),
-  ];
+  ]
 
   return (
     <nav
@@ -40,5 +40,5 @@ export default function Breadcrumbs() {
         </span>
       ))}
     </nav>
-  );
+  )
 }
