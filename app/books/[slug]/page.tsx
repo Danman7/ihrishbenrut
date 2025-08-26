@@ -1,3 +1,4 @@
+import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -26,9 +27,17 @@ export default async function Book({
 
   const { title, originalNotes, rewriteNotes } = book
 
+  const breadcrumbs = [
+    { href: '/books', title: 'Книги' },
+    { href: `/books/${slug}`, title },
+  ]
+
   return (
     <article>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+
       <h1 className="text-center">{title}</h1>
+
       <p className="text-sm text-light">
         <strong>Оригинал:</strong> {originalNotes}
       </p>
