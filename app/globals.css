@@ -2,10 +2,10 @@
 
 :root {
   --background: var(--color-stone-50);
-  --foreground: var(--color-stone-950);
+  --foreground: var(--color-stone-900);
   --border: var(--color-stone-200);
   --light: var(--color-stone-500);
-  --primary: var(--color-amber-600);
+  --primary: var(--color-blue-500);
 }
 
 @theme inline {
@@ -33,12 +33,10 @@ body {
   font-family: var(--font-noto-sans), Arial, Helvetica, sans-serif;
 }
 
-article a {
-  text-decoration: underline;
-}
-
 p {
   margin: 1em 0;
+  line-height: 1.75;
+  text-align: justify;
 }
 
 h1 {
