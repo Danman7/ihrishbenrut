@@ -22,3 +22,16 @@ export const formatParagraphs = (content: string) =>
     .split(/\r?\n\s*\r?\n/) // any blank line
     .map((p) => p.trim())
     .filter(Boolean)
+
+export const formatBulgarianDate = (
+  date: Date,
+  options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+): string => {
+  const formatted = new Intl.DateTimeFormat('bg-BG', options).format(date)
+  // Capitalize the first letter (month names start lowercase in Bulgarian)
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1)
+}
