@@ -10,7 +10,7 @@ export default function Breadcrumbs({
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center mb-4 text-sm text-light"
+      className="flex items-center mb-4 text-sm text-light flex-wrap"
     >
       {breadcrumbs.map((crumb, idx) => (
         <span key={crumb.href}>
