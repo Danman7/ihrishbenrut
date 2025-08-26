@@ -25,7 +25,7 @@ export default function RootLayout({
       </head>
       <body className={`${notoSans.variable} font-serif antialiased`}>
         <Nav />
-        <main className="mx-auto max-w-4xl my-4">{children}</main>
+        <main className="mx-auto max-w-4xl p-4">{children}</main>
       </body>
     </html>
   )

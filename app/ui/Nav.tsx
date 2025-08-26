@@ -23,22 +23,14 @@ export const Nav = () => {
   }
 
   return (
-    <header className="p-4 shadow-md mb-14">
-      <nav className="flex items-center mx-auto max-w-4xl justify-between">
-        {isMobileMenuOpen ? (
-          <IoMdClose className="text-xl" onClick={toggleMobileMenu} />
-        ) : (
-          <IoMdMenu className="md:hidden text-xl" onClick={toggleMobileMenu} />
-        )}
-
-        {!isMobileMenuOpen && (
-          <div className="text-2xl mr-12">
-            <Link className="flex items-center gap-4" href="/">
-              <IoTriangleOutline />
-              Само Твоята Воля
-            </Link>
-          </div>
-        )}
+    <header className="shadow-md">
+      <nav className="flex items-center mx-auto max-w-4xl p-4 justify-between">
+        <div className="text-2xl mr-12">
+          <Link className="flex items-center gap-4" href="/">
+            <IoTriangleOutline />
+            Само Твоята Воля
+          </Link>
+        </div>
 
         <div className="gap-4 hidden md:flex">
           {navigation.map((item) => (
@@ -47,12 +39,18 @@ export const Nav = () => {
             </Anchor>
           ))}
         </div>
+
+        <div className="md:hidden">
+          {isMobileMenuOpen ? (
+            <IoMdClose className="text-xl" onClick={toggleMobileMenu} />
+          ) : (
+            <IoMdMenu className="text-xl" onClick={toggleMobileMenu} />
+          )}
+        </div>
       </nav>
 
       {isMobileMenuOpen && (
-        <nav className="flex flex-col gap-4 mt-4">
-          <Anchor href="/">Home</Anchor>
-
+        <nav className="md:hidden flex flex-col gap-4 px-4 pb-4">
           {navigation.map((item) => (
             <Anchor key={item.href} href={item.href}>
               {item.name}
