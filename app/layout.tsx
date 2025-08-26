@@ -26,6 +26,12 @@ export default function RootLayout({
       <body className={`${notoSans.variable} font-serif antialiased`}>
         <Nav />
         <main className="mx-auto max-w-4xl p-4">{children}</main>
+        <footer className="bg-foreground text-background flex justify-between fixed bottom-0 left-0 right-0 p-4 gap-4">
+          <div>Все що е писано</div>
+          <div>
+            <a href="mailto:danmanm@gmail.com">danmanm@gmail.com</a>
+          </div>
+        </footer>
       </body>
     </html>
   )
