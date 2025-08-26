@@ -49,14 +49,13 @@ export default async function Book({
           <GiBookmarklet /> Глави
         </h2>
         {chapters.map((chapter) => (
-          <div key={chapter.id}>
-            <Link
-              href={`/books/${slug}/chapters/${chapter.id}`}
-              className="text-lg font-bold"
-            >
-              {chapter.title}
-            </Link>
-          </div>
+          <Link
+            key={chapter.id}
+            href={`/books/${slug}/chapters/${chapter.id}`}
+            className="text-lg font-bold mb-2"
+          >
+            {chapter.title}
+          </Link>
         ))}
       </section>
     </article>
