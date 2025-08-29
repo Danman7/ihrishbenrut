@@ -18,12 +18,15 @@ model Book {
   chapters            Chapter[]
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+  series              String[]
 }
 
 model Chapter {
   id        String   @id @default(cuid())
   title     String
+  number    Int?
   quote     String?
+  location  String?
   content   String   @db.Text
   date      DateTime @db.Date
   bookId    String
