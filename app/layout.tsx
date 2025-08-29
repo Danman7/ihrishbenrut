@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
-import { Noto_Sans } from 'next/font/google'
+import { Noto_Sans, Noto_Serif } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/app/ui/Nav'
 
 const notoSans = Noto_Sans({
   variable: '--font-noto-sans',
+  subsets: ['cyrillic'],
+})
+
+const notoSerif = Noto_Serif({
+  variable: '--font-noto-serif',
   subsets: ['cyrillic'],
 })
 
@@ -23,7 +28,9 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`${notoSans.variable} font-serif antialiased`}>
+      <body
+        className={`${notoSans.variable} ${notoSerif.variable} font-serif antialiased`}
+      >
         <Nav />
         <main className="mx-auto max-w-4xl p-4">{children}</main>
         <footer className="bg-foreground text-background flex justify-between bottom-0 left-0 right-0 p-4 gap-4">
