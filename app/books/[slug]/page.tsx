@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
+import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -25,7 +26,7 @@ export default async function Book({
     },
   })
 
-  const { title, originalNotes, rewriteNotes } = book
+  const { title, originalNotes, rewriteNotes, series } = book
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
@@ -38,10 +39,14 @@ export default async function Book({
 
       <h1 className="text-center">{title}</h1>
 
-      <p className="text-sm text-light">
+      <p className="text-lg">
+        <strong>{series.join(', ')}</strong>
+      </p>
+
+      <p>
         <strong>Оригинал:</strong> {originalNotes}
       </p>
-      <p className="text-sm text-light">
+      <p>
         <strong>Препис:</strong> {rewriteNotes}
       </p>
       <section className="flex flex-col items-center">
@@ -54,7 +59,12 @@ export default async function Book({
             href={`/books/${slug}/chapters/${chapter.id}`}
             className="text-lg font-bold mb-2"
           >
-            {chapter.title}
+            <div className="underline">{chapter.title}</div>
+            {chapter.date && (
+              <div className="text-sm text-light">
+                {formatDateAndLocation(chapter.date, chapter.location)}
+              </div>
+            )}
           </Link>
         ))}
       </section>

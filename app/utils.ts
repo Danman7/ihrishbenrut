@@ -45,3 +45,11 @@ export const getYearRange = (chapters: { date: Date }[]): string | null => {
 
   return minYear === maxYear ? minYear.toString() : `${minYear} - ${maxYear}`
 }
+
+export const formatDateAndLocation = (
+  date: Date,
+  location: string | null
+): string => {
+  const formattedDate = formatBulgarianDate(date)
+  return location ? `${formattedDate} ${location}` : formattedDate
+}

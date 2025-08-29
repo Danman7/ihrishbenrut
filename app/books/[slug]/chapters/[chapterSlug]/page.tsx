@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import { formatParagraphs, formatBulgarianDate } from '@/app/utils'
+import { formatDateAndLocation, formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 
@@ -19,7 +19,7 @@ export default async function Chapter({
     notFound()
   }
 
-  const { title, date, content, book, quote } = chapter
+  const { title, date, content, book, quote, location } = chapter
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
@@ -33,7 +33,9 @@ export default async function Chapter({
 
       <h1 className="text-center">{title}</h1>
 
-      <p className="text-sm text-light">{formatBulgarianDate(date)}</p>
+      <p className="text-sm text-light">
+        {formatDateAndLocation(date, location)}
+      </p>
 
       {quote && <p className="text-xl text-light">{quote}</p>}
 
