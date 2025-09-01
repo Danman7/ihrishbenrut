@@ -5,7 +5,7 @@
   --foreground: #3d2c29;
   --border: #c8c8c7;
   --light: #645654;
-  --primary: var(--color-blue-500);
+  --primary: var(--color-amber-500);
 }
 
 @theme inline {
