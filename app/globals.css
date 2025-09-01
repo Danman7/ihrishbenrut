@@ -1,10 +1,10 @@
 @import 'tailwindcss';
 
 :root {
-  --background: var(--color-stone-50);
-  --foreground: var(--color-stone-900);
-  --border: var(--color-stone-200);
-  --light: var(--color-stone-500);
+  --background: #fafaf9;
+  --foreground: #3d2c29;
+  --border: #c8c8c7;
+  --light: #645654;
   --primary: var(--color-blue-500);
 }
 

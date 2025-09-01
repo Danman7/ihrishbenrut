@@ -37,7 +37,7 @@ export default async function Chapter({
         {formatDateAndLocation(date, location)}
       </p>
 
-      {quote && <p className="text-xl text-light">{quote}</p>}
+      {quote && <strong className="text-xl text-light">{quote}</strong>}
 
       <section className="flex flex-col items-center">
         {formatParagraphs(content).map((paragraph, index) => (
