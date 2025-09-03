@@ -25,7 +25,7 @@ export const Nav = () => {
   return (
     <header className="shadow-md">
       <nav className="flex items-center mx-auto max-w-4xl p-4 justify-between">
-        <div className="text-2xl mr-12">
+        <div className="text-2xl mr-12 font-serif">
           <Link className="flex items-center gap-4" href="/">
             <IoTriangleOutline />
             Само Твоята Воля

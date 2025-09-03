@@ -8,13 +8,13 @@ export default function Breadcrumbs({
   breadcrumbs: { href: string; title: string }[]
 }) {
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className="flex items-center mb-4 text-sm text-light flex-wrap"
-    >
+    <nav aria-label="Breadcrumb" className="flex items-center mb-10 flex-wrap">
       {breadcrumbs.map((crumb, idx) => (
         <span key={crumb.href}>
-          <Link href={crumb.href} className="hover:text-foreground">
+          <Link
+            href={crumb.href}
+            className="underline underline-offset-2 hover:decoration-3"
+          >
             {crumb.title}
           </Link>
 

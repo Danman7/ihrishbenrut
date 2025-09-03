@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <article>
-      <p className="text-xl text-light">
+      <p className="text-xl">
         Най-хубавото упражнение в живота на човека е молитвата. За сега, в
         света, по-хубаво упражнение от молитвата няма.
       </p>

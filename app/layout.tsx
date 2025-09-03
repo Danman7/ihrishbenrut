@@ -34,9 +34,11 @@ export default function RootLayout({
       >
         <Nav />
 
-        <main className="mx-auto max-w-4xl p-4 flex-grow">{children}</main>
+        <main className="mx-auto w-full max-w-4xl p-4 flex-grow">
+          {children}
+        </main>
 
-        <footer className="bg-foreground text-background flex justify-between p-4 gap-4 mt-4">
+        <footer className="bg-foreground text-background flex justify-between p-4 gap-4 mt-8">
           <Link href="/">Само Твоята Воля</Link>
           <div>
             <a href="mailto:danmanm@gmail.com">danmanm@gmail.com</a>

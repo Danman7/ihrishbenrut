@@ -2,6 +2,7 @@ import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { formatDateAndLocation, formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
+import { GiBookmarklet } from 'react-icons/gi'
 
 export default async function Chapter({
   params,
@@ -19,7 +20,7 @@ export default async function Chapter({
     notFound()
   }
 
-  const { title, date, content, book, quote, location } = chapter
+  const { title, date, content, book, quote, location, number } = chapter
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
@@ -31,13 +32,20 @@ export default async function Chapter({
     <article>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-      <h1 className="text-center">{title}</h1>
+      {number ? (
+        <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
+          <GiBookmarklet />
+          {number}
+        </div>
+      ) : null}
 
-      <p className="text-sm text-light">
-        {formatDateAndLocation(date, location)}
-      </p>
+      <h1 className="text-center text-3xl font-bold font-serif mb-10">
+        {title}
+      </h1>
 
-      {quote && <strong className="text-xl text-light">{quote}</strong>}
+      <p className="text-sm">{formatDateAndLocation(date, location)}</p>
+
+      {quote && <div className="italic font-bold mb-2">{quote}</div>}
 
       <section className="flex flex-col items-center">
         {formatParagraphs(content).map((paragraph, index) => (

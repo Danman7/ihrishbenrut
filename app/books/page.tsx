@@ -12,9 +12,10 @@ export default async function Books() {
 
   return (
     <article>
-      <h1 className="text-center">
+      <h1 className="text-center text-5xl font-bold font-serif mt-8 mb-10">
         <GiBookCover className="inline" /> Книги
       </h1>
+
       <div className="flex flex-col sm:flex-row gap-4">
         {books.map((book) => {
           const yearRange = getYearRange(book.chapters)
@@ -25,13 +26,13 @@ export default async function Books() {
               key={book.id}
               className="relative w-full sm:w-1/2 md:w-1/3 flex flex-col items-center justify-center border-2 border-border shadow-md rounded-2xl p-4 hover:shadow-lg hover:border-primary transition active:text-background active:bg-primary text-center"
             >
-              <div className="underline text-2xl mb-4 font-bold">
+              <div className="underline underline-offset-2 text-2xl mb-4 font-bold font-serif">
                 {book.title}
               </div>
               <div className="text-xl mb-2 italic">{book.author}</div>
               <div>{book.series.join(', ')}</div>
 
-              <div className="text-sm text-light">
+              <div className="text-sm">
                 {book.chapters.length} глави - {yearRange}
               </div>
             </Link>
