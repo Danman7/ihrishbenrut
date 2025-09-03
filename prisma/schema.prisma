@@ -11,6 +11,7 @@ datasource db {
 model Book {
   id                  String    @id @default(cuid())
   title               String
+  author              String?
   originalReleaseYear Int?
   originalNotes       String?
   yearOfRewrite       Int?

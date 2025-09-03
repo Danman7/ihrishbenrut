@@ -25,10 +25,13 @@ export default async function Books() {
               key={book.id}
               className="relative w-full sm:w-1/2 md:w-1/3 flex flex-col items-center justify-center border-2 border-border shadow-md rounded-2xl p-4 hover:shadow-lg hover:border-primary transition active:text-background active:bg-primary text-center"
             >
-              <h2 className="underline">{book.title}</h2>
-              <div className="text-lg">{book.series.join(', ')}</div>
+              <div className="underline text-2xl mb-4 font-bold">
+                {book.title}
+              </div>
+              <div className="text-xl mb-2 italic">{book.author}</div>
+              <div>{book.series.join(', ')}</div>
 
-              <div>
+              <div className="text-sm text-light">
                 {book.chapters.length} глави - {yearRange}
               </div>
             </Link>
