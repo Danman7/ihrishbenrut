@@ -46,9 +46,9 @@ export default async function Chapter({
         {title}
       </h1>
 
-      <p className="text-sm">{formatDateAndLocation(date, location)}</p>
+      <p className="text-sm italic">{formatDateAndLocation(date, location)}</p>
 
-      {quote && <div className="italic font-bold mb-2">{quote}</div>}
+      {quote && <div className="font-bold my-4">{quote}</div>}
 
       <Suspense fallback={<MultiLineSkeleton />}>
         <ChapterContent chapterId={chapterSlug} />
