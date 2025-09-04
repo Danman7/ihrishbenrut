@@ -20,7 +20,15 @@ export default async function Chapter({
     notFound()
   }
 
-  const { title, date, content, book, quote, location, number } = chapter
+  const content = await prisma.chapterContent.findFirst({
+    where: { chapterId: chapter.id },
+  })
+
+  if (!content) {
+    notFound()
+  }
+
+  const { title, date, book, quote, location, number } = chapter
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
@@ -48,7 +56,7 @@ export default async function Chapter({
       {quote && <div className="italic font-bold mb-2">{quote}</div>}
 
       <section className="flex flex-col items-center">
-        {formatParagraphs(content).map((paragraph, index) => (
+        {formatParagraphs(content.content).map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </section>

@@ -1,14 +1,12 @@
+import BookChaptersRange from '@/app/ui/BookChaptersRange'
+import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { GiBookCover } from 'react-icons/gi'
-import { getYearRange } from '@/app/utils'
 
 export default async function Books() {
-  const books = await prisma.book.findMany({
-    include: {
-      chapters: true,
-    },
-  })
+  const books = await prisma.book.findMany()
 
   return (
     <article>
@@ -18,8 +16,6 @@ export default async function Books() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         {books.map((book) => {
-          const yearRange = getYearRange(book.chapters)
-
           return (
             <Link
               href={`/books/${book.id}`}
@@ -32,9 +28,9 @@ export default async function Books() {
               <div className="text-xl mb-2 italic">{book.author}</div>
               <div>{book.series.join(', ')}</div>
 
-              <div className="text-sm">
-                {book.chapters.length} глави - {yearRange}
-              </div>
+              <Suspense fallback={<ChapterRangeSkeleton />}>
+                <BookChaptersRange bookId={book.id} />
+              </Suspense>
             </Link>
           )
         })}

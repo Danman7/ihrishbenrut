@@ -1,8 +1,9 @@
+import BookChaptersList from '@/app/ui/BookChaptersList'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import { formatDateAndLocation } from '@/app/utils'
+import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import prisma from '@/lib/prisma'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import { GiBookCover, GiBookmarklet } from 'react-icons/gi'
 
 export default async function Book({
@@ -19,12 +20,6 @@ export default async function Book({
   if (!book) {
     notFound()
   }
-
-  const chapters = await prisma.chapter.findMany({
-    where: {
-      bookId: slug,
-    },
-  })
 
   const { title, originalNotes, rewriteNotes, series } = book
 
@@ -63,22 +58,10 @@ export default async function Book({
         <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
           <GiBookmarklet /> Глави
         </h2>
-        {chapters.map((chapter) => (
-          <Link
-            key={chapter.id}
-            href={`/books/${slug}/chapters/${chapter.id}`}
-            className="text-lg mb-4"
-          >
-            <div className="underline underline-offset-2 hover:decoration-3 font-bold">
-              {chapter.number && `${chapter.number}.`} {chapter.title}
-            </div>
-            {chapter.date && (
-              <div className="text-sm">
-                {formatDateAndLocation(chapter.date, chapter.location)}
-              </div>
-            )}
-          </Link>
-        ))}
+
+        <Suspense fallback={<ChapterRangeSkeleton />}>
+          <BookChaptersList bookId={slug} />
+        </Suspense>
       </section>
     </article>
   )
