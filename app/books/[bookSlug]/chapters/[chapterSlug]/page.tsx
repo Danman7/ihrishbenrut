@@ -10,9 +10,9 @@ import { GiBookmarklet } from 'react-icons/gi'
 export default async function Chapter({
   params,
 }: {
-  params: Promise<{ slug: string; chapterSlug: string }>
+  params: Promise<{ bookSlug: string; chapterSlug: string }>
 }) {
-  const { slug: bookSlug, chapterSlug } = await params
+  const { bookSlug, chapterSlug } = await params
 
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterSlug },

@@ -9,12 +9,12 @@ import { GiBookCover, GiBookmarklet } from 'react-icons/gi'
 export default async function Book({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ bookSlug: string }>
 }) {
-  const { slug } = await params
+  const { bookSlug } = await params
 
   const book = await prisma.book.findUnique({
-    where: { id: slug },
+    where: { id: bookSlug },
   })
 
   if (!book) {
@@ -25,7 +25,7 @@ export default async function Book({
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
-    { href: `/books/${slug}`, title },
+    { href: `/books/${bookSlug}`, title },
   ]
 
   return (
@@ -60,7 +60,7 @@ export default async function Book({
         </h2>
 
         <Suspense fallback={<ChapterListSkeleton />}>
-          <BookChaptersList bookId={slug} />
+          <BookChaptersList bookId={bookSlug} />
         </Suspense>
       </section>
     </article>
