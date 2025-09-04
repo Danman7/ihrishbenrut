@@ -1,7 +1,10 @@
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import { formatDateAndLocation, formatParagraphs } from '@/app/utils'
+import ChapterContent from '@/app/ui/ChapterContent'
+import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton copy'
+import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import { GiBookmarklet } from 'react-icons/gi'
 
 export default async function Chapter({
@@ -17,14 +20,6 @@ export default async function Chapter({
   })
 
   if (!chapter) {
-    notFound()
-  }
-
-  const content = await prisma.chapterContent.findFirst({
-    where: { chapterId: chapter.id },
-  })
-
-  if (!content) {
     notFound()
   }
 
@@ -55,11 +50,9 @@ export default async function Chapter({
 
       {quote && <div className="italic font-bold mb-2">{quote}</div>}
 
-      <section className="flex flex-col items-center">
-        {formatParagraphs(content.content).map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-      </section>
+      <Suspense fallback={<MultiLineSkeleton />}>
+        <ChapterContent chapterId={chapterSlug} />
+      </Suspense>
     </article>
   )
 }

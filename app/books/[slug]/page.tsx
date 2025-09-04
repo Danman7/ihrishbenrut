@@ -1,6 +1,6 @@
 import BookChaptersList from '@/app/ui/BookChaptersList'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
+import { ChapterListSkeleton } from '@/app/ui/ChapterListSkeleton'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -59,7 +59,7 @@ export default async function Book({
           <GiBookmarklet /> Глави
         </h2>
 
-        <Suspense fallback={<ChapterRangeSkeleton />}>
+        <Suspense fallback={<ChapterListSkeleton />}>
           <BookChaptersList bookId={slug} />
         </Suspense>
       </section>
