@@ -10,8 +10,8 @@ export default async function Books() {
 
   return (
     <article>
-      <h1 className="text-center text-5xl font-bold font-serif mt-8 mb-10">
-        <GiBookCover className="inline" /> Книги
+      <h1 className="flex gap-2 text-center text-5xl font-bold font-serif mt-8 mb-10">
+        <GiBookCover /> Книги
       </h1>
 
       <div className="flex flex-col sm:flex-row gap-4">

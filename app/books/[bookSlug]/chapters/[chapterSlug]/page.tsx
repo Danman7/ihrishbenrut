@@ -1,7 +1,8 @@
+import { BreadcrumbsSkeleton } from '@/app/ui/BreadcrumbsSkeleton'
 import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
-import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
-import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton copy'
+import ChaptersSideList from '@/app/ui/ChaptersSideList'
+import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
 import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
@@ -35,7 +36,7 @@ export default async function Chapter({
 
   return (
     <article>
-      <Suspense fallback={<ChapterRangeSkeleton />}>
+      <Suspense fallback={<BreadcrumbsSkeleton />}>
         <ChapterBreadcrumbs
           bookId={bookSlug}
           chapterSlug={chapterSlug}
@@ -43,24 +44,36 @@ export default async function Chapter({
         />
       </Suspense>
 
-      {number ? (
-        <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
-          <GiBookmarklet />
-          {number}
+      <div className="flex gap-4">
+        <div className="md:w-2/3">
+          {number ? (
+            <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
+              <GiBookmarklet />
+              {number}
+            </div>
+          ) : null}
+
+          <h1 className="text-center text-3xl font-bold font-serif mb-10">
+            {title}
+          </h1>
+
+          <p className="text-sm italic">
+            {formatDateAndLocation(date, location)}
+          </p>
+
+          {quote && <div className="font-bold my-4">{quote}</div>}
+
+          <Suspense fallback={<MultiLineSkeleton />}>
+            <ChapterContent chapterId={chapterSlug} />
+          </Suspense>
         </div>
-      ) : null}
 
-      <h1 className="text-center text-3xl font-bold font-serif mb-10">
-        {title}
-      </h1>
-
-      <p className="text-sm italic">{formatDateAndLocation(date, location)}</p>
-
-      {quote && <div className="font-bold my-4">{quote}</div>}
-
-      <Suspense fallback={<MultiLineSkeleton />}>
-        <ChapterContent chapterId={chapterSlug} />
-      </Suspense>
+        <aside className="hidden md:block w-1/3">
+          <Suspense fallback={<MultiLineSkeleton />}>
+            <ChaptersSideList bookId={bookSlug} />
+          </Suspense>
+        </aside>
+      </div>
     </article>
   )
 }
