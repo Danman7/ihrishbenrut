@@ -12,6 +12,7 @@ export default async function ChapterBreadcrumbs({
 }) {
   const book = await prisma.book.findUnique({
     where: { id: bookId },
+    select: { title: true },
   })
 
   if (!book) {

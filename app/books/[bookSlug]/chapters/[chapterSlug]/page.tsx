@@ -26,6 +26,13 @@ export default async function Chapter({
 
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterSlug },
+    select: {
+      title: true,
+      date: true,
+      quote: true,
+      location: true,
+      number: true,
+    },
   })
 
   if (!chapter) {

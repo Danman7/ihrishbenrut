@@ -10,6 +10,7 @@ export default async function BookChaptersRange({
     where: {
       bookId,
     },
+    select: { date: true },
   })
 
   const yearRange = getYearRange(chapters)

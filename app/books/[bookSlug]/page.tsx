@@ -23,6 +23,12 @@ export default async function Book({
 
   const book = await prisma.book.findUnique({
     where: { id: bookSlug },
+    select: {
+      title: true,
+      originalNotes: true,
+      rewriteNotes: true,
+      series: true,
+    },
   })
 
   if (!book) {

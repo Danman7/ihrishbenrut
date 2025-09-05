@@ -6,7 +6,10 @@ import { Suspense } from 'react'
 import { GiBookCover } from 'react-icons/gi'
 
 export default async function Books() {
-  const books = await prisma.book.findMany()
+  const books = await prisma.book.findMany({
+    orderBy: { createdAt: 'asc' },
+    select: { id: true, title: true, author: true, series: true },
+  })
 
   return (
     <article className="max-w-4xl mx-auto">

@@ -7,6 +7,8 @@ export default async function BookChaptersList({ bookId }: { bookId: string }) {
     where: {
       bookId,
     },
+    orderBy: { number: 'asc' },
+    select: { id: true, title: true, number: true, date: true, location: true },
   })
 
   return (

@@ -9,6 +9,7 @@ export default async function ChapterContent({
 }) {
   const content = await prisma.chapterContent.findFirst({
     where: { chapterId },
+    select: { content: true },
   })
 
   if (!content) {
