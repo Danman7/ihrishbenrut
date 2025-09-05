@@ -6,8 +6,12 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { IoMdClose, IoMdMenu } from 'react-icons/io'
 import { IoTriangleOutline } from 'react-icons/io5'
+import { motion, AnimatePresence } from 'motion/react'
 
-const navigation = [{ name: 'Книги', href: '/books' }]
+const navigation = [
+  { name: 'Книги', href: '/books' },
+  { name: 'Молитви', href: '/prayers' },
+]
 
 export const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -56,15 +60,25 @@ export const Nav = () => {
         />
       </nav>
 
-      {isMobileMenuOpen && (
-        <nav className="md:hidden flex flex-col gap-4 px-4 pb-4">
-          {navigation.map((item) => (
-            <Anchor key={item.href} href={item.href}>
-              {item.name}
-            </Anchor>
-          ))}
-        </nav>
-      )}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <nav className="md:hidden flex flex-col gap-4 px-4 pb-4 overflow-hidden">
+            {navigation.map((item, index) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{
+                  delay: index * 0.1,
+                }}
+              >
+                <Anchor href={item.href}>{item.name}</Anchor>
+              </motion.div>
+            ))}
+          </nav>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
