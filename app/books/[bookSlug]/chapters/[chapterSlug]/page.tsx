@@ -1,5 +1,6 @@
-import Breadcrumbs from '@/app/ui/Breadcrumbs'
+import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
+import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton copy'
 import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
@@ -24,24 +25,23 @@ export default async function Chapter({
 
   const chapter = await prisma.chapter.findUnique({
     where: { id: chapterSlug },
-    include: { book: true },
   })
 
   if (!chapter) {
     notFound()
   }
 
-  const { title, date, book, quote, location, number } = chapter
-
-  const breadcrumbs = [
-    { href: '/books', title: 'Книги' },
-    { href: `/books/${bookSlug}`, title: book.title },
-    { href: `/books/${bookSlug}/chapters/${chapterSlug}`, title },
-  ]
+  const { title, date, quote, location, number } = chapter
 
   return (
     <article>
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <Suspense fallback={<ChapterRangeSkeleton />}>
+        <ChapterBreadcrumbs
+          bookId={bookSlug}
+          chapterSlug={chapterSlug}
+          chapterTitle={title}
+        />
+      </Suspense>
 
       {number ? (
         <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
