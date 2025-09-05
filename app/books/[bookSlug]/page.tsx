@@ -1,3 +1,4 @@
+import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import BookChaptersList from '@/app/ui/BookChaptersList'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { ChapterListSkeleton } from '@/app/ui/ChapterListSkeleton'
@@ -43,40 +44,42 @@ export default async function Book({
   ]
 
   return (
-    <article className="max-w-3xl mx-auto">
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+    <AnimatedWrapper>
+      <article className="max-w-3xl mx-auto">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-      <GiBookCover className="text-center w-full text-4xl" />
-      <h1 className="text-4xl font-bold text-center font-serif mb-10">
-        {title}
-      </h1>
+        <GiBookCover className="text-center w-full text-4xl" />
+        <h1 className="text-4xl font-bold text-center font-serif mb-10">
+          {title}
+        </h1>
 
-      {series.length ? (
-        <p className="text-lg italic">
-          <span>{series.join(', ')}</span>
-        </p>
-      ) : null}
+        {series.length ? (
+          <p className="text-lg italic">
+            <span>{series.join(', ')}</span>
+          </p>
+        ) : null}
 
-      {originalNotes && (
-        <p>
-          <strong>Оригинал:</strong> {originalNotes}
-        </p>
-      )}
+        {originalNotes && (
+          <p>
+            <strong>Оригинал:</strong> {originalNotes}
+          </p>
+        )}
 
-      {rewriteNotes && (
-        <p>
-          <strong>Препис:</strong> {rewriteNotes}
-        </p>
-      )}
-      <section className="flex flex-col ">
-        <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
-          <GiBookmarklet /> Глави
-        </h2>
+        {rewriteNotes && (
+          <p>
+            <strong>Препис:</strong> {rewriteNotes}
+          </p>
+        )}
+        <section className="flex flex-col ">
+          <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
+            <GiBookmarklet /> Глави
+          </h2>
 
-        <Suspense fallback={<ChapterListSkeleton />}>
-          <BookChaptersList bookId={bookSlug} />
-        </Suspense>
-      </section>
-    </article>
+          <Suspense fallback={<ChapterListSkeleton />}>
+            <BookChaptersList bookId={bookSlug} />
+          </Suspense>
+        </section>
+      </article>
+    </AnimatedWrapper>
   )
 }

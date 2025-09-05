@@ -1,3 +1,4 @@
+import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import { BreadcrumbsSkeleton } from '@/app/ui/BreadcrumbsSkeleton'
 import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
@@ -45,7 +46,7 @@ export default async function Chapter({
   const { title, date, quote, location, number } = chapter
 
   return (
-    <>
+    <AnimatedWrapper>
       <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
         <PageProgressBar />
       </div>
@@ -96,6 +97,6 @@ export default async function Chapter({
 
         <div className="hidden xl:block w-full max-w-64"></div>
       </div>
-    </>
+    </AnimatedWrapper>
   )
 }
