@@ -1,5 +1,6 @@
 import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import BookChaptersRange from '@/app/ui/BookChaptersRange'
+import { BookFilters } from '@/app/ui/BookFilters'
 import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
@@ -12,12 +13,18 @@ export default async function Books() {
     select: { id: true, title: true, author: true, series: true },
   })
 
+  // Extract unique series from all books
+  const allSeries = books.flatMap((book) => book.series)
+  const uniqueSeries = [...new Set(allSeries)].sort()
+
   return (
     <AnimatedWrapper>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-2 text-center text-5xl font-bold font-serif mt-8 mb-10">
+        <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif mt-8 mb-10">
           <GiBookCover /> Книги
         </h1>
+
+        <BookFilters series={uniqueSeries} />
 
         <div className="flex flex-col md:flex-row gap-4">
           {books.map((book) => {
