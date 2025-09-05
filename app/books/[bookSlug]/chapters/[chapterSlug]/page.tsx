@@ -46,7 +46,9 @@ export default async function Chapter({
 
   return (
     <>
-      <PageProgressBar />
+      <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
+        <PageProgressBar />
+      </div>
 
       <div className="flex gap-4">
         <aside className="hidden md:block w-full max-w-64 pt-4">

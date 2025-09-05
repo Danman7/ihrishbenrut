@@ -1,4 +1,5 @@
 import { Anchor } from '@/app/ui/Anchor'
+import PageProgressBar from '@/app/ui/PageProgressBar'
 import prisma from '@/lib/prisma'
 import { FaBookmark } from 'react-icons/fa'
 import { GiBookCover } from 'react-icons/gi'
@@ -20,6 +21,8 @@ export default async function ChaptersSideList({ bookId }: { bookId: string }) {
       <h2 className="flex gap-2 text-2xl mb-6 font-bold font-serif">
         <GiBookCover /> {book?.title}
       </h2>
+
+      <PageProgressBar />
 
       <h3 className="flex items-center gap-2 text-lg font-bold mb-4 font-serif">
         <FaBookmark /> Глави

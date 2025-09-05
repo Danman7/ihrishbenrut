@@ -12,18 +12,12 @@ export default function PageProgressBar() {
 
   return (
     <motion.div
-      className="md:hidden"
+      className="h-2 md:h-1 w-full"
       id="scroll-indicator"
       style={{
         scaleX,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 10,
         originX: 0,
         backgroundColor: 'var(--primary)',
-        transformOrigin: '0%',
       }}
     />
   )
