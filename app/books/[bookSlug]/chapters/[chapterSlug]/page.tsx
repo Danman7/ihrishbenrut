@@ -35,45 +35,47 @@ export default async function Chapter({
   const { title, date, quote, location, number } = chapter
 
   return (
-    <article>
-      <Suspense fallback={<BreadcrumbsSkeleton />}>
-        <ChapterBreadcrumbs
-          bookId={bookSlug}
-          chapterSlug={chapterSlug}
-          chapterTitle={title}
-        />
-      </Suspense>
-
-      <div className="flex gap-4">
-        <div className="md:w-2/3">
-          {number ? (
-            <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
-              <GiBookmarklet />
-              {number}
-            </div>
-          ) : null}
-
-          <h1 className="text-center text-3xl font-bold font-serif mb-10">
-            {title}
-          </h1>
-
-          <p className="text-sm italic">
-            {formatDateAndLocation(date, location)}
-          </p>
-
-          {quote && <div className="font-bold my-4">{quote}</div>}
-
-          <Suspense fallback={<MultiLineSkeleton />}>
-            <ChapterContent chapterId={chapterSlug} />
-          </Suspense>
-        </div>
-
-        <aside className="hidden md:block w-1/3">
+    <div className="flex gap-4">
+      <aside className="hidden md:block w-full max-w-64 pt-4">
+        <div className="fixed scroll-auto">
           <Suspense fallback={<MultiLineSkeleton />}>
             <ChaptersSideList bookId={bookSlug} />
           </Suspense>
-        </aside>
-      </div>
-    </article>
+        </div>
+      </aside>
+
+      <article className="max-w-3xl w-full mx-auto scroll-auto">
+        <Suspense fallback={<BreadcrumbsSkeleton />}>
+          <ChapterBreadcrumbs
+            bookId={bookSlug}
+            chapterSlug={chapterSlug}
+            chapterTitle={title}
+          />
+        </Suspense>
+
+        {number ? (
+          <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
+            <GiBookmarklet />
+            {number}
+          </div>
+        ) : null}
+
+        <h1 className="text-center text-3xl font-bold font-serif mb-10">
+          {title}
+        </h1>
+
+        <p className="text-sm italic">
+          {formatDateAndLocation(date, location)}
+        </p>
+
+        {quote && <div className="font-bold my-4">{quote}</div>}
+
+        <Suspense fallback={<MultiLineSkeleton />}>
+          <ChapterContent chapterId={chapterSlug} />
+        </Suspense>
+      </article>
+
+      <div className="hidden xl:block w-full max-w-64"></div>
+    </div>
   )
 }

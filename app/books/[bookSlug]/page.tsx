@@ -37,7 +37,7 @@ export default async function Book({
   ]
 
   return (
-    <article>
+    <article className="max-w-3xl mx-auto">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
 
       <GiBookCover className="text-center w-full text-4xl" />

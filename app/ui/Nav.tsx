@@ -24,8 +24,8 @@ export const Nav = () => {
 
   return (
     <header className="shadow-md">
-      <nav className="flex items-center mx-auto max-w-4xl p-4 justify-between">
-        <div className="text-2xl mr-12 font-serif">
+      <nav className="flex items-center justify-between mx-auto py-4 px-4 md:px-8 gap-10">
+        <div className="text-2xl font-serif">
           <Link className="flex items-center gap-4" href="/">
             <IoTriangleOutline />
             Само Твоята Воля
@@ -40,13 +40,20 @@ export const Nav = () => {
           ))}
         </div>
 
-        <div className="md:hidden">
+        <div className="justify-end md:hidden">
           {isMobileMenuOpen ? (
             <IoMdClose className="text-xl" onClick={toggleMobileMenu} />
           ) : (
             <IoMdMenu className="text-xl" onClick={toggleMobileMenu} />
           )}
         </div>
+
+        <input
+          className="hidden lg:block rounded-md border border-foreground px-2 py-1 ml-auto focus:border-primary focus:outline focus:outline-primary w-72"
+          type="search"
+          id="site-search"
+          placeholder="Търсене..."
+        />
       </nav>
 
       {isMobileMenuOpen && (
