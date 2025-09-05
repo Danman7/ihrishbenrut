@@ -7,6 +7,14 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { GiBookmarklet } from 'react-icons/gi'
 
+export async function generateStaticParams() {
+  const chapters = await prisma.chapter.findMany()
+
+  return chapters.map((chapter) => ({
+    chapterSlug: chapter.id,
+  }))
+}
+
 export default async function Chapter({
   params,
 }: {

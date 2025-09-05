@@ -6,6 +6,14 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { GiBookCover, GiBookmarklet } from 'react-icons/gi'
 
+export async function generateStaticParams() {
+  const books = await prisma.book.findMany()
+
+  return books.map((book) => ({
+    bookSlug: book.id,
+  }))
+}
+
 export default async function Book({
   params,
 }: {
