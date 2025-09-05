@@ -5,6 +5,7 @@ import ChapterNavigation from '@/app/ui/ChapterNavigation'
 import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import ChaptersSideList from '@/app/ui/ChaptersSideList'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
+import PageProgressBar from '@/app/ui/PageProgressBar'
 import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
@@ -44,51 +45,55 @@ export default async function Chapter({
   const { title, date, quote, location, number } = chapter
 
   return (
-    <div className="flex gap-4">
-      <aside className="hidden md:block w-full max-w-64 pt-4">
-        <div className="fixed scroll-auto">
-          <Suspense fallback={<MultiLineSkeleton />}>
-            <ChaptersSideList bookId={bookSlug} />
-          </Suspense>
-        </div>
-      </aside>
+    <>
+      <PageProgressBar />
 
-      <article className="max-w-3xl w-full mx-auto scroll-auto">
-        <Suspense fallback={<BreadcrumbsSkeleton />}>
-          <ChapterBreadcrumbs
-            bookId={bookSlug}
-            chapterSlug={chapterSlug}
-            chapterTitle={title}
-          />
-        </Suspense>
-
-        {number ? (
-          <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
-            <GiBookmarklet />
-            {number}
+      <div className="flex gap-4">
+        <aside className="hidden md:block w-full max-w-64 pt-4">
+          <div className="fixed scroll-auto">
+            <Suspense fallback={<MultiLineSkeleton />}>
+              <ChaptersSideList bookId={bookSlug} />
+            </Suspense>
           </div>
-        ) : null}
+        </aside>
 
-        <h1 className="text-center text-3xl font-bold font-serif mb-10">
-          {title}
-        </h1>
+        <article className="max-w-3xl w-full mx-auto scroll-auto">
+          <Suspense fallback={<BreadcrumbsSkeleton />}>
+            <ChapterBreadcrumbs
+              bookId={bookSlug}
+              chapterSlug={chapterSlug}
+              chapterTitle={title}
+            />
+          </Suspense>
 
-        <p className="text-sm italic">
-          {formatDateAndLocation(date, location)}
-        </p>
+          {number ? (
+            <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
+              <GiBookmarklet />
+              {number}
+            </div>
+          ) : null}
 
-        {quote && <div className="font-bold my-4">{quote}</div>}
+          <h1 className="text-center text-3xl font-bold font-serif mb-10">
+            {title}
+          </h1>
 
-        <Suspense fallback={<MultiLineSkeleton />}>
-          <ChapterContent chapterId={chapterSlug} />
-        </Suspense>
+          <p className="text-sm italic">
+            {formatDateAndLocation(date, location)}
+          </p>
 
-        <Suspense fallback={<ChapterRangeSkeleton />}>
-          <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
-        </Suspense>
-      </article>
+          {quote && <div className="font-bold my-4">{quote}</div>}
 
-      <div className="hidden xl:block w-full max-w-64"></div>
-    </div>
+          <Suspense fallback={<MultiLineSkeleton />}>
+            <ChapterContent chapterId={chapterSlug} />
+          </Suspense>
+
+          <Suspense fallback={<ChapterRangeSkeleton />}>
+            <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
+          </Suspense>
+        </article>
+
+        <div className="hidden xl:block w-full max-w-64"></div>
+      </div>
+    </>
   )
 }
