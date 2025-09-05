@@ -1,6 +1,8 @@
 import { BreadcrumbsSkeleton } from '@/app/ui/BreadcrumbsSkeleton'
 import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
+import ChapterNavigation from '@/app/ui/ChapterNavigation'
+import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import ChaptersSideList from '@/app/ui/ChaptersSideList'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
 import { formatDateAndLocation } from '@/app/utils'
@@ -79,6 +81,10 @@ export default async function Chapter({
 
         <Suspense fallback={<MultiLineSkeleton />}>
           <ChapterContent chapterId={chapterSlug} />
+        </Suspense>
+
+        <Suspense fallback={<ChapterRangeSkeleton />}>
+          <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
         </Suspense>
       </article>
 
