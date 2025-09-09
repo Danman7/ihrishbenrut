@@ -1,21 +1,5 @@
-export const isPathActive = (
-  currentPath: string,
-  linkPath: string
-): boolean => {
-  return currentPath.startsWith(linkPath)
-}
-
-// Get all parent paths for a given path
-export const getParentPaths = (path: string): string[] => {
-  const segments = path.split('/').filter(Boolean)
-  const paths: string[] = []
-
-  for (let i = 1; i <= segments.length; i++) {
-    paths.push('/' + segments.slice(0, i).join('/'))
-  }
-
-  return paths
-}
+import { BooksPageProps } from '@/app/types/book'
+import prisma from '@/lib/prisma'
 
 export const formatParagraphs = (content: string) =>
   content
@@ -23,15 +7,73 @@ export const formatParagraphs = (content: string) =>
     .map((p) => p.trim())
     .filter(Boolean)
 
-export const formatBulgarianDate = (
-  date: Date,
-  options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+export function parseFilterParams(
+  searchParams: BooksPageProps['searchParams']
+) {
+  const seriesParam = searchParams.series
+  const authorsParam = searchParams.authors
+
+  const selectedSeries =
+    typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
+  const selectedAuthors =
+    typeof authorsParam === 'string' ? authorsParam.split(',') : undefined
+
+  return { selectedSeries, selectedAuthors }
+}
+
+export function buildBooksWhereClause(
+  selectedSeries?: string[],
+  selectedAuthors?: string[]
+) {
+  const conditions = []
+
+  if (selectedSeries && selectedSeries.length > 0) {
+    conditions.push({
+      series: {
+        hasSome: selectedSeries,
+      },
+    })
   }
-): string => {
-  const formatted = new Intl.DateTimeFormat('bg-BG', options).format(date)
-  // Capitalize the first letter (month names start lowercase in Bulgarian)
-  return formatted.charAt(0).toUpperCase() + formatted.slice(1)
+
+  if (selectedAuthors && selectedAuthors.length > 0) {
+    conditions.push({
+      author: {
+        in: selectedAuthors,
+      },
+    })
+  }
+
+  return conditions.length > 0 ? { AND: conditions } : {}
+}
+
+export async function getFilteredBooks(
+  selectedSeries?: string[],
+  selectedAuthors?: string[]
+) {
+  return await prisma.book.findMany({
+    orderBy: { numberInSeries: 'asc' },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      series: true,
+      shortNotes: true,
+      numberInSeries: true,
+    },
+    where: buildBooksWhereClause(selectedSeries, selectedAuthors),
+  })
+}
+
+export const getFilterOptions = async () => {
+  const allBooks = await prisma.book.findMany({
+    select: { series: true, author: true },
+  })
+
+  const allSeries = allBooks.flatMap((book) => book.series)
+  const uniqueSeries = [...new Set(allSeries)].sort()
+
+  const allAuthors = allBooks.map((book) => book.author)
+  const uniqueAuthors = [...new Set(allAuthors)].sort()
+
+  return { uniqueSeries, uniqueAuthors }
 }

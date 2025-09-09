@@ -1,6 +1,5 @@
 import { Prisma } from '@/app/generated/prisma'
 
-// Extract the exact type from the Prisma query
 export type FilteredBook = Prisma.BookGetPayload<{
   select: {
     id: true
@@ -12,7 +11,6 @@ export type FilteredBook = Prisma.BookGetPayload<{
   }
 }>
 
-// Or alternatively, you can define it manually for better control:
 export type BookListItem = {
   id: string
   title: string
@@ -20,4 +18,8 @@ export type BookListItem = {
   series: string[]
   shortNotes: string | null
   numberInSeries: number | null
+}
+
+export interface BooksPageProps {
+  searchParams: { [key: string]: string | string[] | undefined }
 }
