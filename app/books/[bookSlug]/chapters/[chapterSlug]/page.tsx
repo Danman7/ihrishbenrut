@@ -3,7 +3,7 @@ import { BreadcrumbsSkeleton } from '@/app/ui/BreadcrumbsSkeleton'
 import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
 import ChapterNavigation from '@/app/ui/ChapterNavigation'
-import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
+import { SingleLineSkeleton } from '@/app/ui/SingleLineSkeleton'
 import ChaptersSideList from '@/app/ui/ChaptersSideList'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
 import PageProgressBar from '@/app/ui/PageProgressBar'
@@ -86,7 +86,7 @@ export default async function Chapter({
             <ChapterContent chapterId={chapterSlug} />
           </Suspense>
 
-          <Suspense fallback={<ChapterRangeSkeleton />}>
+          <Suspense fallback={<SingleLineSkeleton />}>
             <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
           </Suspense>
         </article>
