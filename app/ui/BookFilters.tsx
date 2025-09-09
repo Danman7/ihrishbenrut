@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
-import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io'
+import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from 'react-icons/io'
 
 interface BookFiltersProps {
   series: string[]
@@ -14,13 +14,13 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
 
-  // Initialize selected series from URL params or default to all series
+  // Initialize selected series from URL params or default to no series
   const [selectedSeries, setSelectedSeries] = useState<string[]>(() => {
     const seriesParam = searchParams.get('series')
     if (seriesParam) {
       return seriesParam.split(',').filter((s) => series.includes(s))
     }
-    return series
+    return []
   })
 
   // Update URL when selected series changes
@@ -63,15 +63,31 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
     )
   }
 
+  const handleClearFilters = () => {
+    setSelectedSeries([])
+  }
+
   return (
     <>
-      <button
-        className="underline underline-offset-2 hover:decoration-3 items-center flex gap-2 mb-4 cursor-pointer"
-        onClick={() => setIsFiltersMenuOpen((prev) => !prev)}
-      >
-        {isFiltersMenuOpen ? <IoIosArrowDown /> : <IoIosArrowForward />} Избор
-        (Филтри)
-      </button>
+      <div className="flex justify-between items-center mb-4">
+        <button
+          className="underline underline-offset-2 hover:decoration-3 items-center flex gap-2 cursor-pointer"
+          onClick={() => setIsFiltersMenuOpen((prev) => !prev)}
+        >
+          {isFiltersMenuOpen ? <IoIosArrowDown /> : <IoIosArrowForward />} Избор
+          (Филтри)
+        </button>
+
+        {selectedSeries.length > 0 && (
+          <button
+            onClick={handleClearFilters}
+            className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 "
+          >
+            <IoMdClose />
+            Изчисти
+          </button>
+        )}
+      </div>
 
       <AnimatePresence>
         {isFiltersMenuOpen && (
