@@ -1,20 +1,42 @@
 import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
-import BookChaptersRange from '@/app/ui/BookChaptersRange'
 import { BookFilters } from '@/app/ui/BookFilters'
-import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import prisma from '@/lib/prisma'
-import Link from 'next/link'
-import { Suspense } from 'react'
 import { GiBookCover } from 'react-icons/gi'
+import BooksList from '@/app/ui/BooksList'
 
-export default async function Books() {
+interface BooksPageProps {
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function Books({ searchParams }: BooksPageProps) {
+  const seriesParam = searchParams.series
+  const selectedSeries =
+    typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
+
   const books = await prisma.book.findMany({
-    orderBy: { createdAt: 'asc' },
-    select: { id: true, title: true, author: true, series: true },
+    orderBy: { numberInSeries: 'asc' },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      series: true,
+      shortNotes: true,
+      numberInSeries: true,
+    },
+    where:
+      selectedSeries && selectedSeries.length > 0
+        ? {
+            series: {
+              hasSome: selectedSeries,
+            },
+          }
+        : undefined,
   })
 
-  // Extract unique series from all books
-  const allSeries = books.flatMap((book) => book.series)
+  const allBooks = await prisma.book.findMany({
+    select: { series: true },
+  })
+  const allSeries = allBooks.flatMap((book) => book.series)
   const uniqueSeries = [...new Set(allSeries)].sort()
 
   return (
@@ -26,27 +48,7 @@ export default async function Books() {
 
         <BookFilters series={uniqueSeries} />
 
-        <div className="flex flex-col md:flex-row gap-4">
-          {books.map((book) => {
-            return (
-              <Link
-                href={`/books/${book.id}`}
-                key={book.id}
-                className="relative w-full md:w-1/3 flex flex-col items-center justify-center border-2 border-border shadow-md rounded-2xl p-4 hover:shadow-lg hover:border-primary transition active:text-background active:bg-primary text-center"
-              >
-                <div className="underline underline-offset-2 text-2xl mb-4 font-bold font-serif">
-                  {book.title}
-                </div>
-                <div className="text-xl mb-2 italic">{book.author}</div>
-                <div>{book.series.join(', ')}</div>
-
-                <Suspense fallback={<ChapterRangeSkeleton />}>
-                  <BookChaptersRange bookId={book.id} />
-                </Suspense>
-              </Link>
-            )
-          })}
-        </div>
+        <BooksList filteredBooks={books} />
       </article>
     </AnimatedWrapper>
   )

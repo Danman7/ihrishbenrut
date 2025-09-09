@@ -7,7 +7,6 @@ import { ChapterRangeSkeleton } from '@/app/ui/ChapterRangeSkeleton'
 import ChaptersSideList from '@/app/ui/ChaptersSideList'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
 import PageProgressBar from '@/app/ui/PageProgressBar'
-import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -32,9 +31,8 @@ export default async function Chapter({
     where: { id: chapterSlug },
     select: {
       title: true,
-      date: true,
+      notes: true,
       quote: true,
-      location: true,
       number: true,
     },
   })
@@ -43,7 +41,7 @@ export default async function Chapter({
     notFound()
   }
 
-  const { title, date, quote, location, number } = chapter
+  const { title, quote, notes, number } = chapter
 
   return (
     <AnimatedWrapper>
@@ -80,9 +78,7 @@ export default async function Chapter({
             {title}
           </h1>
 
-          <p className="text-sm italic">
-            {formatDateAndLocation(date, location)}
-          </p>
+          <p className="text-sm italic">{notes}</p>
 
           {quote && <div className="font-bold my-4">{quote}</div>}
 

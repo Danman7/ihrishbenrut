@@ -1,4 +1,3 @@
-import { formatDateAndLocation } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 
@@ -8,7 +7,12 @@ export default async function BookChaptersList({ bookId }: { bookId: string }) {
       bookId,
     },
     orderBy: { number: 'asc' },
-    select: { id: true, title: true, number: true, date: true, location: true },
+    select: {
+      id: true,
+      title: true,
+      number: true,
+      notes: true,
+    },
   })
 
   return (
@@ -22,11 +26,7 @@ export default async function BookChaptersList({ bookId }: { bookId: string }) {
           <div className="underline underline-offset-2 hover:decoration-3 font-bold">
             {chapter.number && `${chapter.number}.`} {chapter.title}
           </div>
-          {chapter.date && (
-            <div className="text-sm">
-              {formatDateAndLocation(chapter.date, chapter.location)}
-            </div>
-          )}
+          {chapter.notes && <div className="text-sm">{chapter.notes}</div>}
         </Link>
       ))}
     </>

@@ -35,21 +35,3 @@ export const formatBulgarianDate = (
   // Capitalize the first letter (month names start lowercase in Bulgarian)
   return formatted.charAt(0).toUpperCase() + formatted.slice(1)
 }
-
-export const getYearRange = (chapters: { date: Date }[]): string | null => {
-  if (chapters.length === 0) return null
-
-  const years = chapters.map((chapter) => new Date(chapter.date).getFullYear())
-  const minYear = Math.min(...years)
-  const maxYear = Math.max(...years)
-
-  return minYear === maxYear ? minYear.toString() : `${minYear} - ${maxYear}`
-}
-
-export const formatDateAndLocation = (
-  date: Date,
-  location: string | null
-): string => {
-  const formattedDate = formatBulgarianDate(date)
-  return location ? `${formattedDate} ${location}` : formattedDate
-}

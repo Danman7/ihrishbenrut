@@ -17,7 +17,6 @@ export default async function ChapterNavigation({
   const chapters = await prisma.chapter.findMany({
     where: {
       bookId,
-      number: { not: null }, // Only include chapters with numbers
     },
     select: { number: true, title: true, id: true },
     orderBy: { number: 'asc' },

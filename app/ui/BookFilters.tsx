@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io'
 
@@ -9,8 +10,50 @@ interface BookFiltersProps {
 }
 
 export const BookFilters = ({ series }: BookFiltersProps) => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
-  const [selectedSeries, setSelectedSeries] = useState<string[]>(series)
+
+  // Initialize selected series from URL params or default to all series
+  const [selectedSeries, setSelectedSeries] = useState<string[]>(() => {
+    const seriesParam = searchParams.get('series')
+    if (seriesParam) {
+      return seriesParam.split(',').filter((s) => series.includes(s))
+    }
+    return series
+  })
+
+  // Update URL when selected series changes
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString())
+    const currentSeriesParam = params.get('series')
+
+    let newSeriesParam: string | null = null
+
+    if (
+      selectedSeries.length === 0 ||
+      selectedSeries.length === series.length
+    ) {
+      // If no series selected or all series selected, remove the parameter
+      newSeriesParam = null
+    } else {
+      // Add selected series to URL
+      newSeriesParam = selectedSeries.join(',')
+    }
+
+    // Only update URL if the parameter actually changed
+    if (currentSeriesParam !== newSeriesParam) {
+      if (newSeriesParam === null) {
+        params.delete('series')
+      } else {
+        params.set('series', newSeriesParam)
+      }
+
+      // Update URL without causing a page reload
+      const newUrl = params.toString() ? `?${params.toString()}` : ''
+      router.push(`${window.location.pathname}${newUrl}`, { scroll: false })
+    }
+  }, [selectedSeries, router, searchParams, series])
 
   const handleSeriesChange = (seriesName: string) => {
     setSelectedSeries((prev) =>

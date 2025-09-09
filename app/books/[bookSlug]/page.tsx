@@ -2,6 +2,7 @@ import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import BookChaptersList from '@/app/ui/BookChaptersList'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { ChapterListSkeleton } from '@/app/ui/ChapterListSkeleton'
+import { formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
@@ -26,8 +27,8 @@ export default async function Book({
     where: { id: bookSlug },
     select: {
       title: true,
-      originalNotes: true,
-      rewriteNotes: true,
+      notes: true,
+      author: true,
       series: true,
     },
   })
@@ -36,7 +37,7 @@ export default async function Book({
     notFound()
   }
 
-  const { title, originalNotes, rewriteNotes, series } = book
+  const { title, author, notes, series } = book
 
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
@@ -49,9 +50,11 @@ export default async function Book({
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
         <GiBookCover className="text-center w-full text-4xl" />
-        <h1 className="text-4xl font-bold text-center font-serif mb-10">
+        <h1 className="text-4xl font-bold text-center font-serif mb-2">
           {title}
         </h1>
+
+        <div className="text-xl font-bold text-center mb-10">{author}</div>
 
         {series.length ? (
           <p className="text-lg italic">
@@ -59,17 +62,11 @@ export default async function Book({
           </p>
         ) : null}
 
-        {originalNotes && (
-          <p>
-            <strong>Оригинал:</strong> {originalNotes}
-          </p>
-        )}
+        {notes &&
+          formatParagraphs(notes).map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
 
-        {rewriteNotes && (
-          <p>
-            <strong>Препис:</strong> {rewriteNotes}
-          </p>
-        )}
         <section className="flex flex-col ">
           <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
             <GiBookmarklet /> Глави

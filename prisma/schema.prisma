@@ -9,26 +9,25 @@ datasource db {
 }
 
 model Book {
-  id                  String    @id @default(cuid())
-  title               String
-  author              String
-  originalReleaseYear Int?
-  originalNotes       String?
-  yearOfRewrite       Int?
-  rewriteNotes        String?
-  chapters            Chapter[]
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  series              String[]
+  id             String    @id @default(cuid())
+  title          String
+  author         String
+  yearPublished  Int
+  notes          String?   @db.Text
+  shortNotes     String?
+  chapters       Chapter[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  series         String[]
+  numberInSeries Int?
 }
 
 model Chapter {
   id        String           @id @default(cuid())
   title     String
-  number    Int?
+  number    Int
   quote     String?
-  location  String?
-  date      DateTime         @db.Date
+  notes     String?
   bookId    String
   book      Book             @relation(fields: [bookId], references: [id])
   createdAt DateTime         @default(now())
@@ -40,7 +39,7 @@ model ChapterContent {
   id        String   @id @default(cuid())
   chapterId String
   chapter   Chapter  @relation(fields: [chapterId], references: [id])
-  content   String   @db.Text
+  text      String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

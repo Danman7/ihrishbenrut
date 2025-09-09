@@ -9,7 +9,7 @@ export default async function ChapterContent({
 }) {
   const content = await prisma.chapterContent.findFirst({
     where: { chapterId },
-    select: { content: true },
+    select: { text: true },
   })
 
   if (!content) {
@@ -18,7 +18,7 @@ export default async function ChapterContent({
 
   return (
     <section className="flex flex-col items-center">
-      {formatParagraphs(content.content).map((paragraph, index) => (
+      {formatParagraphs(content.text).map((paragraph, index) => (
         <p key={index}>{paragraph}</p>
       ))}
     </section>
