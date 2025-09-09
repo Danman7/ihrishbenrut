@@ -7,9 +7,10 @@ import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from 'react-icons/io'
 
 interface BookFiltersProps {
   series: string[]
+  authors: string[]
 }
 
-export const BookFilters = ({ series }: BookFiltersProps) => {
+export const BookFilters = ({ series, authors }: BookFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
@@ -23,12 +24,23 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
     return []
   })
 
-  // Update URL when selected series changes
+  // Initialize selected authors from URL params or default to no authors
+  const [selectedAuthors, setSelectedAuthors] = useState<string[]>(() => {
+    const authorsParam = searchParams.get('authors')
+    if (authorsParam) {
+      return authorsParam.split(',').filter((a) => authors.includes(a))
+    }
+    return []
+  })
+
+  // Update URL when selected series or authors change
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString())
     const currentSeriesParam = params.get('series')
+    const currentAuthorsParam = params.get('authors')
 
     let newSeriesParam: string | null = null
+    let newAuthorsParam: string | null = null
 
     if (
       selectedSeries.length === 0 ||
@@ -41,19 +53,39 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
       newSeriesParam = selectedSeries.join(',')
     }
 
-    // Only update URL if the parameter actually changed
-    if (currentSeriesParam !== newSeriesParam) {
+    if (
+      selectedAuthors.length === 0 ||
+      selectedAuthors.length === authors.length
+    ) {
+      // If no authors selected or all authors selected, remove the parameter
+      newAuthorsParam = null
+    } else {
+      // Add selected authors to URL
+      newAuthorsParam = selectedAuthors.join(',')
+    }
+
+    // Only update URL if any parameter actually changed
+    if (
+      currentSeriesParam !== newSeriesParam ||
+      currentAuthorsParam !== newAuthorsParam
+    ) {
       if (newSeriesParam === null) {
         params.delete('series')
       } else {
         params.set('series', newSeriesParam)
       }
 
+      if (newAuthorsParam === null) {
+        params.delete('authors')
+      } else {
+        params.set('authors', newAuthorsParam)
+      }
+
       // Update URL without causing a page reload
       const newUrl = params.toString() ? `?${params.toString()}` : ''
       router.push(`${window.location.pathname}${newUrl}`, { scroll: false })
     }
-  }, [selectedSeries, router, searchParams, series])
+  }, [selectedSeries, selectedAuthors, router, searchParams, series, authors])
 
   const handleSeriesChange = (seriesName: string) => {
     setSelectedSeries((prev) =>
@@ -63,8 +95,17 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
     )
   }
 
+  const handleAuthorsChange = (authorName: string) => {
+    setSelectedAuthors((prev) =>
+      prev.includes(authorName)
+        ? prev.filter((a) => a !== authorName)
+        : [...prev, authorName]
+    )
+  }
+
   const handleClearFilters = () => {
     setSelectedSeries([])
+    setSelectedAuthors([])
   }
 
   return (
@@ -78,7 +119,7 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
           (Филтри)
         </button>
 
-        {selectedSeries.length > 0 && (
+        {(selectedSeries.length > 0 || selectedAuthors.length > 0) && (
           <button
             onClick={handleClearFilters}
             className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 "
@@ -94,11 +135,11 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
           <motion.div
             className="overflow-hidden"
             initial={{ height: 0 }}
-            animate={{ height: 150 }}
+            animate={{ height: 300 }}
             exit={{ height: 0 }}
           >
             <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Поредици</legend>
+              <legend className="text-lg">Само от следните поредици</legend>
 
               <div className="flex flex-wrap gap-4">
                 {series.map((seriesName) => (
@@ -111,6 +152,25 @@ export const BookFilters = ({ series }: BookFiltersProps) => {
                       onChange={() => handleSeriesChange(seriesName)}
                     />
                     <label htmlFor={`series-${seriesName}`}>{seriesName}</label>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset className="border border-foreground p-4 rounded-md mt-4">
+              <legend className="text-lg">Само от следните автори</legend>
+
+              <div className="flex flex-wrap gap-4">
+                {authors.map((authorName) => (
+                  <div key={authorName} className="flex gap-2 items-center">
+                    <input
+                      type="checkbox"
+                      id={`author-${authorName}`}
+                      name={`author-${authorName}`}
+                      checked={selectedAuthors.includes(authorName)}
+                      onChange={() => handleAuthorsChange(authorName)}
+                    />
+                    <label htmlFor={`author-${authorName}`}>{authorName}</label>
                   </div>
                 ))}
               </div>
