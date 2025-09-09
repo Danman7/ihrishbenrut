@@ -4,7 +4,6 @@ import ChapterBreadcrumbs from '@/app/ui/ChapterBreadcrumbs'
 import ChapterContent from '@/app/ui/ChapterContent'
 import ChapterNavigation from '@/app/ui/ChapterNavigation'
 import { SingleLineSkeleton } from '@/app/ui/SingleLineSkeleton'
-import ChaptersSideList from '@/app/ui/ChaptersSideList'
 import { MultiLineSkeleton } from '@/app/ui/MultiLineSkeleton'
 import PageProgressBar from '@/app/ui/PageProgressBar'
 import prisma from '@/lib/prisma'
@@ -49,50 +48,40 @@ export default async function Chapter({
         <PageProgressBar />
       </div>
 
-      <div className="flex gap-4">
-        <aside className="hidden md:block w-full max-w-64 pt-4">
-          <div className="fixed scroll-auto">
-            <Suspense fallback={<MultiLineSkeleton />}>
-              <ChaptersSideList bookId={bookSlug} />
-            </Suspense>
+      <article className="max-w-3xl w-full mx-auto scroll-auto">
+        <Suspense fallback={<BreadcrumbsSkeleton />}>
+          <ChapterBreadcrumbs
+            bookId={bookSlug}
+            chapterSlug={chapterSlug}
+            chapterTitle={title}
+          />
+        </Suspense>
+
+        {number ? (
+          <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
+            <GiBookmarklet />
+            {number}
           </div>
-        </aside>
+        ) : null}
 
-        <article className="max-w-3xl w-full mx-auto scroll-auto">
-          <Suspense fallback={<BreadcrumbsSkeleton />}>
-            <ChapterBreadcrumbs
-              bookId={bookSlug}
-              chapterSlug={chapterSlug}
-              chapterTitle={title}
-            />
-          </Suspense>
+        <h1 className="text-center text-3xl font-bold font-serif mb-10">
+          {title}
+        </h1>
 
-          {number ? (
-            <div className="flex justify-center items-center text-2xl font-serif gap-2 mb-2">
-              <GiBookmarklet />
-              {number}
-            </div>
-          ) : null}
+        <p className="text-sm italic">{notes}</p>
 
-          <h1 className="text-center text-3xl font-bold font-serif mb-10">
-            {title}
-          </h1>
+        {quote && <div className="font-bold my-4">{quote}</div>}
 
-          <p className="text-sm italic">{notes}</p>
+        <Suspense fallback={<MultiLineSkeleton />}>
+          <ChapterContent chapterId={chapterSlug} />
+        </Suspense>
 
-          {quote && <div className="font-bold my-4">{quote}</div>}
+        <Suspense fallback={<SingleLineSkeleton />}>
+          <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
+        </Suspense>
+      </article>
 
-          <Suspense fallback={<MultiLineSkeleton />}>
-            <ChapterContent chapterId={chapterSlug} />
-          </Suspense>
-
-          <Suspense fallback={<SingleLineSkeleton />}>
-            <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
-          </Suspense>
-        </article>
-
-        <div className="hidden xl:block w-full max-w-64"></div>
-      </div>
+      <div className="hidden xl:block w-full max-w-64"></div>
     </AnimatedWrapper>
   )
 }
