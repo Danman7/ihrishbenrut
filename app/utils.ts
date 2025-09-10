@@ -12,18 +12,22 @@ export function parseFilterParams(
 ) {
   const seriesParam = searchParams.series
   const authorsParam = searchParams.authors
+  const yearsParam = searchParams.years
 
   const selectedSeries =
     typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
   const selectedAuthors =
     typeof authorsParam === 'string' ? authorsParam.split(',') : undefined
+  const selectedYear =
+    typeof yearsParam === 'string' ? Number(yearsParam) : undefined
 
-  return { selectedSeries, selectedAuthors }
+  return { selectedSeries, selectedAuthors, selectedYear }
 }
 
 export function buildBooksWhereClause(
   selectedSeries?: string[],
-  selectedAuthors?: string[]
+  selectedAuthors?: string[],
+  selectedYear?: number
 ) {
   const conditions = []
 
@@ -43,12 +47,19 @@ export function buildBooksWhereClause(
     })
   }
 
+  if (selectedYear) {
+    conditions.push({
+      yearPublished: selectedYear,
+    })
+  }
+
   return conditions.length > 0 ? { AND: conditions } : {}
 }
 
 export async function getFilteredBooks(
   selectedSeries?: string[],
-  selectedAuthors?: string[]
+  selectedAuthors?: string[],
+  selectedYear?: number
 ) {
   return await prisma.book.findMany({
     orderBy: { numberInSeries: 'asc' },
@@ -60,13 +71,13 @@ export async function getFilteredBooks(
       shortNotes: true,
       numberInSeries: true,
     },
-    where: buildBooksWhereClause(selectedSeries, selectedAuthors),
+    where: buildBooksWhereClause(selectedSeries, selectedAuthors, selectedYear),
   })
 }
 
 export const getFilterOptions = async () => {
   const allBooks = await prisma.book.findMany({
-    select: { series: true, author: true },
+    select: { series: true, author: true, yearPublished: true },
   })
 
   const allSeries = allBooks.flatMap((book) => book.series)
@@ -75,5 +86,8 @@ export const getFilterOptions = async () => {
   const allAuthors = allBooks.map((book) => book.author)
   const uniqueAuthors = [...new Set(allAuthors)].sort()
 
-  return { uniqueSeries, uniqueAuthors }
+  const allYears = allBooks.map((book) => book.yearPublished)
+  const uniqueYears = [...new Set(allYears)].sort((a, b) => a - b) // Sort ascending (oldest first)
+
+  return { uniqueSeries, uniqueAuthors, uniqueYears }
 }

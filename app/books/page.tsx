@@ -10,13 +10,15 @@ import {
 import { GiBookCover } from 'react-icons/gi'
 
 export default async function Books({ searchParams }: BooksPageProps) {
-  const { selectedSeries, selectedAuthors } = parseFilterParams(searchParams)
+  const { selectedSeries, selectedAuthors, selectedYear } =
+    parseFilterParams(searchParams)
 
   // Fetch books and filter options in parallel
-  const [books, { uniqueSeries, uniqueAuthors }] = await Promise.all([
-    getFilteredBooks(selectedSeries, selectedAuthors),
-    getFilterOptions(),
-  ])
+  const [books, { uniqueSeries, uniqueAuthors, uniqueYears }] =
+    await Promise.all([
+      getFilteredBooks(selectedSeries, selectedAuthors, selectedYear),
+      getFilterOptions(),
+    ])
 
   return (
     <AnimatedWrapper>
@@ -25,7 +27,11 @@ export default async function Books({ searchParams }: BooksPageProps) {
           <GiBookCover /> Книги
         </h1>
 
-        <BookFilters series={uniqueSeries} authors={uniqueAuthors} />
+        <BookFilters
+          series={uniqueSeries}
+          authors={uniqueAuthors}
+          years={uniqueYears}
+        />
 
         <BooksList filteredBooks={books} />
       </article>

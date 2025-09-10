@@ -9,9 +9,10 @@ import { Checkbox } from './Checkbox'
 interface BookFiltersProps {
   series: string[]
   authors: string[]
+  years: number[]
 }
 
-export const BookFilters = ({ series, authors }: BookFiltersProps) => {
+export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
@@ -34,14 +35,26 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
     return []
   })
 
-  // Update URL when selected series or authors change
+  // Initialize selected years from URL params or default to no years
+  const [selectedYear, setSelectedYear] = useState<number | null>(() => {
+    const yearsParam = searchParams.get('years')
+    if (yearsParam) {
+      const year = Number(yearsParam)
+      return years.includes(year) ? year : null
+    }
+    return null
+  })
+
+  // Update URL when selected series, authors, or years change
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString())
     const currentSeriesParam = params.get('series')
     const currentAuthorsParam = params.get('authors')
+    const currentYearsParam = params.get('years')
 
     let newSeriesParam: string | null = null
     let newAuthorsParam: string | null = null
+    let newYearsParam: string | null = null
 
     if (
       selectedSeries.length === 0 ||
@@ -65,10 +78,19 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
       newAuthorsParam = selectedAuthors.join(',')
     }
 
+    if (selectedYear === null) {
+      // If no year selected, remove the parameter
+      newYearsParam = null
+    } else {
+      // Add selected year to URL
+      newYearsParam = selectedYear.toString()
+    }
+
     // Only update URL if any parameter actually changed
     if (
       currentSeriesParam !== newSeriesParam ||
-      currentAuthorsParam !== newAuthorsParam
+      currentAuthorsParam !== newAuthorsParam ||
+      currentYearsParam !== newYearsParam
     ) {
       if (newSeriesParam === null) {
         params.delete('series')
@@ -82,11 +104,26 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
         params.set('authors', newAuthorsParam)
       }
 
+      if (newYearsParam === null) {
+        params.delete('years')
+      } else {
+        params.set('years', newYearsParam)
+      }
+
       // Update URL without causing a page reload
       const newUrl = params.toString() ? `?${params.toString()}` : ''
       router.push(`${window.location.pathname}${newUrl}`, { scroll: false })
     }
-  }, [selectedSeries, selectedAuthors, router, searchParams, series, authors])
+  }, [
+    selectedSeries,
+    selectedAuthors,
+    selectedYear,
+    router,
+    searchParams,
+    series,
+    authors,
+    years,
+  ])
 
   const handleSeriesChange = (seriesName: string) => {
     setSelectedSeries((prev) =>
@@ -104,9 +141,14 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
     )
   }
 
+  const handleYearsChange = (year: number | null) => {
+    setSelectedYear(year)
+  }
+
   const handleClearFilters = () => {
     setSelectedSeries([])
     setSelectedAuthors([])
+    setSelectedYear(null)
   }
 
   return (
@@ -120,10 +162,12 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
           (Филтри)
         </button>
 
-        {(selectedSeries.length > 0 || selectedAuthors.length > 0) && (
+        {(selectedSeries.length > 0 ||
+          selectedAuthors.length > 0 ||
+          selectedYear !== null) && (
           <button
             onClick={handleClearFilters}
-            className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 "
+            className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 cursor-pointer"
           >
             <IoMdClose />
             Изчисти
@@ -136,7 +180,7 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
           <motion.div
             className="overflow-hidden"
             initial={{ height: 0 }}
-            animate={{ height: 300 }}
+            animate={{ height: 350 }}
             exit={{ height: 0 }}
           >
             <fieldset className="border border-foreground p-4 rounded-md">
@@ -171,6 +215,27 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
                   />
                 ))}
               </div>
+            </fieldset>
+
+            <fieldset className="border border-foreground p-4 rounded-md mt-4">
+              <legend className="text-lg">Година на публикуване</legend>
+
+              <select
+                value={selectedYear || ''}
+                onChange={(e) =>
+                  handleYearsChange(
+                    e.target.value ? Number(e.target.value) : null
+                  )
+                }
+                className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              >
+                <option value="">Всички години</option>
+                {years.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
             </fieldset>
           </motion.div>
         )}
