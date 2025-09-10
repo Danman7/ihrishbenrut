@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from 'react-icons/io'
+import { Checkbox } from './Checkbox'
 
 interface BookFiltersProps {
   series: string[]
@@ -143,16 +144,14 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
 
               <div className="flex flex-wrap gap-4">
                 {series.map((seriesName) => (
-                  <div key={seriesName} className="flex gap-2 items-center">
-                    <input
-                      type="checkbox"
-                      id={`series-${seriesName}`}
-                      name={`series-${seriesName}`}
-                      checked={selectedSeries.includes(seriesName)}
-                      onChange={() => handleSeriesChange(seriesName)}
-                    />
-                    <label htmlFor={`series-${seriesName}`}>{seriesName}</label>
-                  </div>
+                  <Checkbox
+                    key={seriesName}
+                    id={`series-${seriesName}`}
+                    name={`series-${seriesName}`}
+                    label={seriesName}
+                    checked={selectedSeries.includes(seriesName)}
+                    onChange={() => handleSeriesChange(seriesName)}
+                  />
                 ))}
               </div>
             </fieldset>
@@ -162,16 +161,14 @@ export const BookFilters = ({ series, authors }: BookFiltersProps) => {
 
               <div className="flex flex-wrap gap-4">
                 {authors.map((authorName) => (
-                  <div key={authorName} className="flex gap-2 items-center">
-                    <input
-                      type="checkbox"
-                      id={`author-${authorName}`}
-                      name={`author-${authorName}`}
-                      checked={selectedAuthors.includes(authorName)}
-                      onChange={() => handleAuthorsChange(authorName)}
-                    />
-                    <label htmlFor={`author-${authorName}`}>{authorName}</label>
-                  </div>
+                  <Checkbox
+                    key={authorName}
+                    id={`author-${authorName}`}
+                    name={`author-${authorName}`}
+                    label={authorName}
+                    checked={selectedAuthors.includes(authorName)}
+                    onChange={() => handleAuthorsChange(authorName)}
+                  />
                 ))}
               </div>
             </fieldset>
