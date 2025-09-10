@@ -43,3 +43,23 @@ model ChapterContent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Prayer {
+  id        String   @id @default(cuid())
+  title     String
+  source    String
+  series    String[]
+  content   String   @db.Text
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wisdom {
+  id        String   @id @default(cuid())
+  text      String   @db.Text
+  source    String
+  topics    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
