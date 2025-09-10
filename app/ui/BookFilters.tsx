@@ -157,6 +157,8 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
         <button
           className="underline underline-offset-2 hover:decoration-3 items-center flex gap-2 cursor-pointer"
           onClick={() => setIsFiltersMenuOpen((prev) => !prev)}
+          aria-expanded={isFiltersMenuOpen}
+          aria-controls="filters-panel"
         >
           {isFiltersMenuOpen ? <IoIosArrowDown /> : <IoIosArrowForward />} Избор
           (Филтри)
@@ -178,6 +180,7 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
       <AnimatePresence>
         {isFiltersMenuOpen && (
           <motion.div
+            id="filters-panel"
             className="overflow-hidden"
             initial={{ height: 0 }}
             animate={{ height: 350 }}
@@ -186,7 +189,11 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
             <fieldset className="border border-foreground p-4 rounded-md">
               <legend className="text-lg">Само от следните поредици</legend>
 
-              <div className="flex flex-wrap gap-4">
+              <div
+                className="flex flex-wrap gap-4"
+                role="group"
+                aria-labelledby="series-legend"
+              >
                 {series.map((seriesName) => (
                   <Checkbox
                     key={seriesName}
@@ -203,7 +210,11 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
             <fieldset className="border border-foreground p-4 rounded-md mt-4">
               <legend className="text-lg">Само от следните автори</legend>
 
-              <div className="flex flex-wrap gap-4">
+              <div
+                className="flex flex-wrap gap-4"
+                role="group"
+                aria-labelledby="authors-legend"
+              >
                 {authors.map((authorName) => (
                   <Checkbox
                     key={authorName}
@@ -228,6 +239,7 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
                   )
                 }
                 className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                aria-label="Избор на година на публикуване"
               >
                 <option value="">Всички години</option>
                 {years.map((year) => (

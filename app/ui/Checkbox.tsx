@@ -14,7 +14,7 @@ export const Checkbox = ({
   onChange,
 }: CheckboxProps) => {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 items-center relative">
       <label
         htmlFor={id}
         className="flex items-center gap-2 cursor-pointer group"
@@ -25,10 +25,10 @@ export const Checkbox = ({
           name={name}
           checked={checked}
           onChange={onChange}
-          className="sr-only"
+          className="absolute opacity-0 w-0 h-0 peer"
         />
         <div
-          className={`w-4 h-4 border-2 border-border rounded-sm flex items-center justify-center transition-all duration-200 ${
+          className={`w-4 h-4 border-2 border-border rounded-sm flex items-center justify-center transition-all duration-200 peer-focus:ring-2 peer-focus:ring-primary peer-focus:ring-offset-2 ${
             checked
               ? 'bg-primary border-primary'
               : 'bg-background group-hover:border-primary'
