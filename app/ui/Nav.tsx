@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'motion/react'
 const navigation = [
   { name: 'Книги', href: '/books' },
   { name: 'Молитви', href: '/prayers' },
+  { name: 'Мъдрости', href: '/wisdom' },
 ]
 
 export const Nav = () => {
