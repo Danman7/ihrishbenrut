@@ -136,7 +136,7 @@ export async function getFilteredPrayers(
   selectedSources?: string[]
 ) {
   return await prisma.prayer.findMany({
-    orderBy: { title: 'asc' },
+    orderBy: { rank: 'asc' },
     where: buildPrayersWhereClause(selectedSeries, selectedSources),
   })
 }
