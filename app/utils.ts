@@ -91,3 +91,66 @@ export const getFilterOptions = async () => {
 
   return { uniqueSeries, uniqueAuthors, uniqueYears }
 }
+
+export function parsePrayerFilterParams(searchParams: {
+  [key: string]: string | string[] | undefined
+}) {
+  const seriesParam = searchParams.series
+  const sourcesParam = searchParams.sources
+
+  const selectedSeries =
+    typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
+  const selectedSources =
+    typeof sourcesParam === 'string' ? sourcesParam.split(',') : undefined
+
+  return { selectedSeries, selectedSources }
+}
+
+export function buildPrayersWhereClause(
+  selectedSeries?: string[],
+  selectedSources?: string[]
+) {
+  const conditions = []
+
+  if (selectedSeries && selectedSeries.length > 0) {
+    conditions.push({
+      series: {
+        hasSome: selectedSeries,
+      },
+    })
+  }
+
+  if (selectedSources && selectedSources.length > 0) {
+    conditions.push({
+      source: {
+        in: selectedSources,
+      },
+    })
+  }
+
+  return conditions.length > 0 ? { AND: conditions } : {}
+}
+
+export async function getFilteredPrayers(
+  selectedSeries?: string[],
+  selectedSources?: string[]
+) {
+  return await prisma.prayer.findMany({
+    orderBy: { title: 'asc' },
+    where: buildPrayersWhereClause(selectedSeries, selectedSources),
+  })
+}
+
+export const getPrayerFilterOptions = async () => {
+  const allPrayers = await prisma.prayer.findMany({
+    select: { series: true, source: true },
+  })
+
+  const allSeries = allPrayers.flatMap((prayer) => prayer.series)
+  const uniqueSeries = [...new Set(allSeries)].sort()
+
+  const allSources = allPrayers.map((prayer) => prayer.source)
+  const uniqueSources = [...new Set(allSources)].sort()
+
+  return { uniqueSeries, uniqueSources }
+}
