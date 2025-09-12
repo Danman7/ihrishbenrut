@@ -2,6 +2,7 @@ import { WisdomPageProps } from '@/app/types/wisdom'
 import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import { WisdomFilters } from '@/app/ui/WisdomFilters'
 import WisdomList from '@/app/ui/WisdomList'
+import WisdomNavigation from '@/app/ui/WisdomNavigation'
 import {
   getFilteredWisdom,
   getWisdomFilterOptions,
@@ -10,12 +11,12 @@ import {
 import { GiScrollUnfurled } from 'react-icons/gi'
 
 export default async function Wisdom({ searchParams }: WisdomPageProps) {
-  const { selectedTopics, selectedAuthors } =
+  const { selectedTopics, selectedAuthors, cursor, direction } =
     parseWisdomFilterParams(searchParams)
 
   // Fetch wisdom and filter options in parallel
-  const [wisdom, { uniqueTopics, uniqueAuthors }] = await Promise.all([
-    getFilteredWisdom(selectedTopics, selectedAuthors),
+  const [wisdomResult, { uniqueTopics, uniqueAuthors }] = await Promise.all([
+    getFilteredWisdom(selectedTopics, selectedAuthors, cursor, direction),
     getWisdomFilterOptions(),
   ])
 
@@ -29,7 +30,16 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
 
         <WisdomFilters topics={uniqueTopics} authors={uniqueAuthors} />
 
-        <WisdomList filteredWisdom={wisdom} />
+        <WisdomList filteredWisdom={wisdomResult.items} />
+
+        <WisdomNavigation
+          hasNext={wisdomResult.hasNext}
+          hasPrev={wisdomResult.hasPrev}
+          nextCursor={wisdomResult.nextCursor}
+          prevCursor={wisdomResult.prevCursor}
+          selectedTopics={selectedTopics}
+          selectedAuthors={selectedAuthors}
+        />
       </article>
     </AnimatedWrapper>
   )

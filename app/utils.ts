@@ -160,13 +160,21 @@ export function parseWisdomFilterParams(searchParams: {
 }) {
   const topicsParam = searchParams.topics
   const authorsParam = searchParams.authors
+  const cursorParam = searchParams.cursor
+  const directionParam = searchParams.direction
 
   const selectedTopics =
     typeof topicsParam === 'string' ? topicsParam.split(',') : undefined
   const selectedAuthors =
     typeof authorsParam === 'string' ? authorsParam.split(',') : undefined
+  const cursor = typeof cursorParam === 'string' ? cursorParam : undefined
+  const direction =
+    typeof directionParam === 'string' &&
+    (directionParam === 'next' || directionParam === 'prev')
+      ? (directionParam as 'next' | 'prev')
+      : 'next'
 
-  return { selectedTopics, selectedAuthors }
+  return { selectedTopics, selectedAuthors, cursor, direction }
 }
 
 export function buildWisdomWhereClause(
@@ -196,12 +204,52 @@ export function buildWisdomWhereClause(
 
 export async function getFilteredWisdom(
   selectedTopics?: string[],
-  selectedAuthors?: string[]
+  selectedAuthors?: string[],
+  cursor?: string,
+  direction: 'next' | 'prev' = 'next'
 ) {
-  return await prisma.wisdom.findMany({
-    orderBy: { createdAt: 'desc' },
-    where: buildWisdomWhereClause(selectedTopics, selectedAuthors),
-  })
+  const pageSize = 50
+
+  if (direction === 'next') {
+    const wisdom = await prisma.wisdom.findMany({
+      take: pageSize + 1, // Take one extra to know if there are more
+      skip: cursor ? 1 : 0, // Skip the cursor item
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: { createdAt: 'desc' },
+      where: buildWisdomWhereClause(selectedTopics, selectedAuthors),
+    })
+
+    const hasNext = wisdom.length > pageSize
+    const items = hasNext ? wisdom.slice(0, -1) : wisdom
+
+    return {
+      items,
+      hasNext,
+      hasPrev: !!cursor,
+      nextCursor: hasNext ? items[items.length - 1]?.id : null,
+      prevCursor: items[0]?.id || null,
+    }
+  } else {
+    // For previous page, we need to reverse the order, take from cursor backwards
+    const wisdom = await prisma.wisdom.findMany({
+      take: -(pageSize + 1), // Negative take for backwards pagination
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: { createdAt: 'desc' },
+      where: buildWisdomWhereClause(selectedTopics, selectedAuthors),
+    })
+
+    const hasPrev = wisdom.length > pageSize
+    const items = hasPrev ? wisdom.slice(1) : wisdom
+
+    return {
+      items,
+      hasNext: !!cursor,
+      hasPrev,
+      nextCursor: items[items.length - 1]?.id || null,
+      prevCursor: hasPrev ? items[0]?.id : null,
+    }
+  }
 }
 
 export const getWisdomFilterOptions = async () => {

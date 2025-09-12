@@ -139,11 +139,11 @@ export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
             id="filters-panel"
             className="overflow-hidden"
             initial={{ height: 0 }}
-            animate={{ height: 210 }}
+            animate={{ height: 240 }}
             exit={{ height: 0 }}
           >
             <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Само от следните теми</legend>
+              <legend className="text-lg">Само по следните теми</legend>
 
               <div
                 className="flex flex-wrap gap-4"
@@ -164,7 +164,7 @@ export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
             </fieldset>
 
             <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Само от следните автори</legend>
+              <legend className="text-lg">Само от следните източници</legend>
 
               <div
                 className="flex flex-wrap gap-4"
