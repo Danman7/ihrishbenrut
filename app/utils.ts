@@ -154,3 +154,66 @@ export const getPrayerFilterOptions = async () => {
 
   return { uniqueSeries, uniqueSources }
 }
+
+export function parseWisdomFilterParams(searchParams: {
+  [key: string]: string | string[] | undefined
+}) {
+  const topicsParam = searchParams.topics
+  const authorsParam = searchParams.authors
+
+  const selectedTopics =
+    typeof topicsParam === 'string' ? topicsParam.split(',') : undefined
+  const selectedAuthors =
+    typeof authorsParam === 'string' ? authorsParam.split(',') : undefined
+
+  return { selectedTopics, selectedAuthors }
+}
+
+export function buildWisdomWhereClause(
+  selectedTopics?: string[],
+  selectedAuthors?: string[]
+) {
+  const conditions = []
+
+  if (selectedTopics && selectedTopics.length > 0) {
+    conditions.push({
+      topics: {
+        hasSome: selectedTopics,
+      },
+    })
+  }
+
+  if (selectedAuthors && selectedAuthors.length > 0) {
+    conditions.push({
+      source: {
+        in: selectedAuthors,
+      },
+    })
+  }
+
+  return conditions.length > 0 ? { AND: conditions } : {}
+}
+
+export async function getFilteredWisdom(
+  selectedTopics?: string[],
+  selectedAuthors?: string[]
+) {
+  return await prisma.wisdom.findMany({
+    orderBy: { createdAt: 'desc' },
+    where: buildWisdomWhereClause(selectedTopics, selectedAuthors),
+  })
+}
+
+export const getWisdomFilterOptions = async () => {
+  const allWisdom = await prisma.wisdom.findMany({
+    select: { topics: true, source: true },
+  })
+
+  const allTopics = allWisdom.flatMap((wisdom) => wisdom.topics)
+  const uniqueTopics = [...new Set(allTopics)].sort()
+
+  const allAuthors = allWisdom.map((wisdom) => wisdom.source)
+  const uniqueAuthors = [...new Set(allAuthors)].sort()
+
+  return { uniqueTopics, uniqueAuthors }
+}

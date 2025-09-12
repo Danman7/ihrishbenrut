@@ -6,22 +6,21 @@ import { motion, AnimatePresence } from 'motion/react'
 import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from 'react-icons/io'
 import { Checkbox } from './Checkbox'
 
-interface BookFiltersProps {
-  series: string[]
+interface WisdomFiltersProps {
+  topics: string[]
   authors: string[]
-  years: number[]
 }
 
-export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
+export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
 
-  // Initialize selected series from URL params or default to no series
-  const [selectedSeries, setSelectedSeries] = useState<string[]>(() => {
-    const seriesParam = searchParams.get('series')
-    if (seriesParam) {
-      return seriesParam.split(',').filter((s) => series.includes(s))
+  // Initialize selected topics from URL params or default to no topics
+  const [selectedTopics, setSelectedTopics] = useState<string[]>(() => {
+    const topicsParam = searchParams.get('topics')
+    if (topicsParam) {
+      return topicsParam.split(',').filter((t) => topics.includes(t))
     }
     return []
   })
@@ -35,36 +34,24 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
     return []
   })
 
-  // Initialize selected years from URL params or default to no years
-  const [selectedYear, setSelectedYear] = useState<number | null>(() => {
-    const yearsParam = searchParams.get('years')
-    if (yearsParam) {
-      const year = Number(yearsParam)
-      return years.includes(year) ? year : null
-    }
-    return null
-  })
-
-  // Update URL when selected series, authors, or years change
+  // Update URL when selected topics or authors change
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString())
-    const currentSeriesParam = params.get('series')
+    const currentTopicsParam = params.get('topics')
     const currentAuthorsParam = params.get('authors')
-    const currentYearsParam = params.get('years')
 
-    let newSeriesParam: string | null = null
+    let newTopicsParam: string | null = null
     let newAuthorsParam: string | null = null
-    let newYearsParam: string | null = null
 
     if (
-      selectedSeries.length === 0 ||
-      selectedSeries.length === series.length
+      selectedTopics.length === 0 ||
+      selectedTopics.length === topics.length
     ) {
-      // If no series selected or all series selected, remove the parameter
-      newSeriesParam = null
+      // If no topics selected or all topics selected, remove the parameter
+      newTopicsParam = null
     } else {
-      // Add selected series to URL
-      newSeriesParam = selectedSeries.join(',')
+      // Add selected topics to URL
+      newTopicsParam = selectedTopics.join(',')
     }
 
     if (
@@ -78,24 +65,15 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
       newAuthorsParam = selectedAuthors.join(',')
     }
 
-    if (selectedYear === null) {
-      // If no year selected, remove the parameter
-      newYearsParam = null
-    } else {
-      // Add selected year to URL
-      newYearsParam = selectedYear.toString()
-    }
-
     // Only update URL if any parameter actually changed
     if (
-      currentSeriesParam !== newSeriesParam ||
-      currentAuthorsParam !== newAuthorsParam ||
-      currentYearsParam !== newYearsParam
+      currentTopicsParam !== newTopicsParam ||
+      currentAuthorsParam !== newAuthorsParam
     ) {
-      if (newSeriesParam === null) {
-        params.delete('series')
+      if (newTopicsParam === null) {
+        params.delete('topics')
       } else {
-        params.set('series', newSeriesParam)
+        params.set('topics', newTopicsParam)
       }
 
       if (newAuthorsParam === null) {
@@ -104,32 +82,17 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
         params.set('authors', newAuthorsParam)
       }
 
-      if (newYearsParam === null) {
-        params.delete('years')
-      } else {
-        params.set('years', newYearsParam)
-      }
-
       // Update URL without causing a page reload
       const newUrl = params.toString() ? `?${params.toString()}` : ''
       router.push(`${window.location.pathname}${newUrl}`, { scroll: false })
     }
-  }, [
-    selectedSeries,
-    selectedAuthors,
-    selectedYear,
-    router,
-    searchParams,
-    series,
-    authors,
-    years,
-  ])
+  }, [selectedTopics, selectedAuthors, router, searchParams, topics, authors])
 
-  const handleSeriesChange = (seriesName: string) => {
-    setSelectedSeries((prev) =>
-      prev.includes(seriesName)
-        ? prev.filter((s) => s !== seriesName)
-        : [...prev, seriesName]
+  const handleTopicsChange = (topicName: string) => {
+    setSelectedTopics((prev) =>
+      prev.includes(topicName)
+        ? prev.filter((t) => t !== topicName)
+        : [...prev, topicName]
     )
   }
 
@@ -141,14 +104,9 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
     )
   }
 
-  const handleYearsChange = (year: number | null) => {
-    setSelectedYear(year)
-  }
-
   const handleClearFilters = () => {
-    setSelectedSeries([])
+    setSelectedTopics([])
     setSelectedAuthors([])
-    setSelectedYear(null)
   }
 
   return (
@@ -164,9 +122,7 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
           (Филтри)
         </button>
 
-        {(selectedSeries.length > 0 ||
-          selectedAuthors.length > 0 ||
-          selectedYear !== null) && (
+        {(selectedTopics.length > 0 || selectedAuthors.length > 0) && (
           <button
             onClick={handleClearFilters}
             className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 cursor-pointer"
@@ -183,25 +139,25 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
             id="filters-panel"
             className="overflow-hidden"
             initial={{ height: 0 }}
-            animate={{ height: 330 }}
+            animate={{ height: 210 }}
             exit={{ height: 0 }}
           >
             <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Само от следните поредици</legend>
+              <legend className="text-lg">Само от следните теми</legend>
 
               <div
                 className="flex flex-wrap gap-4"
                 role="group"
-                aria-labelledby="series-legend"
+                aria-labelledby="topics-legend"
               >
-                {series.map((seriesName) => (
+                {topics.map((topicName) => (
                   <Checkbox
-                    key={seriesName}
-                    id={`series-${seriesName}`}
-                    name={`series-${seriesName}`}
-                    label={seriesName}
-                    checked={selectedSeries.includes(seriesName)}
-                    onChange={() => handleSeriesChange(seriesName)}
+                    key={topicName}
+                    id={`topic-${topicName}`}
+                    name={`topic-${topicName}`}
+                    label={topicName}
+                    checked={selectedTopics.includes(topicName)}
+                    onChange={() => handleTopicsChange(topicName)}
                   />
                 ))}
               </div>
@@ -226,28 +182,6 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
                   />
                 ))}
               </div>
-            </fieldset>
-
-            <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Година на публикуване</legend>
-
-              <select
-                value={selectedYear || ''}
-                onChange={(e) =>
-                  handleYearsChange(
-                    e.target.value ? Number(e.target.value) : null
-                  )
-                }
-                className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                aria-label="Избор на година на публикуване"
-              >
-                <option value="">Всички години</option>
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
             </fieldset>
           </motion.div>
         )}
