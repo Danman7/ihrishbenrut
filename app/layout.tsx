@@ -38,8 +38,10 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="bg-foreground text-background flex justify-between p-4 gap-4 mt-8">
-          <Link href="/">Само Твоята Воля</Link>
+        <footer className="bg-foreground text-background md:flex md:justify-between p-4 gap-4 mt-8">
+          <div className="mb-2 md:mb-0">
+            <Link href="/">Само Твоята Воля</Link>
+          </div>
 
           <div>
             <a href="mailto:danmanm@gmail.com">danmanm@gmail.com</a>
