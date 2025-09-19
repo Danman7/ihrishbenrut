@@ -191,119 +191,126 @@ export const BookFilters = ({
         {isFiltersMenuOpen && (
           <motion.div
             id="filters-panel"
-            className="overflow-hidden"
-            initial={{ height: 0 }}
-            animate={{ height: 330 }}
-            exit={{ height: 0 }}
+            className="grid overflow-hidden"
+            initial={{ gridTemplateRows: '0fr' }}
+            animate={{ gridTemplateRows: '1fr' }}
+            exit={{ gridTemplateRows: '0fr' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Само от следните поредици</legend>
+            <div className="min-h-0">
+              <fieldset className="border border-foreground p-4 rounded-md">
+                <legend className="text-lg">Само от следните поредици</legend>
 
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="series-legend"
-              >
-                {series.map((seriesName) => {
-                  const isAvailable = availableSeries.includes(seriesName)
-                  const isSelected = selectedSeries.includes(seriesName)
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="series-legend"
+                >
+                  {series.map((seriesName) => {
+                    const isAvailable = availableSeries.includes(seriesName)
+                    const isSelected = selectedSeries.includes(seriesName)
 
-                  // Hide unavailable series unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
+                    // Hide unavailable series unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
+
+                    return (
+                      <div
+                        key={seriesName}
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          id={`series-${seriesName}`}
+                          name={`series-${seriesName}`}
+                          label={seriesName}
+                          checked={isSelected}
+                          onChange={() => handleSeriesChange(seriesName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
+
+              <fieldset className="border border-foreground p-4 rounded-md mt-4">
+                <legend className="text-lg">Само от следните автори</legend>
+
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="authors-legend"
+                >
+                  {authors.map((authorName) => {
+                    const isAvailable = availableAuthors.includes(authorName)
+                    const isSelected = selectedAuthors.includes(authorName)
+
+                    // Hide unavailable authors unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
+
+                    return (
+                      <div
+                        key={authorName}
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          id={`author-${authorName}`}
+                          name={`author-${authorName}`}
+                          label={authorName}
+                          checked={isSelected}
+                          onChange={() => handleAuthorsChange(authorName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
+
+              <fieldset className="border border-foreground p-4 rounded-md mt-4">
+                <legend className="text-lg">Година на публикуване</legend>
+
+                <select
+                  value={selectedYear || ''}
+                  onChange={(e) =>
+                    handleYearsChange(
+                      e.target.value ? Number(e.target.value) : null
+                    )
                   }
+                  className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                  aria-label="Избор на година на публикуване"
+                >
+                  <option value="">Всички години</option>
+                  {years.map((year) => {
+                    const isAvailable = availableYears.includes(year)
+                    const isSelected = selectedYear === year
 
-                  return (
-                    <div
-                      key={seriesName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
-                        id={`series-${seriesName}`}
-                        name={`series-${seriesName}`}
-                        label={seriesName}
-                        checked={isSelected}
-                        onChange={() => handleSeriesChange(seriesName)}
+                    // Hide unavailable years unless they are selected, or show all if no filters applied
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
+
+                    return (
+                      <option
+                        key={year}
+                        value={year}
                         disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
+                        style={{
+                          opacity: !isAvailable && !isSelected ? 0.5 : 1,
+                        }}
+                      >
+                        {year} {!isAvailable && isSelected ? ' (избрано)' : ''}
+                      </option>
+                    )
+                  })}
+                </select>
+              </fieldset>
 
-            <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Само от следните автори</legend>
-
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="authors-legend"
-              >
-                {authors.map((authorName) => {
-                  const isAvailable = availableAuthors.includes(authorName)
-                  const isSelected = selectedAuthors.includes(authorName)
-
-                  // Hide unavailable authors unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
-
-                  return (
-                    <div
-                      key={authorName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
-                        id={`author-${authorName}`}
-                        name={`author-${authorName}`}
-                        label={authorName}
-                        checked={isSelected}
-                        onChange={() => handleAuthorsChange(authorName)}
-                        disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
-
-            <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Година на публикуване</legend>
-
-              <select
-                value={selectedYear || ''}
-                onChange={(e) =>
-                  handleYearsChange(
-                    e.target.value ? Number(e.target.value) : null
-                  )
-                }
-                className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                aria-label="Избор на година на публикуване"
-              >
-                <option value="">Всички години</option>
-                {years.map((year) => {
-                  const isAvailable = availableYears.includes(year)
-                  const isSelected = selectedYear === year
-
-                  // Hide unavailable years unless they are selected, or show all if no filters applied
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
-
-                  return (
-                    <option
-                      key={year}
-                      value={year}
-                      disabled={!isAvailable && !isSelected}
-                      style={{ opacity: !isAvailable && !isSelected ? 0.5 : 1 }}
-                    >
-                      {year} {!isAvailable && isSelected ? ' (избрано)' : ''}
-                    </option>
-                  )
-                })}
-              </select>
-            </fieldset>
+              <div className="pb-4"></div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

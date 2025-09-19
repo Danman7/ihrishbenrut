@@ -144,82 +144,87 @@ export const PrayerFilters = ({
         {isFiltersMenuOpen && (
           <motion.div
             id="filters-panel"
-            className="overflow-hidden"
-            initial={{ height: 0 }}
-            animate={{ height: 320 }}
-            exit={{ height: 0 }}
+            className="grid overflow-hidden"
+            initial={{ gridTemplateRows: '0fr' }}
+            animate={{ gridTemplateRows: '1fr' }}
+            exit={{ gridTemplateRows: '0fr' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Само от следните поредици</legend>
+            <div className="min-h-0">
+              <fieldset className="border border-foreground p-4 rounded-md">
+                <legend className="text-lg">Само от следните поредици</legend>
 
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="series-legend"
-              >
-                {series.map((seriesName) => {
-                  const isAvailable = availableSeries.includes(seriesName)
-                  const isSelected = selectedSeries.includes(seriesName)
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="series-legend"
+                >
+                  {series.map((seriesName) => {
+                    const isAvailable = availableSeries.includes(seriesName)
+                    const isSelected = selectedSeries.includes(seriesName)
 
-                  // Hide unavailable series unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
+                    // Hide unavailable series unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
 
-                  return (
-                    <div
-                      key={seriesName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
-                        id={`series-${seriesName}`}
-                        name={`series-${seriesName}`}
-                        label={seriesName}
-                        checked={isSelected}
-                        onChange={() => handleSeriesChange(seriesName)}
-                        disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
+                    return (
+                      <div
+                        key={seriesName}
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          id={`series-${seriesName}`}
+                          name={`series-${seriesName}`}
+                          label={seriesName}
+                          checked={isSelected}
+                          onChange={() => handleSeriesChange(seriesName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
 
-            <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Само от следните източници</legend>
+              <fieldset className="border border-foreground p-4 rounded-md mt-4">
+                <legend className="text-lg">Само от следните източници</legend>
 
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="sources-legend"
-              >
-                {sources.map((sourceName) => {
-                  const isAvailable = availableSources.includes(sourceName)
-                  const isSelected = selectedSources.includes(sourceName)
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="sources-legend"
+                >
+                  {sources.map((sourceName) => {
+                    const isAvailable = availableSources.includes(sourceName)
+                    const isSelected = selectedSources.includes(sourceName)
 
-                  // Hide unavailable sources unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
+                    // Hide unavailable sources unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
 
-                  return (
-                    <div
-                      key={sourceName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
-                        id={`source-${sourceName}`}
-                        name={`source-${sourceName}`}
-                        label={sourceName}
-                        checked={isSelected}
-                        onChange={() => handleSourcesChange(sourceName)}
-                        disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
+                    return (
+                      <div
+                        key={sourceName}
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          id={`source-${sourceName}`}
+                          name={`source-${sourceName}`}
+                          label={sourceName}
+                          checked={isSelected}
+                          onChange={() => handleSourcesChange(sourceName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
+
+              <div className="pb-4"></div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

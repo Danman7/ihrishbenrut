@@ -144,83 +144,88 @@ export const WisdomFilters = ({
         {isFiltersMenuOpen && (
           <motion.div
             id="filters-panel"
-            className="overflow-hidden"
-            initial={{ height: 0 }}
-            animate={{ height: 440 }}
-            exit={{ height: 0 }}
+            className="grid overflow-hidden"
+            initial={{ gridTemplateRows: '0fr' }}
+            animate={{ gridTemplateRows: '1fr' }}
+            exit={{ gridTemplateRows: '0fr' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <fieldset className="border border-foreground p-4 rounded-md">
-              <legend className="text-lg">Само по следните теми</legend>
+            <div className="min-h-0">
+              <fieldset className="border border-foreground p-4 rounded-md">
+                <legend className="text-lg">Само по следните теми</legend>
 
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="topics-legend"
-              >
-                {topics.map((topicName) => {
-                  const isAvailable = availableTopics.includes(topicName)
-                  const isSelected = selectedTopics.includes(topicName)
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="topics-legend"
+                >
+                  {topics.map((topicName) => {
+                    const isAvailable = availableTopics.includes(topicName)
+                    const isSelected = selectedTopics.includes(topicName)
 
-                  // Hide unavailable topics unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
+                    // Hide unavailable topics unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
 
-                  return (
-                    <div
-                      key={topicName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
-                        id={`topic-${topicName}`}
-                        name={`topic-${topicName}`}
-                        label={topicName}
-                        checked={isSelected}
-                        onChange={() => handleTopicsChange(topicName)}
-                        disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
+                    return (
+                      <div
+                        key={topicName}
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          id={`topic-${topicName}`}
+                          name={`topic-${topicName}`}
+                          label={topicName}
+                          checked={isSelected}
+                          onChange={() => handleTopicsChange(topicName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
 
-            <fieldset className="border border-foreground p-4 rounded-md mt-4">
-              <legend className="text-lg">Само от следните източници</legend>
+              <fieldset className="border border-foreground p-4 rounded-md mt-4">
+                <legend className="text-lg">Само от следните източници</legend>
 
-              <div
-                className="flex flex-wrap gap-4"
-                role="group"
-                aria-labelledby="authors-legend"
-              >
-                {authors.map((authorName) => {
-                  const isAvailable = availableAuthors.includes(authorName)
-                  const isSelected = selectedAuthors.includes(authorName)
+                <div
+                  className="flex flex-wrap gap-4"
+                  role="group"
+                  aria-labelledby="authors-legend"
+                >
+                  {authors.map((authorName) => {
+                    const isAvailable = availableAuthors.includes(authorName)
+                    const isSelected = selectedAuthors.includes(authorName)
 
-                  // Hide unavailable authors unless they are selected
-                  if (!isAvailable && !isSelected) {
-                    return null
-                  }
+                    // Hide unavailable authors unless they are selected
+                    if (!isAvailable && !isSelected) {
+                      return null
+                    }
 
-                  return (
-                    <div
-                      key={authorName}
-                      className={!isAvailable ? 'opacity-50' : ''}
-                    >
-                      <Checkbox
+                    return (
+                      <div
                         key={authorName}
-                        id={`author-${authorName}`}
-                        name={`author-${authorName}`}
-                        label={authorName}
-                        checked={isSelected}
-                        onChange={() => handleAuthorsChange(authorName)}
-                        disabled={!isAvailable && !isSelected}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            </fieldset>
+                        className={!isAvailable ? 'opacity-50' : ''}
+                      >
+                        <Checkbox
+                          key={authorName}
+                          id={`author-${authorName}`}
+                          name={`author-${authorName}`}
+                          label={authorName}
+                          checked={isSelected}
+                          onChange={() => handleAuthorsChange(authorName)}
+                          disabled={!isAvailable && !isSelected}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </fieldset>
+
+              <div className="pb-4"></div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
