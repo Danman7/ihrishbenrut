@@ -9,9 +9,16 @@ import { Checkbox } from './Checkbox'
 interface PrayerFiltersProps {
   series: string[]
   sources: string[]
+  availableSeries?: string[]
+  availableSources?: string[]
 }
 
-export const PrayerFilters = ({ series, sources }: PrayerFiltersProps) => {
+export const PrayerFilters = ({
+  series,
+  sources,
+  availableSeries = series,
+  availableSources = sources,
+}: PrayerFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
@@ -150,16 +157,31 @@ export const PrayerFilters = ({ series, sources }: PrayerFiltersProps) => {
                 role="group"
                 aria-labelledby="series-legend"
               >
-                {series.map((seriesName) => (
-                  <Checkbox
-                    key={seriesName}
-                    id={`series-${seriesName}`}
-                    name={`series-${seriesName}`}
-                    label={seriesName}
-                    checked={selectedSeries.includes(seriesName)}
-                    onChange={() => handleSeriesChange(seriesName)}
-                  />
-                ))}
+                {series.map((seriesName) => {
+                  const isAvailable = availableSeries.includes(seriesName)
+                  const isSelected = selectedSeries.includes(seriesName)
+
+                  // Hide unavailable series unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={seriesName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        id={`series-${seriesName}`}
+                        name={`series-${seriesName}`}
+                        label={seriesName}
+                        checked={isSelected}
+                        onChange={() => handleSeriesChange(seriesName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
 
@@ -171,16 +193,31 @@ export const PrayerFilters = ({ series, sources }: PrayerFiltersProps) => {
                 role="group"
                 aria-labelledby="sources-legend"
               >
-                {sources.map((sourceName) => (
-                  <Checkbox
-                    key={sourceName}
-                    id={`source-${sourceName}`}
-                    name={`source-${sourceName}`}
-                    label={sourceName}
-                    checked={selectedSources.includes(sourceName)}
-                    onChange={() => handleSourcesChange(sourceName)}
-                  />
-                ))}
+                {sources.map((sourceName) => {
+                  const isAvailable = availableSources.includes(sourceName)
+                  const isSelected = selectedSources.includes(sourceName)
+
+                  // Hide unavailable sources unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={sourceName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        id={`source-${sourceName}`}
+                        name={`source-${sourceName}`}
+                        label={sourceName}
+                        checked={isSelected}
+                        onChange={() => handleSourcesChange(sourceName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
           </motion.div>

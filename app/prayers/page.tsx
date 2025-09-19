@@ -4,7 +4,7 @@ import { PrayerFilters } from '@/app/ui/PrayerFilters'
 import PrayersList from '@/app/ui/PrayersList'
 import {
   getFilteredPrayers,
-  getPrayerFilterOptions,
+  getContextualPrayerFilterOptions,
   parsePrayerFilterParams,
 } from '@/app/utils'
 import { PiHandsPraying } from 'react-icons/pi'
@@ -14,9 +14,9 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
     parsePrayerFilterParams(searchParams)
 
   // Fetch prayers and filter options in parallel
-  const [prayers, { uniqueSeries, uniqueSources }] = await Promise.all([
+  const [prayers, filterOptions] = await Promise.all([
     getFilteredPrayers(selectedSeries, selectedSources),
-    getPrayerFilterOptions(),
+    getContextualPrayerFilterOptions(selectedSeries, selectedSources),
   ])
 
   return (
@@ -26,7 +26,12 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
           <PiHandsPraying /> Молитви
         </h1>
 
-        <PrayerFilters series={uniqueSeries} sources={uniqueSources} />
+        <PrayerFilters
+          series={filterOptions.allSeries}
+          sources={filterOptions.allSources}
+          availableSeries={filterOptions.availableSeries}
+          availableSources={filterOptions.availableSources}
+        />
 
         <PrayersList filteredPrayers={prayers} />
       </article>

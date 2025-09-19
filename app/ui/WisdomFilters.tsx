@@ -9,9 +9,16 @@ import { Checkbox } from './Checkbox'
 interface WisdomFiltersProps {
   topics: string[]
   authors: string[]
+  availableTopics?: string[]
+  availableAuthors?: string[]
 }
 
-export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
+export const WisdomFilters = ({
+  topics,
+  authors,
+  availableTopics = topics,
+  availableAuthors = authors,
+}: WisdomFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
@@ -150,16 +157,31 @@ export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
                 role="group"
                 aria-labelledby="topics-legend"
               >
-                {topics.map((topicName) => (
-                  <Checkbox
-                    key={topicName}
-                    id={`topic-${topicName}`}
-                    name={`topic-${topicName}`}
-                    label={topicName}
-                    checked={selectedTopics.includes(topicName)}
-                    onChange={() => handleTopicsChange(topicName)}
-                  />
-                ))}
+                {topics.map((topicName) => {
+                  const isAvailable = availableTopics.includes(topicName)
+                  const isSelected = selectedTopics.includes(topicName)
+
+                  // Hide unavailable topics unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={topicName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        id={`topic-${topicName}`}
+                        name={`topic-${topicName}`}
+                        label={topicName}
+                        checked={isSelected}
+                        onChange={() => handleTopicsChange(topicName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
 
@@ -171,16 +193,32 @@ export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
                 role="group"
                 aria-labelledby="authors-legend"
               >
-                {authors.map((authorName) => (
-                  <Checkbox
-                    key={authorName}
-                    id={`author-${authorName}`}
-                    name={`author-${authorName}`}
-                    label={authorName}
-                    checked={selectedAuthors.includes(authorName)}
-                    onChange={() => handleAuthorsChange(authorName)}
-                  />
-                ))}
+                {authors.map((authorName) => {
+                  const isAvailable = availableAuthors.includes(authorName)
+                  const isSelected = selectedAuthors.includes(authorName)
+
+                  // Hide unavailable authors unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={authorName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        key={authorName}
+                        id={`author-${authorName}`}
+                        name={`author-${authorName}`}
+                        label={authorName}
+                        checked={isSelected}
+                        onChange={() => handleAuthorsChange(authorName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
           </motion.div>

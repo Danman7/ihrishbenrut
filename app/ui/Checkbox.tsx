@@ -4,6 +4,7 @@ interface CheckboxProps {
   label: string
   checked: boolean
   onChange: () => void
+  disabled?: boolean
 }
 
 export const Checkbox = ({
@@ -12,26 +13,30 @@ export const Checkbox = ({
   label,
   checked,
   onChange,
+  disabled = false,
 }: CheckboxProps) => {
   return (
-    <div className="flex gap-2 items-center relative">
+    <div
+      className={`flex gap-2 items-center relative ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
       <label
         htmlFor={id}
-        className="flex items-center gap-2 cursor-pointer group"
+        className={`flex items-center gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} group`}
       >
         <input
           type="checkbox"
           id={id}
           name={name}
           checked={checked}
-          onChange={onChange}
+          onChange={disabled ? undefined : onChange}
+          disabled={disabled}
           className="absolute opacity-0 w-0 h-0 peer"
         />
         <div
           className={`w-4 h-4 border-2 border-border rounded-sm flex items-center justify-center transition-all duration-200 peer-focus:ring-2 peer-focus:ring-primary peer-focus:ring-offset-2 ${
             checked
               ? 'bg-primary border-primary'
-              : 'bg-background group-hover:border-primary'
+              : `bg-background ${!disabled ? 'group-hover:border-primary' : ''}`
           }`}
         >
           {checked && (

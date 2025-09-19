@@ -5,7 +5,7 @@ import WisdomList from '@/app/ui/WisdomList'
 import WisdomNavigation from '@/app/ui/WisdomNavigation'
 import {
   getFilteredWisdom,
-  getWisdomFilterOptions,
+  getContextualWisdomFilterOptions,
   parseWisdomFilterParams,
 } from '@/app/utils'
 import { GiScrollUnfurled } from 'react-icons/gi'
@@ -15,9 +15,9 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
     parseWisdomFilterParams(searchParams)
 
   // Fetch wisdom and filter options in parallel
-  const [wisdomResult, { uniqueTopics, uniqueAuthors }] = await Promise.all([
+  const [wisdomResult, filterOptions] = await Promise.all([
     getFilteredWisdom(selectedTopics, selectedAuthors, cursor, direction),
-    getWisdomFilterOptions(),
+    getContextualWisdomFilterOptions(selectedTopics, selectedAuthors),
   ])
 
   return (
@@ -28,7 +28,12 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
           Мъдрости
         </h1>
 
-        <WisdomFilters topics={uniqueTopics} authors={uniqueAuthors} />
+        <WisdomFilters
+          topics={filterOptions.allTopics}
+          authors={filterOptions.allAuthors}
+          availableTopics={filterOptions.availableTopics}
+          availableAuthors={filterOptions.availableAuthors}
+        />
 
         <WisdomList filteredWisdom={wisdomResult.items} />
 

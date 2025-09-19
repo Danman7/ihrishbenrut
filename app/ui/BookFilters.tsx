@@ -10,9 +10,19 @@ interface BookFiltersProps {
   series: string[]
   authors: string[]
   years: number[]
+  availableSeries?: string[]
+  availableAuthors?: string[]
+  availableYears?: number[]
 }
 
-export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
+export const BookFilters = ({
+  series,
+  authors,
+  years,
+  availableSeries = series,
+  availableAuthors = authors,
+  availableYears = years,
+}: BookFiltersProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isFiltersMenuOpen, setIsFiltersMenuOpen] = useState(false)
@@ -194,16 +204,31 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
                 role="group"
                 aria-labelledby="series-legend"
               >
-                {series.map((seriesName) => (
-                  <Checkbox
-                    key={seriesName}
-                    id={`series-${seriesName}`}
-                    name={`series-${seriesName}`}
-                    label={seriesName}
-                    checked={selectedSeries.includes(seriesName)}
-                    onChange={() => handleSeriesChange(seriesName)}
-                  />
-                ))}
+                {series.map((seriesName) => {
+                  const isAvailable = availableSeries.includes(seriesName)
+                  const isSelected = selectedSeries.includes(seriesName)
+
+                  // Hide unavailable series unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={seriesName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        id={`series-${seriesName}`}
+                        name={`series-${seriesName}`}
+                        label={seriesName}
+                        checked={isSelected}
+                        onChange={() => handleSeriesChange(seriesName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
 
@@ -215,16 +240,31 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
                 role="group"
                 aria-labelledby="authors-legend"
               >
-                {authors.map((authorName) => (
-                  <Checkbox
-                    key={authorName}
-                    id={`author-${authorName}`}
-                    name={`author-${authorName}`}
-                    label={authorName}
-                    checked={selectedAuthors.includes(authorName)}
-                    onChange={() => handleAuthorsChange(authorName)}
-                  />
-                ))}
+                {authors.map((authorName) => {
+                  const isAvailable = availableAuthors.includes(authorName)
+                  const isSelected = selectedAuthors.includes(authorName)
+
+                  // Hide unavailable authors unless they are selected
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={authorName}
+                      className={!isAvailable ? 'opacity-50' : ''}
+                    >
+                      <Checkbox
+                        id={`author-${authorName}`}
+                        name={`author-${authorName}`}
+                        label={authorName}
+                        checked={isSelected}
+                        onChange={() => handleAuthorsChange(authorName)}
+                        disabled={!isAvailable && !isSelected}
+                      />
+                    </div>
+                  )
+                })}
               </div>
             </fieldset>
 
@@ -242,11 +282,26 @@ export const BookFilters = ({ series, authors, years }: BookFiltersProps) => {
                 aria-label="Избор на година на публикуване"
               >
                 <option value="">Всички години</option>
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
+                {years.map((year) => {
+                  const isAvailable = availableYears.includes(year)
+                  const isSelected = selectedYear === year
+
+                  // Hide unavailable years unless they are selected, or show all if no filters applied
+                  if (!isAvailable && !isSelected) {
+                    return null
+                  }
+
+                  return (
+                    <option
+                      key={year}
+                      value={year}
+                      disabled={!isAvailable && !isSelected}
+                      style={{ opacity: !isAvailable && !isSelected ? 0.5 : 1 }}
+                    >
+                      {year} {!isAvailable && isSelected ? ' (избрано)' : ''}
+                    </option>
+                  )
+                })}
               </select>
             </fieldset>
           </motion.div>

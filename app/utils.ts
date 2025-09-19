@@ -265,3 +265,148 @@ export const getWisdomFilterOptions = async () => {
 
   return { uniqueTopics, uniqueAuthors }
 }
+
+export const getContextualWisdomFilterOptions = async (
+  selectedTopics?: string[],
+  selectedAuthors?: string[]
+) => {
+  // Get all available options (for initial state)
+  const allOptions = await getWisdomFilterOptions()
+
+  // If no filters are applied, return all options
+  if (
+    (!selectedTopics || selectedTopics.length === 0) &&
+    (!selectedAuthors || selectedAuthors.length === 0)
+  ) {
+    return {
+      availableTopics: allOptions.uniqueTopics,
+      availableAuthors: allOptions.uniqueAuthors,
+      allTopics: allOptions.uniqueTopics,
+      allAuthors: allOptions.uniqueAuthors,
+    }
+  }
+
+  // Get wisdom entries based on current filters to determine available options
+  const whereClause = buildWisdomWhereClause(selectedTopics, selectedAuthors)
+
+  const filteredWisdom = await prisma.wisdom.findMany({
+    select: { topics: true, source: true },
+    where: whereClause,
+  })
+
+  // Extract available topics and authors from filtered results
+  const availableTopics = [
+    ...new Set(filteredWisdom.flatMap((wisdom) => wisdom.topics)),
+  ].sort()
+  const availableAuthors = [
+    ...new Set(filteredWisdom.map((wisdom) => wisdom.source)),
+  ].sort()
+
+  return {
+    availableTopics,
+    availableAuthors,
+    allTopics: allOptions.uniqueTopics,
+    allAuthors: allOptions.uniqueAuthors,
+  }
+}
+
+export const getContextualPrayerFilterOptions = async (
+  selectedSeries?: string[],
+  selectedSources?: string[]
+) => {
+  // Get all available options (for initial state)
+  const allOptions = await getPrayerFilterOptions()
+
+  // If no filters are applied, return all options
+  if (
+    (!selectedSeries || selectedSeries.length === 0) &&
+    (!selectedSources || selectedSources.length === 0)
+  ) {
+    return {
+      availableSeries: allOptions.uniqueSeries,
+      availableSources: allOptions.uniqueSources,
+      allSeries: allOptions.uniqueSeries,
+      allSources: allOptions.uniqueSources,
+    }
+  }
+
+  // Get prayer entries based on current filters to determine available options
+  const whereClause = buildPrayersWhereClause(selectedSeries, selectedSources)
+
+  const filteredPrayers = await prisma.prayer.findMany({
+    select: { series: true, source: true },
+    where: whereClause,
+  })
+
+  // Extract available series and sources from filtered results
+  const availableSeries = [
+    ...new Set(filteredPrayers.flatMap((prayer) => prayer.series)),
+  ].sort()
+  const availableSources = [
+    ...new Set(filteredPrayers.map((prayer) => prayer.source)),
+  ].sort()
+
+  return {
+    availableSeries,
+    availableSources,
+    allSeries: allOptions.uniqueSeries,
+    allSources: allOptions.uniqueSources,
+  }
+}
+
+export const getContextualBookFilterOptions = async (
+  selectedSeries?: string[],
+  selectedAuthors?: string[],
+  selectedYear?: number
+) => {
+  // Get all available options (for initial state)
+  const allOptions = await getFilterOptions()
+
+  // If no filters are applied, return all options
+  if (
+    (!selectedSeries || selectedSeries.length === 0) &&
+    (!selectedAuthors || selectedAuthors.length === 0) &&
+    !selectedYear
+  ) {
+    return {
+      availableSeries: allOptions.uniqueSeries,
+      availableAuthors: allOptions.uniqueAuthors,
+      availableYears: allOptions.uniqueYears,
+      allSeries: allOptions.uniqueSeries,
+      allAuthors: allOptions.uniqueAuthors,
+      allYears: allOptions.uniqueYears,
+    }
+  }
+
+  // Get book entries based on current filters to determine available options
+  const whereClause = buildBooksWhereClause(
+    selectedSeries,
+    selectedAuthors,
+    selectedYear
+  )
+
+  const filteredBooks = await prisma.book.findMany({
+    select: { series: true, author: true, yearPublished: true },
+    where: whereClause,
+  })
+
+  // Extract available options from filtered results
+  const availableSeries = [
+    ...new Set(filteredBooks.flatMap((book) => book.series)),
+  ].sort()
+  const availableAuthors = [
+    ...new Set(filteredBooks.map((book) => book.author)),
+  ].sort()
+  const availableYears = [
+    ...new Set(filteredBooks.map((book) => book.yearPublished)),
+  ].sort((a, b) => a - b)
+
+  return {
+    availableSeries,
+    availableAuthors,
+    availableYears,
+    allSeries: allOptions.uniqueSeries,
+    allAuthors: allOptions.uniqueAuthors,
+    allYears: allOptions.uniqueYears,
+  }
+}

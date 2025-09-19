@@ -4,7 +4,7 @@ import { BookFilters } from '@/app/ui/BookFilters'
 import BooksList from '@/app/ui/BooksList'
 import {
   getFilteredBooks,
-  getFilterOptions,
+  getContextualBookFilterOptions,
   parseFilterParams,
 } from '@/app/utils'
 import { GiBookCover } from 'react-icons/gi'
@@ -14,11 +14,14 @@ export default async function Books({ searchParams }: BooksPageProps) {
     parseFilterParams(searchParams)
 
   // Fetch books and filter options in parallel
-  const [books, { uniqueSeries, uniqueAuthors, uniqueYears }] =
-    await Promise.all([
-      getFilteredBooks(selectedSeries, selectedAuthors, selectedYear),
-      getFilterOptions(),
-    ])
+  const [books, filterOptions] = await Promise.all([
+    getFilteredBooks(selectedSeries, selectedAuthors, selectedYear),
+    getContextualBookFilterOptions(
+      selectedSeries,
+      selectedAuthors,
+      selectedYear
+    ),
+  ])
 
   return (
     <AnimatedWrapper>
@@ -28,9 +31,12 @@ export default async function Books({ searchParams }: BooksPageProps) {
         </h1>
 
         <BookFilters
-          series={uniqueSeries}
-          authors={uniqueAuthors}
-          years={uniqueYears}
+          series={filterOptions.allSeries}
+          authors={filterOptions.allAuthors}
+          years={filterOptions.allYears}
+          availableSeries={filterOptions.availableSeries}
+          availableAuthors={filterOptions.availableAuthors}
+          availableYears={filterOptions.availableYears}
         />
 
         <BooksList filteredBooks={books} />
