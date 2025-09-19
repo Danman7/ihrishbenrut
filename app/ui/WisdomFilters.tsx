@@ -139,7 +139,7 @@ export const WisdomFilters = ({ topics, authors }: WisdomFiltersProps) => {
             id="filters-panel"
             className="overflow-hidden"
             initial={{ height: 0 }}
-            animate={{ height: 240 }}
+            animate={{ height: 440 }}
             exit={{ height: 0 }}
           >
             <fieldset className="border border-foreground p-4 rounded-md">
