@@ -38,7 +38,7 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="bg-foreground text-background md:flex md:justify-between p-4 gap-4 mt-8">
+        <footer className="bg-foreground text-background text-center md:flex md:justify-between p-4 gap-4 mt-8">
           <div className="mb-2 md:mb-0">
             <Link href="/">Само Твоята Воля</Link>
           </div>

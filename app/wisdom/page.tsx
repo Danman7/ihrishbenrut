@@ -12,7 +12,7 @@ import { GiScrollUnfurled } from 'react-icons/gi'
 
 export default async function Wisdom({ searchParams }: WisdomPageProps) {
   const { selectedTopics, selectedAuthors, cursor, direction } =
-    parseWisdomFilterParams(searchParams)
+    await parseWisdomFilterParams(searchParams)
 
   // Fetch wisdom and filter options in parallel
   const [wisdomResult, filterOptions] = await Promise.all([

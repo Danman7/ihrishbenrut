@@ -11,7 +11,7 @@ import { PiHandsPraying } from 'react-icons/pi'
 
 export default async function Prayers({ searchParams }: PrayersPageProps) {
   const { selectedSeries, selectedSources } =
-    parsePrayerFilterParams(searchParams)
+    await parsePrayerFilterParams(searchParams)
 
   // Fetch prayers and filter options in parallel
   const [prayers, filterOptions] = await Promise.all([

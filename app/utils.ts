@@ -1,4 +1,6 @@
 import { BooksPageProps } from '@/app/types/book'
+import { PrayersPageProps } from '@/app/types/prayer'
+import { WisdomPageProps } from '@/app/types/wisdom'
 import prisma from '@/lib/prisma'
 
 export const formatParagraphs = (content: string) =>
@@ -7,12 +9,13 @@ export const formatParagraphs = (content: string) =>
     .map((p) => p.trim())
     .filter(Boolean)
 
-export function parseFilterParams(
+export async function parseFilterParams(
   searchParams: BooksPageProps['searchParams']
 ) {
-  const seriesParam = searchParams.series
-  const authorsParam = searchParams.authors
-  const yearsParam = searchParams.years
+  const params = await searchParams
+  const seriesParam = params.series
+  const authorsParam = params.authors
+  const yearsParam = params.years
 
   const selectedSeries =
     typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
@@ -92,11 +95,12 @@ export const getFilterOptions = async () => {
   return { uniqueSeries, uniqueAuthors, uniqueYears }
 }
 
-export function parsePrayerFilterParams(searchParams: {
-  [key: string]: string | string[] | undefined
-}) {
-  const seriesParam = searchParams.series
-  const sourcesParam = searchParams.sources
+export async function parsePrayerFilterParams(
+  searchParams: PrayersPageProps['searchParams']
+) {
+  const params = await searchParams
+  const seriesParam = params.series
+  const sourcesParam = params.sources
 
   const selectedSeries =
     typeof seriesParam === 'string' ? seriesParam.split(',') : undefined
@@ -155,13 +159,14 @@ export const getPrayerFilterOptions = async () => {
   return { uniqueSeries, uniqueSources }
 }
 
-export function parseWisdomFilterParams(searchParams: {
-  [key: string]: string | string[] | undefined
-}) {
-  const topicsParam = searchParams.topics
-  const authorsParam = searchParams.authors
-  const cursorParam = searchParams.cursor
-  const directionParam = searchParams.direction
+export async function parseWisdomFilterParams(
+  searchParams: WisdomPageProps['searchParams']
+) {
+  const params = await searchParams
+  const topicsParam = params.topics
+  const authorsParam = params.authors
+  const cursorParam = params.cursor
+  const directionParam = params.direction
 
   const selectedTopics =
     typeof topicsParam === 'string' ? topicsParam.split(',') : undefined

@@ -11,7 +11,7 @@ import { GiBookCover } from 'react-icons/gi'
 
 export default async function Books({ searchParams }: BooksPageProps) {
   const { selectedSeries, selectedAuthors, selectedYear } =
-    parseFilterParams(searchParams)
+    await parseFilterParams(searchParams)
 
   // Fetch books and filter options in parallel
   const [books, filterOptions] = await Promise.all([
