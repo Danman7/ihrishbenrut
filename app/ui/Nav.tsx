@@ -63,7 +63,7 @@ export const Nav = () => {
 
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <nav className="md:hidden flex flex-col gap-4 px-4 pb-4 overflow-hidden">
+          <nav className="md:hidden text-center flex flex-col gap-4 px-4 pb-4 overflow-hidden">
             {navigation.map((item, index) => (
               <motion.div
                 key={item.href}
