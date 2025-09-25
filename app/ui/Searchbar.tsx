@@ -1,4 +1,5 @@
 import { SetStateAction } from 'react'
+import { motion } from 'motion/react'
 
 export const Searchbar = ({
   searchQuery,
@@ -11,7 +12,10 @@ export const Searchbar = ({
   setSearchQuery: (value: SetStateAction<string>) => void
   handleSearchSubmit: (e: React.FormEvent) => void
 }) => (
-  <form
+  <motion.form
+    initial={{ opacity: 0, x: -10 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -10 }}
     onSubmit={handleSearchSubmit}
     className={isMobile ? 'w-full' : 'hidden lg:block ml-auto w-72'}
   >
@@ -23,5 +27,5 @@ export const Searchbar = ({
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
     />
-  </form>
+  </motion.form>
 )
