@@ -1,6 +1,7 @@
 import { BooksPageProps } from '@/app/types/book'
 import { PrayersPageProps } from '@/app/types/prayer'
 import { WisdomPageProps } from '@/app/types/wisdom'
+import { SearchResult, SearchPageProps } from '@/app/types/search'
 import prisma from '@/lib/prisma'
 
 export const formatParagraphs = (content: string) =>
@@ -414,4 +415,185 @@ export const getContextualBookFilterOptions = async (
     allAuthors: allOptions.uniqueAuthors,
     allYears: allOptions.uniqueYears,
   }
+}
+
+// Search functionality
+export async function parseSearchParams(
+  searchParams: SearchPageProps['searchParams']
+) {
+  const params = await searchParams
+  const query = typeof params.q === 'string' ? params.q : ''
+  const typeParam = params.type
+
+  const selectedTypes =
+    typeof typeParam === 'string'
+      ? (typeParam.split(',') as ('book' | 'chapter' | 'prayer' | 'wisdom')[])
+      : undefined
+
+  return { query, selectedTypes }
+}
+
+export async function performSearch(
+  query: string,
+  types?: ('book' | 'chapter' | 'prayer' | 'wisdom')[]
+): Promise<SearchResult[]> {
+  if (!query.trim()) {
+    return []
+  }
+
+  const searchQuery = query.trim()
+  const results: SearchResult[] = []
+
+  // Search in books
+  if (!types || types.includes('book')) {
+    const books = await prisma.book.findMany({
+      where: {
+        OR: [
+          { title: { contains: searchQuery, mode: 'insensitive' } },
+          { author: { contains: searchQuery, mode: 'insensitive' } },
+          { notes: { contains: searchQuery, mode: 'insensitive' } },
+          { shortNotes: { contains: searchQuery, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        title: true,
+        author: true,
+        notes: true,
+        shortNotes: true,
+        series: true,
+      },
+    })
+
+    books.forEach((book) => {
+      results.push({
+        id: book.id,
+        title: book.title,
+        type: 'book',
+        content: book.shortNotes || book.notes || '',
+        href: `/books/${book.id}`,
+        metadata: {
+          author: book.author,
+          series: book.series,
+        },
+      })
+    })
+  }
+
+  // Search in chapters
+  if (!types || types.includes('chapter')) {
+    const chapters = await prisma.chapter.findMany({
+      where: {
+        OR: [
+          { title: { contains: searchQuery, mode: 'insensitive' } },
+          { notes: { contains: searchQuery, mode: 'insensitive' } },
+          { quote: { contains: searchQuery, mode: 'insensitive' } },
+        ],
+      },
+      include: {
+        book: {
+          select: {
+            id: true,
+            title: true,
+            author: true,
+          },
+        },
+      },
+    })
+
+    chapters.forEach((chapter) => {
+      results.push({
+        id: chapter.id,
+        title: chapter.title,
+        type: 'chapter',
+        content: chapter.quote || chapter.notes || '',
+        href: `/books/${chapter.book.id}/chapters/${chapter.id}`,
+        metadata: {
+          author: chapter.book.author,
+          bookTitle: chapter.book.title,
+          chapterNumber: chapter.number,
+        },
+      })
+    })
+  }
+
+  // Search in prayers
+  if (!types || types.includes('prayer')) {
+    const prayers = await prisma.prayer.findMany({
+      where: {
+        OR: [
+          { title: { contains: searchQuery, mode: 'insensitive' } },
+          { content: { contains: searchQuery, mode: 'insensitive' } },
+          { notes: { contains: searchQuery, mode: 'insensitive' } },
+          { source: { contains: searchQuery, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        notes: true,
+        source: true,
+        series: true,
+      },
+    })
+
+    prayers.forEach((prayer) => {
+      // Truncate content for display
+      const contentPreview =
+        prayer.content.length > 200
+          ? prayer.content.substring(0, 200) + '...'
+          : prayer.content
+
+      results.push({
+        id: prayer.id,
+        title: prayer.title,
+        type: 'prayer',
+        content: contentPreview,
+        href: `/prayers/${prayer.id}`,
+        metadata: {
+          source: prayer.source,
+          series: prayer.series,
+        },
+      })
+    })
+  }
+
+  // Search in wisdom
+  if (!types || types.includes('wisdom')) {
+    const wisdom = await prisma.wisdom.findMany({
+      where: {
+        OR: [
+          { text: { contains: searchQuery, mode: 'insensitive' } },
+          { source: { contains: searchQuery, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        text: true,
+        source: true,
+        topics: true,
+      },
+    })
+
+    wisdom.forEach((item) => {
+      // Truncate text for display
+      const textPreview =
+        item.text.length > 200 ? item.text.substring(0, 200) + '...' : item.text
+
+      results.push({
+        id: item.id,
+        title: textPreview.split(' ').slice(0, 8).join(' ') + '...', // Use first few words as title
+        type: 'wisdom',
+        content: textPreview,
+        href: `/wisdom?cursor=${item.id}`, // Navigate to wisdom page with this item
+        metadata: {
+          source: item.source,
+          topics: item.topics,
+        },
+      })
+    })
+  }
+
+  return results
 }

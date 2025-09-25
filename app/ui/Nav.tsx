@@ -2,11 +2,12 @@
 
 import { Anchor } from '@/app/ui/Anchor'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { IoMdClose, IoMdMenu } from 'react-icons/io'
 import { IoTriangleOutline } from 'react-icons/io5'
 import { motion, AnimatePresence } from 'motion/react'
+import { Searchbar } from '@/app/ui/Searchbar'
 
 const navigation = [
   { name: 'Книги', href: '/books' },
@@ -16,7 +17,9 @@ const navigation = [
 
 export const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const pathname = usePathname()
+  const router = useRouter()
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -27,11 +30,18 @@ export const Nav = () => {
     setIsMobileMenuOpen((prev) => !prev)
   }
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
+
   return (
     <header className="shadow-md">
       <nav className="flex items-center justify-between mx-auto py-4 px-4 md:px-8 gap-10">
         <div className="text-2xl font-serif">
-          <Link className="flex items-center gap-4" href="/">
+          <Link className="flex items-center gap-2" href="/">
             <IoTriangleOutline />
             Само Твоята Воля
           </Link>
@@ -53,11 +63,10 @@ export const Nav = () => {
           )}
         </div>
 
-        <input
-          className="hidden lg:block rounded-md border border-foreground px-2 py-1 ml-auto focus:border-primary focus:outline focus:outline-primary w-72"
-          type="search"
-          id="site-search"
-          placeholder="Търсене..."
+        <Searchbar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          handleSearchSubmit={handleSearchSubmit}
         />
       </nav>
 
@@ -77,6 +86,13 @@ export const Nav = () => {
                 <Anchor href={item.href}>{item.name}</Anchor>
               </motion.div>
             ))}
+
+            <Searchbar
+              isMobile
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              handleSearchSubmit={handleSearchSubmit}
+            />
           </nav>
         )}
       </AnimatePresence>
