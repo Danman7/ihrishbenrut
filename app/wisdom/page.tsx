@@ -8,7 +8,12 @@ import {
   getContextualWisdomFilterOptions,
   parseWisdomFilterParams,
 } from '@/app/utils'
+import { Metadata } from 'next'
 import { GiScrollUnfurled } from 'react-icons/gi'
+
+export const metadata: Metadata = {
+  title: 'Само Твоята Воля | Мъдрости',
+}
 
 export default async function Wisdom({ searchParams }: WisdomPageProps) {
   const { selectedTopics, selectedAuthors, cursor, direction } =

@@ -4,9 +4,35 @@ import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { ChapterListSkeleton } from '@/app/ui/ChapterListSkeleton'
 import { formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { GiBookCover, GiBookmarklet } from 'react-icons/gi'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ bookSlug: string }>
+}): Promise<Metadata> {
+  const { bookSlug } = await params
+
+  const book = await prisma.book.findUnique({
+    where: { id: bookSlug },
+    select: {
+      title: true,
+      author: true,
+    },
+  })
+
+  if (!book)
+    return {
+      title: 'Само Твоята Воля',
+    }
+
+  return {
+    title: `${book.title} | ${book.author}`,
+  }
+}
 
 export async function generateStaticParams() {
   const books = await prisma.book.findMany()

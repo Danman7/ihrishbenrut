@@ -5,10 +5,12 @@ export default async function ChapterBreadcrumbs({
   bookId,
   chapterTitle,
   chapterSlug,
+  chapterNumber,
 }: {
   bookId: string
   chapterTitle: string
   chapterSlug: string
+  chapterNumber: number
 }) {
   const book = await prisma.book.findUnique({
     where: { id: bookId },
@@ -22,7 +24,10 @@ export default async function ChapterBreadcrumbs({
   const breadcrumbs = [
     { href: '/books', title: 'Книги' },
     { href: `/books/${bookId}`, title: book.title },
-    { href: `/books/${bookId}/chapters/${chapterSlug}`, title: chapterTitle },
+    {
+      href: `/books/${bookId}/chapters/${chapterSlug}`,
+      title: `${chapterNumber}. ${chapterTitle}`,
+    },
   ]
 
   return <Breadcrumbs breadcrumbs={breadcrumbs} />

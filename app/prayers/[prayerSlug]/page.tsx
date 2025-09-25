@@ -2,9 +2,34 @@ import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PiHandsPraying } from 'react-icons/pi'
 import { TfiPencil } from 'react-icons/tfi'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ prayerSlug: string }>
+}): Promise<Metadata> {
+  const { prayerSlug } = await params
+
+  const prayer = await prisma.prayer.findUnique({
+    where: { id: prayerSlug },
+    select: {
+      title: true,
+    },
+  })
+
+  if (!prayer)
+    return {
+      title: 'Само Твоята Воля',
+    }
+
+  return {
+    title: `${prayer.title}`,
+  }
+}
 
 export async function generateStaticParams() {
   const prayers = await prisma.prayer.findMany()

@@ -7,7 +7,12 @@ import {
   getContextualBookFilterOptions,
   parseFilterParams,
 } from '@/app/utils'
+import { Metadata } from 'next'
 import { GiBookCover } from 'react-icons/gi'
+
+export const metadata: Metadata = {
+  title: 'Само Твоята Воля | Книги',
+}
 
 export default async function Books({ searchParams }: BooksPageProps) {
   const { selectedSeries, selectedAuthors, selectedYear } =

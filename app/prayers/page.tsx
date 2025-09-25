@@ -7,7 +7,12 @@ import {
   getContextualPrayerFilterOptions,
   parsePrayerFilterParams,
 } from '@/app/utils'
+import { Metadata } from 'next'
 import { PiHandsPraying } from 'react-icons/pi'
+
+export const metadata: Metadata = {
+  title: 'Само Твоята Воля | Молитви',
+}
 
 export default async function Prayers({ searchParams }: PrayersPageProps) {
   const { selectedSeries, selectedSources } =
