@@ -11,7 +11,7 @@ export default function PrayersList({
   filteredPrayers: Prayer[]
 }) {
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="grid md:grid-cols-3 gap-4">
       <AnimatePresence>
         {filteredPrayers.map((prayer) => {
           return (
@@ -20,7 +20,7 @@ export default function PrayersList({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full md:w-1/3 flex flex-col items-center justify-center border-2 border-border shadow-md rounded-2xl p-4 hover:shadow-lg hover:border-primary transition active:text-background active:bg-primary text-center"
+              className="relative flex flex-col items-center justify-center border-2 border-border shadow-md rounded-2xl p-4 hover:shadow-lg hover:border-primary transition active:text-background active:bg-primary text-center"
             >
               <Link href={`/prayers/${prayer.id}`}>
                 <div className="text-2xl mb-2 font-bold font-serif">
