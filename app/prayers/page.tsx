@@ -31,6 +31,12 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
           <PiHandsPraying /> Молитви
         </h1>
 
+        <p>
+          Най-хубавото упражнение в живота на човека е молитвата. За сега, в
+          света, по-хубаво упражнение от молитвата няма.
+        </p>
+        <p className="font-bold text-right!">Учителят</p>
+
         <PrayerFilters
           series={filterOptions.allSeries}
           sources={filterOptions.allSources}

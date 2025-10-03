@@ -16,7 +16,8 @@ const notoSerif = Noto_Serif({
 
 export const metadata: Metadata = {
   title: 'Само Твоята Воля',
-  description: 'Все що е писано',
+  description:
+    'Библиотека на търсача - книги, молитви, мъдрости. Слово което не е наше. Защото всичко, което е било писано отпреди, е било писано за наше поучение.',
 }
 
 export default function RootLayout({
