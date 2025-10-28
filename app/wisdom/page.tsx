@@ -28,7 +28,7 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
   return (
     <AnimatedWrapper>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif mt-8 mb-10">
+        <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif my-16">
           <GiScrollUnfurled />
           Мъдрости
         </h1>
@@ -39,6 +39,8 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
           availableTopics={filterOptions.availableTopics}
           availableAuthors={filterOptions.availableAuthors}
         />
+
+        <hr className="my-8 text-border" />
 
         <WisdomList filteredWisdom={wisdomResult.items} />
 

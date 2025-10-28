@@ -21,7 +21,7 @@ export const FilterPanel = ({
 }: FilterPanelProps) => {
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center">
         <button
           className="underline underline-offset-2 hover:decoration-3 items-center flex gap-2 cursor-pointer"
           onClick={onToggle}

@@ -75,15 +75,16 @@ export default async function Book({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <GiBookCover className="text-center w-full text-4xl" />
-        <h1 className="text-4xl font-bold text-center font-serif mb-2">
-          {title}
-        </h1>
+        <div className="py-12 space-y-4">
+          <GiBookCover className="text-center w-full text-4xl" />
 
-        <div className="text-xl font-bold text-center mb-10">{author}</div>
+          <h1 className="text-4xl font-bold text-center font-serif">{title}</h1>
+
+          <div className="text-xl font-bold text-center">{author}</div>
+        </div>
 
         {series.length ? (
-          <p className="text-lg italic">
+          <p className="text-lg italic py-4">
             <span>{series.join(', ')}</span>
           </p>
         ) : null}
@@ -97,6 +98,8 @@ export default async function Book({
           <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
             <GiBookmarklet /> Глави
           </h2>
+
+          <hr className="my-4 text-border" />
 
           <Suspense fallback={<ChapterListSkeleton />}>
             <BookChaptersList bookId={bookSlug} />

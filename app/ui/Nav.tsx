@@ -39,7 +39,7 @@ export const Nav = () => {
 
   return (
     <header className="shadow-md">
-      <nav className="flex items-center justify-between mx-auto py-4 px-4 md:px-8 gap-10">
+      <nav className="flex items-center justify-between mx-auto p-4 md:px-8 gap-10">
         <div className="text-2xl font-serif">
           <Link className="flex items-center gap-2" href="/">
             <IoTriangleOutline />
@@ -72,7 +72,9 @@ export const Nav = () => {
 
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <nav className="md:hidden text-center flex flex-col gap-4 px-4 pb-4 overflow-hidden">
+          <nav className="md:hidden text-center flex flex-col gap-4 overflow-hidden px-4 pb-4">
+            <hr className="text-border" />
+
             {navigation.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -86,6 +88,8 @@ export const Nav = () => {
                 <Anchor href={item.href}>{item.name}</Anchor>
               </motion.div>
             ))}
+
+            <hr className="text-border" />
 
             <Searchbar
               isMobile

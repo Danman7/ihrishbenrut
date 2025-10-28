@@ -18,7 +18,7 @@ export const FilterGroup = <T extends string | number>({
   idPrefix,
 }: FilterGroupProps<T>) => {
   return (
-    <fieldset className="border border-foreground p-4 rounded-md">
+    <fieldset className="border border-foreground p-4 rounded-md mt-4">
       <legend className="text-lg">{title}</legend>
 
       <div className="flex flex-wrap gap-4" role="group">

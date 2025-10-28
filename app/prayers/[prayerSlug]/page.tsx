@@ -71,13 +71,14 @@ export default async function Prayer({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <PiHandsPraying className="text-center w-full text-4xl" />
-        <h1 className="text-4xl font-bold text-center font-serif mb-10">
-          {title}
-        </h1>
+        <div className="py-12 font-bold text-3xl text-center font-serif">
+          <PiHandsPraying className="w-full" />
+
+          <h1>{title}</h1>
+        </div>
 
         {formatParagraphs(content).map((paragraph, index) => (
-          <p className="font-serif text-lg text-center!" key={index}>
+          <p className="font-serif text-lg text-center! py-2" key={index}>
             {paragraph}
           </p>
         ))}
