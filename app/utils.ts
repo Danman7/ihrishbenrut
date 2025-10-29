@@ -488,6 +488,11 @@ export async function performSearch(
           { title: { contains: searchQuery, mode: 'insensitive' } },
           { notes: { contains: searchQuery, mode: 'insensitive' } },
           { quote: { contains: searchQuery, mode: 'insensitive' } },
+          {
+            content: {
+              some: { text: { contains: searchQuery, mode: 'insensitive' } },
+            },
+          },
         ],
       },
       include: {
@@ -498,15 +503,30 @@ export async function performSearch(
             author: true,
           },
         },
+        // Include at most one matching content block to build a preview if needed
+        content: {
+          where: { text: { contains: searchQuery, mode: 'insensitive' } },
+          select: { text: true },
+          take: 1,
+        },
       },
     })
 
     chapters.forEach((chapter) => {
+      // Build a short preview using quote/notes or the first matching content block
+      const contentFromBody = chapter.content?.[0]?.text ?? ''
+      const contentPreviewRaw =
+        chapter.quote || chapter.notes || contentFromBody || ''
+      const contentPreview =
+        contentPreviewRaw.length > 200
+          ? contentPreviewRaw.substring(0, 200) + '...'
+          : contentPreviewRaw
+
       results.push({
         id: chapter.id,
         title: chapter.title,
         type: 'chapter',
-        content: chapter.quote || chapter.notes || '',
+        content: contentPreview,
         href: `/books/${chapter.book.id}/chapters/${chapter.id}`,
         metadata: {
           author: chapter.book.author,
