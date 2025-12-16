@@ -15,27 +15,27 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.14.0",
-    "@prisma/extension-accelerate": "^2.0.2",
-    "motion": "^12.23.12",
-    "next": "15.5.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "@prisma/client": "6.19.1",
+    "@prisma/extension-accelerate": "^3.0.1",
+    "motion": "^12.23.26",
+    "next": "16.0.10",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.0",
-    "prettier": "^3.6.2",
+    "eslint-config-next": "16.0.10",
+    "prettier": "^3.7.4",
     "prettier-plugin-prisma": "^5.0.0",
-    "prisma": "^6.14.0",
+    "prisma": "6.19.1",
     "tailwindcss": "^4",
-    "tsx": "^4.20.5",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
