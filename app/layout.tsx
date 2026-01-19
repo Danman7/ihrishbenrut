@@ -1,23 +1,22 @@
 import type { Metadata } from 'next'
-import { Noto_Sans, Noto_Serif } from 'next/font/google'
-import './globals.css'
-import { Nav } from '@/app/ui/Nav'
+import { Noto_Serif, Noto_Serif_Display } from 'next/font/google'
 import Link from 'next/link'
-
-const notoSans = Noto_Sans({
-  variable: '--font-noto-sans',
-  subsets: ['cyrillic'],
-})
+import './globals.css'
 
 const notoSerif = Noto_Serif({
   variable: '--font-noto-serif',
   subsets: ['cyrillic'],
 })
 
+const notoSerifDisplay = Noto_Serif_Display({
+  variable: '--font-noto-serif-display',
+  subsets: ['latin'],
+})
+
 export const metadata: Metadata = {
   title: 'Само Твоята Воля',
   description:
-    'Библиотека на търсача - книги, молитви, мъдрости. Слово което не е наше. Защото всичко, което е било писано отпреди, е било писано за наше поучение.',
+    'Библиотека на търсача - книги, молитви, мъдрости. Слово което не e наше. Защото всичко, което e било писано отпреди, e било писано за наше поучение.',
 }
 
 export default function RootLayout({
@@ -26,22 +25,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full bg-background text-foreground">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
-        className={`${notoSans.variable} ${notoSerif.variable} font-serif antialiased h-full flex flex-col`}
+        className={`${notoSerif.variable} ${notoSerifDisplay.variable} antialiased h-full flex flex-col font-serif selection:bg-primary selection:text-background`}
       >
-        <Nav />
+        <main className="grow">{children}</main>
 
-        <main className="mx-auto w-full py-4 px-4 md:px-8 flex-grow">
-          {children}
-        </main>
-
-        <footer className="bg-foreground text-background text-center md:flex md:justify-between p-4 gap-4 mt-8">
+        <footer className="inset-shadow-sm text-center sm:flex sm:justify-between px-6 py-4 gap-4 shadow-md bg-surface z-10">
           <div className="mb-2 md:mb-0">
-            <Link href="/">Само Твоята Воля</Link>
+            <Link href="/" className="text-foreground!">
+              Само Твоята Воля
+            </Link>
           </div>
 
           <div>

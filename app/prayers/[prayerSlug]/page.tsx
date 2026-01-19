@@ -1,4 +1,3 @@
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { formatParagraphs } from '@/app/utils'
 import prisma from '@/lib/prisma'
@@ -67,7 +66,7 @@ export default async function Prayer({
   ]
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
@@ -77,11 +76,13 @@ export default async function Prayer({
           <h1>{title}</h1>
         </div>
 
-        {formatParagraphs(content).map((paragraph, index) => (
-          <p className="font-serif text-lg text-center! py-2" key={index}>
-            {paragraph}
-          </p>
-        ))}
+        <div className="space-y-4">
+          {formatParagraphs(content).map((paragraph, index) => (
+            <p className="font-serif text-lg text-center!" key={index}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
 
         {notes && (
           <section className="flex flex-col ">
@@ -89,12 +90,14 @@ export default async function Prayer({
               <TfiPencil /> Бележки
             </h2>
 
-            {formatParagraphs(notes).map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+            <div className="space-y-4">
+              {formatParagraphs(notes).map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
           </section>
         )}
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

@@ -1,9 +1,8 @@
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import Link from 'next/link'
 
 export default function Page() {
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-3xl mx-auto">
         <div className="text-5xl text-center py-20 font-serif">
           <div className="text-primary">Библиотека</div>
@@ -49,6 +48,6 @@ export default function Page() {
         </p>
         <p className="font-bold text-right! pb-4">Елеазар Хараш</p>
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

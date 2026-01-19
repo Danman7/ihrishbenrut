@@ -1,5 +1,4 @@
 import { WisdomPageProps } from '@/app/types/wisdom'
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import { WisdomFilters } from '@/app/ui/WisdomFilters'
 import WisdomList from '@/app/ui/WisdomList'
 import WisdomNavigation from '@/app/ui/WisdomNavigation'
@@ -26,7 +25,7 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
   ])
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-4xl mx-auto">
         <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif my-16">
           <GiScrollUnfurled />
@@ -53,6 +52,6 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
           selectedAuthors={selectedAuthors}
         />
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

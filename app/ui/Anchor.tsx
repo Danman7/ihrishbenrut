@@ -7,22 +7,18 @@ export const Anchor: React.FC<{
   children: React.ReactNode
   href: string
   className?: string
-}> = ({ href, children, className = '' }) => {
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
+}> = ({ href, children, className = '', onClick }) => {
   const pathname = usePathname()
 
-  const isActive = pathname.startsWith(href)
-
-  const baseClasses =
-    'underline underline-offset-2 hover:decoration-3 transition hover:text-foreground inline-flex items-center gap-2'
-
-  const activeClasses = isActive ? 'text-primary' : ''
-
-  const combinedClasses = [baseClasses, activeClasses, className]
-    .filter(Boolean)
-    .join(' ')
+  const isActive = pathname.endsWith(href)
 
   return (
-    <Link className={combinedClasses} href={href}>
+    <Link
+      className={`rounded w-full px-2 py-1 hover:bg-surface-dim border border-transparent hover:border-foreground/10 ${isActive ? 'bg-primary-surface border-primary/20! text-primary-text' : ''} ${className}`}
+      href={href}
+      onClick={onClick}
+    >
       {children}
     </Link>
   )

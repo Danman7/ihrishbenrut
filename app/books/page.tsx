@@ -1,5 +1,4 @@
 import { BooksPageProps } from '@/app/types/book'
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import { BookFilters } from '@/app/ui/BookFilters'
 import BooksList from '@/app/ui/BooksList'
 import {
@@ -29,7 +28,7 @@ export default async function Books({ searchParams }: BooksPageProps) {
   ])
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-4xl mx-auto">
         <h1 className="flex gap-4 justify-center items-center text-5xl font-bold font-serif my-16">
           <GiBookCover /> Книги
@@ -48,6 +47,6 @@ export default async function Books({ searchParams }: BooksPageProps) {
 
         <BooksList filteredBooks={books} />
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

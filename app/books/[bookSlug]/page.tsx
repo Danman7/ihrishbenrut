@@ -1,4 +1,3 @@
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import BookChaptersList from '@/app/ui/BookChaptersList'
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import { ChapterListSkeleton } from '@/app/ui/ChapterListSkeleton'
@@ -71,7 +70,7 @@ export default async function Book({
   ]
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
@@ -89,10 +88,12 @@ export default async function Book({
           </p>
         ) : null}
 
-        {notes &&
-          formatParagraphs(notes).map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+        <div className="space-y-4">
+          {notes &&
+            formatParagraphs(notes).map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+        </div>
 
         <section className="flex flex-col ">
           <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
@@ -106,6 +107,6 @@ export default async function Book({
           </Suspense>
         </section>
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

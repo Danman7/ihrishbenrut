@@ -1,5 +1,4 @@
 import { PrayersPageProps } from '@/app/types/prayer'
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import { PrayerFilters } from '@/app/ui/PrayerFilters'
 import PrayersList from '@/app/ui/PrayersList'
 import {
@@ -25,7 +24,7 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
   ])
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-4xl mx-auto">
         <h1 className="flex gap-4 justify-center items-center text-5xl font-bold font-serif my-16">
           <PiHandsPraying /> Молитви
@@ -50,6 +49,6 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
 
         <PrayersList filteredPrayers={prayers} />
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

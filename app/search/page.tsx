@@ -1,5 +1,4 @@
 import { SearchPageProps } from '@/app/types/search'
-import AnimatedWrapper from '@/app/ui/AnimatedWrapper'
 import SearchResults from '@/app/ui/SearchResults'
 import { parseSearchParams, performSearch } from '@/app/utils'
 import { Metadata } from 'next'
@@ -25,7 +24,7 @@ export default async function Search({ searchParams }: SearchPageProps) {
   const results = query ? await performSearch(query, selectedTypes) : []
 
   return (
-    <AnimatedWrapper>
+    <>
       <article className="max-w-4xl mx-auto">
         <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif mt-8 mb-10">
           <IoSearchOutline />
@@ -45,6 +44,6 @@ export default async function Search({ searchParams }: SearchPageProps) {
           </div>
         )}
       </article>
-    </AnimatedWrapper>
+    </>
   )
 }

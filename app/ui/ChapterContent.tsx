@@ -17,7 +17,7 @@ export default async function ChapterContent({
   }
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col space-y-4">
       {formatParagraphs(content.text).map((paragraph, index) => (
         <p key={index}>{paragraph}</p>
       ))}
