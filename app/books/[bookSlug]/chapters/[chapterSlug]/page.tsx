@@ -91,7 +91,7 @@ export default async function Chapter({
           />
         </Suspense>
 
-        <div className="py-12 space-y-4 text-3xl font-bold">
+        <div className="py-12 space-y-6 text-3xl font-bold">
           {number ? (
             <div className="flex justify-center items-center font-serif gap-2">
               <GiBookmarklet />

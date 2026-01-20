@@ -74,7 +74,7 @@ export default async function Book({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <div className="py-12 space-y-4">
+        <div className="py-12 space-y-6">
           <GiBookCover className="text-center w-full text-4xl" />
 
           <h1 className="text-4xl font-bold text-center font-serif">{title}</h1>
@@ -88,7 +88,7 @@ export default async function Book({
           </p>
         ) : null}
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {notes &&
             formatParagraphs(notes).map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

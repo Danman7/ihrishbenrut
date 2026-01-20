@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 
 import Card from '@/app/ui/Card'
-import Link from 'next/link'
 import { FilteredBook } from '@/app/types/book'
 
 export default function BooksList({
@@ -22,17 +21,15 @@ export default function BooksList({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
             >
-              <Card>
-                <Link href={`/books/${book.id}`} className="w-full h-full">
-                  <div className="text-2xl mb-2 font-bold font-serif">
-                    {book.title}
-                  </div>
-                  <div className="text-xl mb-2 italic">{book.author}</div>
-                  <div>{book.series.join(', ')}</div>
-                  {book.shortNotes && (
-                    <div className="text-sm">{book.shortNotes}</div>
-                  )}
-                </Link>
+              <Card href={`/books/${book.id}`}>
+                <div className="text-2xl mb-2 font-bold font-serif">
+                  {book.title}
+                </div>
+                <div className="text-xl mb-2 italic">{book.author}</div>
+                <div>{book.series.join(', ')}</div>
+                {book.shortNotes && (
+                  <div className="text-sm">{book.shortNotes}</div>
+                )}
               </Card>
             </motion.div>
           )

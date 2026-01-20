@@ -86,12 +86,15 @@
 
   article a {
     color: var(--color-primary-text);
-    text-decoration: underline;
     font-weight: var(--font-weight-semibold);
 
     &:hover {
-      text-decoration-color: var(--color-primary);
-      text-decoration-thickness: 2px;
+      text-decoration: underline;
     }
+  }
+
+  article p {
+    line-height: 1.75;
+    letter-spacing: var(--leading-relaxed);
   }
 }

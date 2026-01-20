@@ -23,7 +23,7 @@ export const FilterPanel = ({
     <>
       <div className="flex justify-between items-center">
         <button
-          className="underline underline-offset-2 hover:decoration-3 items-center flex gap-2 cursor-pointer"
+          className=" items-center flex gap-2 cursor-pointer"
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls="filters-panel"
@@ -34,7 +34,7 @@ export const FilterPanel = ({
         {hasFilters && (
           <button
             onClick={onClear}
-            className="text-red-500 flex items-center gap-2 underline underline-offset-2 hover:decoration-3 cursor-pointer"
+            className="text-red-500 flex items-center gap-2  cursor-pointer"
           >
             <IoMdClose />
             Изчисти

@@ -31,7 +31,7 @@ export const SideNavigation = ({
   return (
     <nav
       aria-labelledby="primary-navigation"
-      className={`flex flex-col bg-surface shadow-lg overflow-y-auto w-72 divide-y space-y-4 divide-foreground/10 p-4 *:space-y-1 ${
+      className={`flex flex-col bg-surface shadow-lg overflow-y-auto w-72 divide-y space-y-6 divide-foreground/10 p-4 *:space-y-1 ${
         isMobile ? 'h-full' : 'sticky top-0 max-h-screen'
       }`}
     >

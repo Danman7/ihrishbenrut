@@ -11,10 +11,7 @@ export default function Breadcrumbs({
     <nav aria-label="Breadcrumb" className="flex items-center mb-10 flex-wrap">
       {breadcrumbs.map((crumb, idx) => (
         <span key={crumb.href}>
-          <Link
-            href={crumb.href}
-            className="underline underline-offset-2 hover:decoration-3"
-          >
+          <Link href={crumb.href} className="">
             {crumb.title}
           </Link>
 

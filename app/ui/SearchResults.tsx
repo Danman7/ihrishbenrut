@@ -95,7 +95,7 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
             {getTypeLabel(type as SearchResult['type'])} ({typeResults.length})
           </h2>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {typeResults.map((result) => (
               <Link
                 key={result.id}

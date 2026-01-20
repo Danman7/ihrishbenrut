@@ -42,7 +42,7 @@ export default async function ChapterNavigation({
         {previousChapter ? (
           <Link
             href={`/books/${bookId}/chapters/${previousChapter.id}`}
-            className="flex items-center underline underline-offset-2 hover:decoration-3 text-left"
+            className="flex items-center  text-left"
           >
             <IoIosArrowBack />
 
@@ -60,7 +60,7 @@ export default async function ChapterNavigation({
         {nextChapter ? (
           <Link
             href={`/books/${bookId}/chapters/${nextChapter.id}`}
-            className="flex items-center underline underline-offset-2 hover:decoration-3 text-right"
+            className="flex items-center  text-right"
           >
             <div>
               {nextChapter.number && `${nextChapter.number}.`}{' '}

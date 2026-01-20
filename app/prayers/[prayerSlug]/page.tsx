@@ -76,7 +76,7 @@ export default async function Prayer({
           <h1>{title}</h1>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {formatParagraphs(content).map((paragraph, index) => (
             <p className="font-serif text-lg text-center!" key={index}>
               {paragraph}
@@ -90,7 +90,7 @@ export default async function Prayer({
               <TfiPencil /> Бележки
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {formatParagraphs(notes).map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}

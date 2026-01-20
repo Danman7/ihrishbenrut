@@ -23,7 +23,7 @@ export default async function BookChaptersList({ bookId }: { bookId: string }) {
           href={`/books/${bookId}/chapters/${chapter.id}`}
           className="text-lg mb-4"
         >
-          <div className="underline underline-offset-2 hover:decoration-3 font-bold">
+          <div className=" font-bold">
             {chapter.number && `${chapter.number}.`} {chapter.title}
           </div>
           {chapter.notes && <div className="text-sm">{chapter.notes}</div>}
