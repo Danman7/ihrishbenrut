@@ -1,13 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { ROOT_NAVIGATION_ITEMS } from '@/app/constants'
 import { Anchor } from '@/app/ui/Anchor'
 import { SectionNav } from '@/app/ui/SectionNav'
 import type { RouteItem } from '@/lib/routes'
 import { IoTriangleOutline } from 'react-icons/io5'
+import { Searchbar } from './Searchbar'
+import { useState } from 'react'
 
 type SideNavigationProps = {
   sectionNav?: {
@@ -16,17 +18,28 @@ type SideNavigationProps = {
     rootUrl: string
   }
   hideLogo?: boolean
+  hideSearchbar?: boolean
   isMobile?: boolean
 }
 
 export const SideNavigation = ({
   sectionNav,
   hideLogo,
+  hideSearchbar,
   isMobile,
 }: SideNavigationProps) => {
   const pathname = usePathname()
   const isBookDetail = /^\/books\/[^/]+(?:\/chapters\/[^/]+)?$/.test(pathname)
   const shouldShowSectionNav = !!sectionNav && isBookDetail
+  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
 
   return (
     <nav
@@ -54,6 +67,17 @@ export const SideNavigation = ({
           </Anchor>
         ))}
       </div>
+
+      {!hideSearchbar ? (
+        <div>
+          <Searchbar
+            isFullWidth
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSearchSubmit={handleSearchSubmit}
+          />
+        </div>
+      ) : null}
 
       {shouldShowSectionNav ? (
         <SectionNav

@@ -1,13 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { IoMdClose, IoMdMenu } from 'react-icons/io'
 
 import { SideNavigation } from '@/app/ui/SideNavigation'
 import type { RouteItem } from '@/lib/routes'
 import { IoTriangleOutline } from 'react-icons/io5'
+import { Searchbar } from './Searchbar'
 
 type HeaderProps = {
   sectionNav?: {
@@ -34,11 +35,21 @@ export const Header = ({ sectionNav }: HeaderProps) => {
     setIsMobileMenuOpen((prev) => !prev)
   }
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
+
   return (
     <>
       <header className="z-50 sticky top-0 shadow-md bg-surface h-14 flex items-center text-xl md:hidden">
         <nav aria-labelledby="primary-navigation">
-          <div className="px-4 flex items-center">
+          <div className="px-4 flex items-center space-x-4">
             <button
               className="cursor-pointer hover:text-primary transition-all pr-2 pb-2 pt-2"
               onClick={toggleMobileMenu}
@@ -55,6 +66,12 @@ export const Header = ({ sectionNav }: HeaderProps) => {
               <IoTriangleOutline />
               <span className="hidden sm:inline">Само Твоята Воля</span>
             </Link>
+
+            <Searchbar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              handleSearchSubmit={handleSearchSubmit}
+            />
           </div>
         </nav>
       </header>
@@ -62,7 +79,12 @@ export const Header = ({ sectionNav }: HeaderProps) => {
       <div
         className={`fixed top-14 left-0 w-full max-w-82 h-[calc(100vh-3.5rem)] transition ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} z-40 lg:hidden`}
       >
-        <SideNavigation sectionNav={sectionNav} hideLogo isMobile />
+        <SideNavigation
+          sectionNav={sectionNav}
+          hideLogo
+          hideSearchbar
+          isMobile
+        />
       </div>
     </>
   )
