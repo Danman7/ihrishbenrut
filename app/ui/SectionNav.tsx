@@ -22,7 +22,7 @@ export function SectionNav({ items, title }: Props) {
   if (!chapterItems.length) return null
 
   return (
-    <nav aria-labelledby="section-navigation" className="grow flex flex-col">
+    <nav aria-label="Навигация по раздел" className="grow flex flex-col">
       <div className="px-2 pt-2 text-sm uppercase tracking-wide text-foreground/60">
         {bookItem?.title ?? title}
       </div>

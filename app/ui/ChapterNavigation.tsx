@@ -44,7 +44,7 @@ export default async function ChapterNavigation({
             href={`/books/${bookId}/chapters/${previousChapter.id}`}
             className="flex items-center  text-left"
           >
-            <IoIosArrowBack />
+            <IoIosArrowBack aria-hidden="true" />
 
             <div>
               {previousChapter.number && `${previousChapter.number}.`}{' '}
@@ -67,7 +67,7 @@ export default async function ChapterNavigation({
               {nextChapter.title}
             </div>
 
-            <IoIosArrowForward />
+            <IoIosArrowForward aria-hidden="true" />
           </Link>
         ) : (
           <div></div> // Empty div to maintain spacing

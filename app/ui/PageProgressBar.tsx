@@ -14,6 +14,7 @@ export default function PageProgressBar() {
     <motion.div
       className="h-2 md:h-1 w-full"
       id="scroll-indicator"
+      aria-hidden="true"
       style={{
         scaleX,
         originX: 0,

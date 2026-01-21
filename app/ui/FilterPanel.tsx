@@ -25,8 +25,10 @@ export const FilterPanel = ({
         <button
           className=" items-center flex gap-2 cursor-pointer"
           onClick={onToggle}
+          id="filters-toggle"
           aria-expanded={isOpen}
           aria-controls="filters-panel"
+          aria-label={isOpen ? 'Скрий филтрите' : 'Покажи филтрите'}
         >
           {isOpen ? <IoIosArrowDown /> : <IoIosArrowForward />} Избор (Филтри)
         </button>
@@ -35,6 +37,7 @@ export const FilterPanel = ({
           <button
             onClick={onClear}
             className="text-red-500 flex items-center gap-2  cursor-pointer"
+            aria-label="Изчисти филтрите"
           >
             <IoMdClose />
             Изчисти
@@ -47,6 +50,8 @@ export const FilterPanel = ({
           <motion.div
             id="filters-panel"
             className="grid overflow-hidden"
+            role="region"
+            aria-labelledby="filters-toggle"
             initial={{ gridTemplateRows: '0fr' }}
             animate={{ gridTemplateRows: '1fr' }}
             exit={{ gridTemplateRows: '0fr' }}

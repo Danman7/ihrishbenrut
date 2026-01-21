@@ -25,14 +25,22 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="h-full bg-background text-foreground">
+    <html lang="bg" className="h-full bg-background text-foreground">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
         className={`${notoSerif.variable} ${notoSerifDisplay.variable} antialiased h-full flex flex-col font-serif selection:bg-primary selection:text-background`}
       >
-        <main className="grow">{children}</main>
+        <a
+          href="#main-content"
+          className="sr-only sr-only-focusable px-4 py-2 bg-surface shadow-md"
+        >
+          Прескочи към основното съдържание
+        </a>
+        <main id="main-content" className="grow">
+          {children}
+        </main>
 
         <footer className="inset-shadow-sm text-center sm:flex sm:justify-between px-6 py-4 gap-4 shadow-md bg-surface z-10">
           <div className="mb-2 md:mb-0">

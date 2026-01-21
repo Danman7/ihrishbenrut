@@ -47,7 +47,7 @@ export default function WisdomNavigation({
             href={`/wisdom${buildQueryParams(prevCursor, 'prev')}`}
             className="flex items-center  text-left gap-2"
           >
-            <IoIosArrowBack />
+            <IoIosArrowBack aria-hidden="true" />
             <div>Предишни</div>
           </Link>
         ) : (
@@ -62,7 +62,7 @@ export default function WisdomNavigation({
             className="flex items-center  text-right gap-2"
           >
             <div>Следващи</div>
-            <IoIosArrowForward />
+            <IoIosArrowForward aria-hidden="true" />
           </Link>
         ) : (
           <div></div>

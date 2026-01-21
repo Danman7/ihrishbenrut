@@ -48,12 +48,14 @@ export const Header = ({ sectionNav }: HeaderProps) => {
   return (
     <>
       <header className="z-50 sticky top-0 shadow-md bg-surface h-14 flex items-center text-xl md:hidden">
-        <nav aria-labelledby="primary-navigation">
+        <nav aria-label="Основна навигация">
           <div className="px-4 flex items-center space-x-4">
             <button
               className="cursor-pointer hover:text-primary transition-all pr-2 pb-2 pt-2"
               onClick={toggleMobileMenu}
-              aria-label="Toggle mobile menu"
+              aria-label={isMobileMenuOpen ? 'Затвори менюто' : 'Отвори менюто'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMobileMenuOpen ? <IoMdClose /> : <IoMdMenu />}
             </button>
@@ -77,6 +79,7 @@ export const Header = ({ sectionNav }: HeaderProps) => {
       </header>
 
       <div
+        id="mobile-navigation"
         className={`fixed top-14 left-0 w-full max-w-82 h-[calc(100vh-3.5rem)] transition ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} z-40 lg:hidden`}
       >
         <SideNavigation

@@ -12,13 +12,13 @@ interface SearchResultsProps {
 const getTypeIcon = (type: SearchResult['type']) => {
   switch (type) {
     case 'book':
-      return <GiBookCover className="text-lg" />
+      return <GiBookCover className="text-lg" aria-hidden="true" />
     case 'chapter':
-      return <MdArticle className="text-lg" />
+      return <MdArticle className="text-lg" aria-hidden="true" />
     case 'prayer':
-      return <PiHandsPraying className="text-lg" />
+      return <PiHandsPraying className="text-lg" aria-hidden="true" />
     case 'wisdom':
-      return <GiScrollUnfurled className="text-lg" />
+      return <GiScrollUnfurled className="text-lg" aria-hidden="true" />
   }
 }
 
@@ -58,7 +58,7 @@ const highlightText = (text: string, query: string) => {
 export default function SearchResults({ results, query }: SearchResultsProps) {
   if (results.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-12" aria-live="polite">
         <p className="text-lg text-gray-600">
           Няма намерени резултати за &ldquo;{query}&rdquo;
         </p>
@@ -83,7 +83,7 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
 
   return (
     <div className="space-y-8">
-      <div className="text-sm text-gray-600">
+      <div className="text-sm text-gray-600" aria-live="polite">
         Намерени са {results.length} резултат{results.length === 1 ? '' : 'а'}{' '}
         за &ldquo;{query}&rdquo;
       </div>
@@ -95,15 +95,16 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
             {getTypeLabel(type as SearchResult['type'])} ({typeResults.length})
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-6" role="list">
             {typeResults.map((result) => (
               <Link
                 key={result.id}
                 href={result.href}
                 className="block border rounded-lg p-4 hover:shadow-md transition-shadow"
+                role="listitem"
               >
                 <div className="flex items-start gap-3">
-                  <div className="text-gray-500 mt-1">
+                  <div className="text-gray-500 mt-1" aria-hidden="true">
                     {getTypeIcon(result.type)}
                   </div>
 

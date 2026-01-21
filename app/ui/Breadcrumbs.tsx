@@ -11,13 +11,17 @@ export default function Breadcrumbs({
     <nav aria-label="Breadcrumb" className="flex items-center mb-10 flex-wrap">
       {breadcrumbs.map((crumb, idx) => (
         <span key={crumb.href}>
-          <Link href={crumb.href} className="">
+          <Link
+            href={crumb.href}
+            className=""
+            aria-current={idx === breadcrumbs.length - 1 ? 'page' : undefined}
+          >
             {crumb.title}
           </Link>
 
           {idx < breadcrumbs.length - 1 && (
             <span className="mx-1">
-              <IoIosArrowForward className="inline" />
+              <IoIosArrowForward className="inline" aria-hidden="true" />
             </span>
           )}
         </span>

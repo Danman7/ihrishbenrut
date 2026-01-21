@@ -19,9 +19,15 @@ export const FilterGroup = <T extends string | number>({
 }: FilterGroupProps<T>) => {
   return (
     <fieldset className="border border-foreground p-4 rounded-md mt-4">
-      <legend className="text-lg">{title}</legend>
+      <legend id={`${idPrefix}-legend`} className="text-lg">
+        {title}
+      </legend>
 
-      <div className="flex flex-wrap gap-4" role="group">
+      <div
+        className="flex flex-wrap gap-4"
+        role="group"
+        aria-labelledby={`${idPrefix}-legend`}
+      >
         {options.map((option) => {
           const isAvailable = availableOptions.includes(option)
           const isSelected = selectedOptions.includes(option)

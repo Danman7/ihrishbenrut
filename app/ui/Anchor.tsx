@@ -18,6 +18,7 @@ export const Anchor: React.FC<{
       className={`rounded w-full px-2 py-1 hover:bg-surface-dim border border-transparent hover:border-foreground/10 ${isActive ? 'bg-primary-surface border-primary/20! text-primary-text' : ''} ${className}`}
       href={href}
       onClick={onClick}
+      aria-current={isActive ? 'page' : undefined}
     >
       {children}
     </Link>

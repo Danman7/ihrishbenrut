@@ -14,15 +14,18 @@ export const Searchbar = ({
 }) => (
   <form
     onSubmit={handleSearchSubmit}
+    role="search"
     className={`text-base! ${isFullWidth ? 'w-full mb-6 space-y-2' : 'ml-auto flex items-center justify-center gap-2 max-w-64'}`}
   >
     <input
       className="rounded border border-foreground/50 px-2 py-1 focus:border-primary focus:outline focus:outline-primary w-full"
       type="search"
       id="site-search"
+      name="q"
       placeholder="Търсене..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
+      aria-label="Търсене в сайта"
     />
     {isFullWidth ? (
       <button
