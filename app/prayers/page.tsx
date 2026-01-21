@@ -26,7 +26,7 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
   return (
     <>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-4 justify-center items-center text-5xl font-bold font-serif my-16">
+        <h1 className="flex gap-4 justify-center items-center text-5xl font-bold my-16">
           <PiHandsPraying /> Молитви
         </h1>
 

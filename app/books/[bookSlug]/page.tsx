@@ -77,7 +77,7 @@ export default async function Book({
         <div className="py-12 space-y-6">
           <GiBookCover className="text-center w-full text-4xl" />
 
-          <h1 className="text-4xl font-bold text-center font-serif">{title}</h1>
+          <h1 className="text-4xl font-bold text-center">{title}</h1>
 
           <div className="text-xl font-bold text-center">{author}</div>
         </div>
@@ -96,7 +96,7 @@ export default async function Book({
         </div>
 
         <section className="flex flex-col ">
-          <h2 className="flex items-center gap-4 text-3xl my-6 font-bold font-serif">
+          <h2 className="flex items-center gap-4 text-3xl my-6 font-bold">
             <GiBookmarklet /> Глави
           </h2>
 

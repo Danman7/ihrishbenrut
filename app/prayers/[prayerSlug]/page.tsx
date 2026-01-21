@@ -70,7 +70,7 @@ export default async function Prayer({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <div className="py-12 font-bold text-3xl text-center font-serif">
+        <div className="py-12 font-bold text-3xl text-center">
           <PiHandsPraying className="w-full" />
 
           <h1>{title}</h1>
@@ -78,7 +78,7 @@ export default async function Prayer({
 
         <div className="space-y-6">
           {formatParagraphs(content).map((paragraph, index) => (
-            <p className="font-serif text-lg text-center!" key={index}>
+            <p className="text-lg text-center!" key={index}>
               {paragraph}
             </p>
           ))}
@@ -86,7 +86,7 @@ export default async function Prayer({
 
         {notes && (
           <section className="flex flex-col ">
-            <h2 className="flex items-center gap-2 text-2xl mt-12 font-bold font-serif">
+            <h2 className="flex items-center gap-2 text-2xl mt-12 font-bold">
               <TfiPencil /> Бележки
             </h2>
 

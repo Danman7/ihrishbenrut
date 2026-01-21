@@ -22,13 +22,11 @@ export default function BooksList({
               exit={{ opacity: 0, scale: 0.95 }}
             >
               <Card href={`/books/${book.id}`}>
-                <div className="text-2xl mb-2 font-bold font-serif">
-                  {book.title}
-                </div>
-                <div className="text-xl mb-2 italic">{book.author}</div>
-                <div>{book.series.join(', ')}</div>
+                <h2 className="text-2xl">{book.title}</h2>
+                <p>{book.author}</p>
+
                 {book.shortNotes && (
-                  <div className="text-sm">{book.shortNotes}</div>
+                  <div className="text-sm font-light">{book.shortNotes}</div>
                 )}
               </Card>
             </motion.div>

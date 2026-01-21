@@ -21,7 +21,7 @@ export default function WisdomList({
               exit={{ opacity: 0, scale: 0.95 }}
               className="relative w-full border-2 border-border shadow-md rounded-2xl p-4 transition"
             >
-              <div className="text-lg font-serif">{wisdom.text}</div>
+              <div className="text-lg">{wisdom.text}</div>
               <div className="text-right">{wisdom.source}</div>
             </motion.div>
           )

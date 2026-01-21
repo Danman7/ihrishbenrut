@@ -93,13 +93,13 @@ export default async function Chapter({
 
         <div className="py-12 space-y-6 text-3xl font-bold">
           {number ? (
-            <div className="flex justify-center items-center font-serif gap-2">
+            <div className="flex justify-center items-center gap-2">
               <GiBookmarklet />
               {number}
             </div>
           ) : null}
 
-          <h1 className="text-center font-serif">{title}</h1>
+          <h1 className="text-center">{title}</h1>
         </div>
 
         <p className="text-sm italic">{notes}</p>

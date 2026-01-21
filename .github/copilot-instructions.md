@@ -33,6 +33,7 @@
 
 - For long text in seed data, keep each paragraph as a separate string in a `text: [ ... ]` array and end with `.join('\n\n')` (see [prisma/seed.ts](prisma/seed.ts)).
 - When inserting new paragraphs, preserve this pattern instead of using a raw multiline string so `formatParagraphs` can split content consistently.
+- AI command: “Insert seed content” → take the provided paragraphs, split on blank lines, and insert into `content: { create: { text: [ ... ].join('\n\n') } }` in [prisma/seed.ts](prisma/seed.ts).
 
 ## UI and client components
 

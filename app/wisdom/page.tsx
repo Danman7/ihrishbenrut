@@ -27,7 +27,7 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
   return (
     <>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-2 justify-center items-center text-5xl font-bold font-serif my-16">
+        <h1 className="flex gap-2 justify-center items-center text-5xl font-bold my-16">
           <GiScrollUnfurled />
           Мъдрости
         </h1>

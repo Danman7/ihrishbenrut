@@ -30,7 +30,7 @@ export default async function Books({ searchParams }: BooksPageProps) {
   return (
     <>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-4 justify-center items-center text-5xl font-bold font-serif my-16">
+        <h1 className="flex gap-4 justify-center items-center text-5xl font-bold my-16">
           <GiBookCover /> Книги
         </h1>
 
