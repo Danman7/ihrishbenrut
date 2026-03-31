@@ -1,15 +1,13 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { ROOT_NAVIGATION_ITEMS } from '@/app/constants'
 import { Anchor } from '@/app/ui/Anchor'
+import { Searchbar } from '@/app/ui/Searchbar'
 import { SectionNav } from '@/app/ui/SectionNav'
 import type { RouteItem } from '@/lib/routes'
-import { IoTriangleOutline } from 'react-icons/io5'
-import { Searchbar } from './Searchbar'
-import { useState } from 'react'
 
 type SideNavigationProps = {
   sectionNav?: {
@@ -17,15 +15,11 @@ type SideNavigationProps = {
     title: string
     rootUrl: string
   }
-  hideLogo?: boolean
-  hideSearchbar?: boolean
   isMobile?: boolean
 }
 
 export const SideNavigation = ({
   sectionNav,
-  hideLogo,
-  hideSearchbar,
   isMobile,
 }: SideNavigationProps) => {
   const pathname = usePathname()
@@ -43,41 +37,25 @@ export const SideNavigation = ({
 
   return (
     <nav
-      aria-label="Основна навигация"
-      className={`flex flex-col bg-surface shadow-lg overflow-y-auto w-72 divide-y space-y-6 divide-foreground/10 p-4 *:space-y-1 ${
-        isMobile ? 'h-full' : 'sticky top-0 max-h-screen'
+      className={`edge-padding blurred-surface divide-y divide-foreground/10 ${
+        isMobile ? 'h-dvh overflow-y-auto pt-4' : 'h-full w-72 overflow-y-auto'
       }`}
     >
-      {!hideLogo && (
-        <Link
-          className="flex items-center gap-2 hover:gap-4 hover:text-primary font-bold no-underline transition-all text-xl px-2 pb-4"
-          href="/"
-          aria-label="Go to homepage"
-        >
-          <IoTriangleOutline />
-          <span className="hidden sm:inline">Само Твоята Воля</span>
-        </Link>
-      )}
-
-      <div className="flex flex-col font-semibold pb-4">
+      <div className="flex flex-col lg:hidden font-bold space-y-2">
         {ROOT_NAVIGATION_ITEMS.map((item) => (
           <Anchor key={item.href} href={item.href}>
             {' '}
             {item.name}
           </Anchor>
         ))}
-      </div>
 
-      {!hideSearchbar ? (
-        <div>
-          <Searchbar
-            isFullWidth
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            handleSearchSubmit={handleSearchSubmit}
-          />
-        </div>
-      ) : null}
+        <Searchbar
+          isFullWidth
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          handleSearchSubmit={handleSearchSubmit}
+        />
+      </div>
 
       {shouldShowSectionNav ? (
         <SectionNav

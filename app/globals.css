@@ -3,16 +3,16 @@
 :root {
   --background: hsl(10, 10%, 98%);
   --foreground: hsl(10, 20%, 20%);
-  --surface: hsl(10, 20%, 94%);
+  --surface: hsl(10, 10%, 96%);
   --primary: hsl(10, 80%, 45%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: hsl(10, 20%, 10%);
-    --foreground: hsl(10, 10%, 85%);
-    --surface: hsl(10, 20%, 15%);
-    --primary: hsl(10, 80%, 60%);
+    --background: hsl(10, 20%, 5%);
+    --foreground: hsl(10, 10%, 80%);
+    --surface: hsl(10, 20%, 10%);
+    --primary: hsl(10, 80%, 55%);
   }
 }
 
@@ -64,45 +64,94 @@
   }
 }
 
-@layer base {
-  section h3 {
-    scroll-margin-top: 4.5rem;
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
-    margin-top: --spacing(8) !important;
-    margin-bottom: --spacing(3) !important;
-  }
-
-  article a {
-    @apply text-primary underline hover:text-primary/80 active:text-primary/60 transition-colors;
-  }
-
-  article p {
-    @apply leading-7 tracking-wide;
-  }
+@utility flex-center {
+  @apply flex gap-2 items-center;
 }
 
-@layer utilities {
-  .sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
+@utility flex-list {
+  @apply flex flex-wrap gap-4;
+}
+
+@utility blurred-surface {
+  @apply bg-background/90 backdrop-blur-md;
+}
+
+@utility sticky-aside {
+  @apply sticky top-24 max-h-screen overflow-y-auto;
+}
+
+@utility box {
+  @apply border bg-surface border-foreground/10 shadow-sm rounded p-4 space-y-4;
+}
+
+@utility lead {
+  @apply text-lg font-bold;
+}
+
+@layer base {
+  a {
+    @apply flex-center hover:text-primary active:text-primary/70 transition-colors;
   }
 
-  .sr-only-focusable:focus,
-  .sr-only-focusable:focus-visible {
-    position: static !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    overflow: visible !important;
-    clip: auto !important;
-    white-space: normal !important;
+  h1,
+  h2,
+  h3 {
+    @apply tracking-[-0.022em] font-bold leading-[1.15] mt-9 mb-4 text-left;
+  }
+
+  h1 {
+    @apply text-[2.986rem];
+  }
+
+  h2 {
+    @apply text-[2.488rem];
+  }
+
+  h3 {
+    @apply text-[2.074rem];
+  }
+
+  h2[id],
+  h3[id] {
+    scroll-margin-top: 2.5rem;
+  }
+
+  hr {
+    @apply border-foreground/10 w-full;
+  }
+
+  small {
+    @apply text-[0.833rem] font-light;
+  }
+
+  blockquote {
+    @apply border-l-4 border-foreground/10 pl-4 text-foreground/80 text-sm space-y-4;
+  }
+
+  main {
+    a {
+      @apply inline-flex underline;
+    }
+
+    section {
+      @apply space-y-4;
+    }
+
+    ul,
+    ol {
+      @apply ml-6;
+    }
+
+    ul {
+      @apply list-disc [&_ul]:list-[revert] [&_ul]:ml-6;
+    }
+
+    ol {
+      @apply list-decimal;
+    }
+  }
+
+  .edge-padding {
+    @apply px-4 lg:px-8;
   }
 }

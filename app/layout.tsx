@@ -30,29 +30,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
-        className={`${notoSerif.variable} ${notoSerifDisplay.variable} antialiased h-full flex flex-col font-serif selection:bg-primary selection:text-background`}
+        className={`${notoSerif.variable} ${notoSerifDisplay.variable} text-pretty leading-[1.6] font-medium antialiased h-full font-serif selection:bg-primary selection:text-background`}
       >
-        <a
-          href="#main-content"
-          className="sr-only sr-only-focusable px-4 py-2 bg-surface shadow-md"
-        >
-          Прескочи към основното съдържание
-        </a>
         <main id="main-content" className="grow">
           {children}
         </main>
-
-        <footer className="inset-shadow-sm text-center sm:flex sm:justify-between px-6 py-4 gap-4 shadow-md bg-surface z-10">
-          <div className="mb-2 md:mb-0">
-            <Link href="/" className="text-foreground!">
-              Само Твоята Воля
-            </Link>
-          </div>
-
-          <div>
-            <a href="mailto:danmanm@gmail.com">danmanm@gmail.com</a>
-          </div>
-        </footer>
       </body>
     </html>
   )

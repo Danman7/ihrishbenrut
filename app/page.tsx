@@ -5,34 +5,40 @@ import { Section } from './ui/Section'
 
 export default function Page() {
   return (
-    <>
-      <article className="max-w-3xl mx-auto">
-        <Section className="max-w-3xl mx-auto space-y-16 text-center h-[calc(100dvh-(--spacing(32)))] flex flex-col justify-around items-center px-4">
-          <div className="font-display">
-            <div className="text-5xl md:text-7xl text-primary font-bold animate-slide-left">
-              Библиотека
-            </div>
-
-            <div className="text-4xl md:text-5xl animate-slide-right">
-              на <span className="italic border-b">търсача</span>
-            </div>
+    <main tabIndex={-1} className="edge-padding py-12 md:py-0">
+      <section className="max-w-3xl mx-auto space-y-20 h-dvh flex flex-col justify-around">
+        <div className="space-y-2 md:space-y-4 font-bold text-center font-display">
+          <div className="text-5xl md:text-6xl animate-slide-left text-primary">
+            Библиотека
           </div>
 
-          <FlexWrapper className="justify-center font-semibold text-xl">
+          <div
+            className="text-3xl md:text-4xl animate-slide-right"
+            style={{ animationDelay: '0.3s' }}
+          >
+            на <span className="italic border-b">търсача</span>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex-list text-lg justify-center">
             {ROOT_NAVIGATION_ITEMS.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
-                style={{ animationDelay: `${0.3 + index * 0.3}s` }}
-                className="animate-fade-in-scale px-4 py-2 hover:text-primary transition underline"
+                style={{ animationDelay: `${0.6 + index * 0.3}s` }}
+                className="animate-fade-in-scale"
               >
                 {item.name}
               </Link>
             ))}
-          </FlexWrapper>
-        </Section>
+          </div>
+        </div>
 
-        <Section className="max-w-3xl mx-auto space-y-8 text-center px-4">
+        <div
+          className="animate-fade-in-scale"
+          style={{ animationDelay: '1.2s' }}
+        >
           <p>
             В живота търсѝ първо обвивката, после – обвитото, след това –
             семката, и най-после – разумното.
@@ -57,8 +63,8 @@ export default function Page() {
             Цялостен - търси с ума, сърцето, и волята заедно.
           </p>
           <p className="font-bold text-right! pb-4">Елеазар Хараш</p>
-        </Section>
-      </article>
-    </>
+        </div>
+      </section>
+    </main>
   )
 }

@@ -17,7 +17,6 @@ export const Anchor: React.FC<{
 
   return (
     <Link
-      className={`flex items-center gap-1 rounded w-full px-2 py-1 border border-transparent hover:text-primary active:text-primary/80 ${className}`}
       href={href}
       onClick={onClick}
       aria-current={isActive ? 'page' : undefined}

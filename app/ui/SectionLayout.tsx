@@ -19,8 +19,8 @@ export function SectionLayout({
     <div className="flex flex-col min-h-full">
       <Header sectionNav={items ? { items, title, rootUrl } : undefined} />
 
-      <div className="flex relative grow gap-6 items-stretch">
-        <aside className="hidden md:flex">
+      <div className="relative grow">
+        <aside className="hidden lg:block fixed left-0 top-12 bottom-0 z-30">
           <SideNavigation
             sectionNav={items ? { items, title, rootUrl } : undefined}
           />
