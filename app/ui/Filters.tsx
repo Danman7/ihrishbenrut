@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FilterPanel } from './FilterPanel'
 import { FilterGroup } from './FilterGroup'
 import { FilterSelect } from './FilterSelect'
@@ -29,84 +30,70 @@ type SingleFilterConfig = {
 
 export type FilterConfig = MultiFilterConfig | SingleFilterConfig
 
-function MultiFilter({ config }: { config: MultiFilterConfig }) {
+function MultiFilterEntry({ config }: { config: MultiFilterConfig }) {
   const filter = useMultiFilterState({
     paramName: config.paramName,
     allOptions: config.options,
   })
 
-  return {
-    filter,
-    element: (
-      <FilterGroup
-        title={config.title}
-        options={config.options}
-        selectedOptions={filter.selected as string[]}
-        availableOptions={config.availableOptions ?? config.options}
-        onToggle={filter.handleToggle}
-        idPrefix={config.idPrefix}
-      />
-    ),
-  }
+  return (
+    <FilterGroup
+      title={config.title}
+      options={config.options}
+      selectedOptions={filter.selected as string[]}
+      availableOptions={config.availableOptions ?? config.options}
+      onToggle={filter.handleToggle}
+      idPrefix={config.idPrefix}
+    />
+  )
 }
 
-function SingleFilter({ config }: { config: SingleFilterConfig }) {
+function SingleFilterEntry({ config }: { config: SingleFilterConfig }) {
   const filter = useSingleFilterState({
     paramName: config.paramName,
     allOptions: config.options,
   })
 
-  return {
-    filter,
-    element: (
-      <FilterSelect
-        title={config.title}
-        value={filter.selected as number | null}
-        onChange={filter.handleChange}
-        options={config.options}
-        availableOptions={config.availableOptions ?? config.options}
-        placeholder={config.placeholder ?? ''}
-      />
-    ),
-  }
+  return (
+    <FilterSelect
+      title={config.title}
+      value={filter.selected as number | null}
+      onChange={filter.handleChange}
+      options={config.options}
+      availableOptions={config.availableOptions ?? config.options}
+      placeholder={config.placeholder ?? ''}
+    />
+  )
 }
 
 function FilterEntry({ config }: { config: FilterConfig }) {
   if (config.type === 'multi') {
-    return MultiFilter({ config }).element
+    return <MultiFilterEntry config={config} />
   }
-  return SingleFilter({ config }).element
-}
-
-function useFilterEntries(configs: FilterConfig[]) {
-  const entries = configs.map((config) => {
-    if (config.type === 'multi') {
-      return MultiFilter({ config })
-    }
-    return SingleFilter({ config })
-  })
-
-  const hasFilters = entries.some((e) => e.filter.hasFilters)
-  const clearAll = () => {
-    entries.forEach((e) => {
-      if ('setSelected' in e.filter) {
-        if (Array.isArray(e.filter.selected)) {
-          ;(e.filter.setSelected as (value: (string | number)[]) => void)([])
-        } else {
-          ;(e.filter.setSelected as (value: string | number | null) => void)(
-            null
-          )
-        }
-      }
-    })
-  }
-
-  return { hasFilters, clearAll }
+  return <SingleFilterEntry config={config} />
 }
 
 export function Filters({ configs }: { configs: FilterConfig[] }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { hasFilters, clearAll } = useFilterEntries(configs)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const hasFilters = configs.some((config) => {
+    const value = searchParams.get(config.paramName)
+    return value !== null && value.length > 0
+  })
+
+  const clearAll = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    configs.forEach((config) => {
+      params.delete(config.paramName)
+    })
+
+    const query = params.toString()
+    const newUrl = query ? `${pathname}?${query}` : pathname
+    router.push(newUrl, { scroll: false })
+  }
 
   return (
     <FilterPanel

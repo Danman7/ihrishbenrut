@@ -1,5 +1,5 @@
 import { PrayersPageProps } from '@/app/types/prayer'
-import { PrayerFilters } from '@/app/ui/PrayerFilters'
+import { FilterConfig, Filters } from '@/app/ui/Filters'
 import PrayersList from '@/app/ui/PrayersList'
 import {
   getFilteredPrayers,
@@ -23,6 +23,25 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
     getContextualPrayerFilterOptions(selectedSeries, selectedSources),
   ])
 
+  const filterConfigs: FilterConfig[] = [
+    {
+      type: 'multi',
+      paramName: 'series',
+      title: 'Само от следните поредици',
+      idPrefix: 'series',
+      options: filterOptions.allSeries,
+      availableOptions: filterOptions.availableSeries,
+    },
+    {
+      type: 'multi',
+      paramName: 'sources',
+      title: 'Само от следните източници',
+      idPrefix: 'source',
+      options: filterOptions.allSources,
+      availableOptions: filterOptions.availableSources,
+    },
+  ]
+
   return (
     <>
       <article className="max-w-4xl mx-auto">
@@ -38,12 +57,7 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
           <p className="font-bold text-right!">Учителят</p>
         </section>
 
-        <PrayerFilters
-          series={filterOptions.allSeries}
-          sources={filterOptions.allSources}
-          availableSeries={filterOptions.availableSeries}
-          availableSources={filterOptions.availableSources}
-        />
+        <Filters configs={filterConfigs} />
 
         <hr className="my-8 text-border" />
 

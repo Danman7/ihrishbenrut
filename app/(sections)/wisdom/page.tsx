@@ -1,5 +1,5 @@
 import { WisdomPageProps } from '@/app/types/wisdom'
-import { WisdomFilters } from '@/app/ui/WisdomFilters'
+import { FilterConfig, Filters } from '@/app/ui/Filters'
 import WisdomList from '@/app/ui/WisdomList'
 import WisdomNavigation from '@/app/ui/WisdomNavigation'
 import {
@@ -24,6 +24,25 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
     getContextualWisdomFilterOptions(selectedTopics, selectedAuthors),
   ])
 
+  const filterConfigs: FilterConfig[] = [
+    {
+      type: 'multi',
+      paramName: 'topics',
+      title: 'Само по следните теми',
+      idPrefix: 'topic',
+      options: filterOptions.allTopics,
+      availableOptions: filterOptions.availableTopics,
+    },
+    {
+      type: 'multi',
+      paramName: 'authors',
+      title: 'Само от следните източници',
+      idPrefix: 'author',
+      options: filterOptions.allAuthors,
+      availableOptions: filterOptions.availableAuthors,
+    },
+  ]
+
   return (
     <>
       <article className="max-w-4xl mx-auto">
@@ -32,12 +51,7 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
           Мъдрости
         </h1>
 
-        <WisdomFilters
-          topics={filterOptions.allTopics}
-          authors={filterOptions.allAuthors}
-          availableTopics={filterOptions.availableTopics}
-          availableAuthors={filterOptions.availableAuthors}
-        />
+        <Filters configs={filterConfigs} />
 
         <hr className="my-8 text-border" />
 
