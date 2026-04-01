@@ -3,6 +3,7 @@
 import { Anchor } from '@/app/ui/Anchor'
 import type { RouteItem } from '@/lib/routes'
 import { usePathname } from 'next/navigation'
+import { GiBookCover } from 'react-icons/gi'
 
 type Props = {
   items: RouteItem[]
@@ -23,10 +24,10 @@ export function SectionNav({ items, title }: Props) {
 
   return (
     <nav aria-label="Навигация по раздел" className="grow flex flex-col">
-      <div className="px-2 pt-2 text-sm uppercase tracking-wide text-foreground/60">
-        {bookItem?.title ?? title}
+      <div className="uppercase flex-center tracking-wide lead">
+        <GiBookCover /> {bookItem?.title ?? title}
       </div>
-      <div className="mt-2 flex flex-col">
+      <div className="mt-2 flex flex-col gap-1">
         {chapterItems.map((item) => (
           <Anchor key={item.href} href={item.href}>
             {item.title}

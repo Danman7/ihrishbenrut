@@ -90,7 +90,7 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
 
       {Object.entries(groupedResults).map(([type, typeResults]) => (
         <section key={type}>
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <h2 className="font-semibold mb-4 flex items-center gap-2">
             {getTypeIcon(type as SearchResult['type'])}
             {getTypeLabel(type as SearchResult['type'])} ({typeResults.length})
           </h2>

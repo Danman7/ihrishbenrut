@@ -70,7 +70,7 @@ export default async function Prayer({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <div className="py-12 font-bold text-3xl text-center">
+        <div className="py-12 font-bold text-center">
           <PiHandsPraying className="w-full" />
 
           <h1>{title}</h1>

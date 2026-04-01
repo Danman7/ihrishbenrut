@@ -75,11 +75,11 @@ export default async function Book({
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
         <div className="py-12 space-y-6">
-          <GiBookCover className="text-center w-full text-4xl" />
+          <h1 className="font-bold flex-center justify-center">
+            <GiBookCover /> {title}
+          </h1>
 
-          <h1 className="text-4xl font-bold text-center">{title}</h1>
-
-          <div className="text-xl font-bold text-center">{author}</div>
+          <div className="font-bold text-center">{author}</div>
         </div>
 
         {series.length ? (
@@ -96,7 +96,7 @@ export default async function Book({
         </div>
 
         <section className="flex flex-col ">
-          <h2 className="flex items-center gap-4 text-3xl my-6 font-bold">
+          <h2 className="flex items-center gap-4 my-6 font-bold">
             <GiBookmarklet /> Глави
           </h2>
 

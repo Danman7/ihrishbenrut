@@ -38,7 +38,9 @@ export const SideNavigation = ({
   return (
     <nav
       className={`edge-padding blurred-surface divide-y divide-foreground/10 ${
-        isMobile ? 'h-dvh overflow-y-auto pt-4' : 'h-full w-72 overflow-y-auto'
+        isMobile
+          ? 'h-dvh overflow-y-auto pt-4'
+          : 'pt-10 h-full w-72 overflow-y-auto'
       }`}
     >
       <div className="flex flex-col lg:hidden font-bold space-y-2">
