@@ -91,28 +91,30 @@ export default async function Chapter({
           />
         </Suspense>
 
-        <div className="py-12 space-y-6 font-bold">
+        <section>
           {number ? (
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex-center justify-center text-4xl">
               <GiBookmarklet />
               {number}
             </div>
           ) : null}
 
           <h1 className="text-center">{title}</h1>
-        </div>
+        </section>
 
-        <p className="text-sm italic">{notes}</p>
+        <section>
+          <p className="text-sm italic">{notes}</p>
 
-        {quote && <div className="font-bold my-4">{quote}</div>}
+          {quote && <div className="lead">{quote}</div>}
 
-        <Suspense fallback={<MultiLineSkeleton />}>
-          <ChapterContent chapterId={chapterSlug} />
-        </Suspense>
+          <Suspense fallback={<MultiLineSkeleton />}>
+            <ChapterContent chapterId={chapterSlug} />
+          </Suspense>
 
-        <Suspense fallback={<SingleLineSkeleton />}>
-          <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
-        </Suspense>
+          <Suspense fallback={<SingleLineSkeleton />}>
+            <ChapterNavigation bookId={bookSlug} chapterNumber={number} />
+          </Suspense>
+        </section>
       </article>
 
       <div className="hidden xl:block w-full max-w-64"></div>

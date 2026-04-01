@@ -23,45 +23,6 @@
   --color-primary: var(--primary);
   --font-serif: var(--font-noto-serif);
   --font-display: var(--font-noto-serif-display);
-
-  --animate-fade-in-scale: fade-in-scale 0.3s ease-out both;
-
-  @keyframes fade-in-scale {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  --animate-slide-left: slide-left 0.3s ease-out both;
-
-  @keyframes slide-left {
-    from {
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  --animate-slide-right: slide-right 0.3s ease-out both;
-
-  @keyframes slide-right {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
 }
 
 @utility flex-center {
@@ -86,6 +47,10 @@
 
 @utility lead {
   @apply text-lg font-bold;
+}
+
+@utility skeleton {
+  @apply bg-foreground/10 rounded;
 }
 
 @layer base {

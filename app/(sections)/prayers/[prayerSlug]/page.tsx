@@ -70,33 +70,33 @@ export default async function Prayer({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <div className="py-12 font-bold text-center">
-          <PiHandsPraying className="w-full" />
+        <section>
+          <h1 className="flex-center flex-wrap justify-center text-center">
+            <PiHandsPraying /> {title}
+          </h1>
 
-          <h1>{title}</h1>
-        </div>
+          <div className="space-y-6">
+            {formatParagraphs(content).map((paragraph, index) => (
+              <p className="text-lg text-center!" key={index}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
 
-        <div className="space-y-6">
-          {formatParagraphs(content).map((paragraph, index) => (
-            <p className="text-lg text-center!" key={index}>
-              {paragraph}
-            </p>
-          ))}
-        </div>
+          {notes && (
+            <section className="flex flex-col ">
+              <h2 className="flex items-center gap-2 text-2xl mt-12 font-bold">
+                <TfiPencil /> Бележки
+              </h2>
 
-        {notes && (
-          <section className="flex flex-col ">
-            <h2 className="flex items-center gap-2 text-2xl mt-12 font-bold">
-              <TfiPencil /> Бележки
-            </h2>
-
-            <div className="space-y-6">
-              {formatParagraphs(notes).map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-          </section>
-        )}
+              <div className="space-y-6">
+                {formatParagraphs(notes).map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          )}
+        </section>
       </article>
     </>
   )
