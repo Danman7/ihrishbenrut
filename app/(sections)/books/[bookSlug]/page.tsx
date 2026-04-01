@@ -74,33 +74,33 @@ export default async function Book({
       <article className="max-w-3xl mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-        <div className="py-12 space-y-6">
+        <section className="py-12">
           <h1 className="font-bold flex-center justify-center">
             <GiBookCover /> {title}
           </h1>
 
           <div className="font-bold text-center">{author}</div>
-        </div>
+        </section>
 
         {series.length ? (
-          <p className="text-lg italic py-4">
+          <p className="text-lg italic">
             <span>{series.join(', ')}</span>
           </p>
         ) : null}
 
-        <div className="space-y-6">
+        <section>
           {notes &&
             formatParagraphs(notes).map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
-        </div>
+        </section>
 
-        <section className="flex flex-col ">
-          <h2 className="flex items-center gap-4 my-6 font-bold">
+        <section>
+          <h2 className="flex items-center gap-4 font-bold">
             <GiBookmarklet /> Глави
           </h2>
 
-          <hr className="my-4 text-border" />
+          <hr />
 
           <Suspense fallback={<ChapterListSkeleton />}>
             <BookChaptersList bookId={bookSlug} />

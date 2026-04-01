@@ -46,7 +46,7 @@ const highlightText = (text: string, query: string) => {
 
   return parts.map((part, index) =>
     regex.test(part) ? (
-      <mark key={index} className="bg-yellow-200 px-1 rounded">
+      <mark key={index} className="bg-primary/20 px-1 rounded">
         {part}
       </mark>
     ) : (
@@ -59,10 +59,10 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
   if (results.length === 0) {
     return (
       <div className="text-center py-12" aria-live="polite">
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-foreground/60">
           Няма намерени резултати за &ldquo;{query}&rdquo;
         </p>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-foreground/50 mt-2">
           Опитайте с различни ключови думи или проверете правописа
         </p>
       </div>
@@ -83,7 +83,7 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
 
   return (
     <div className="space-y-8">
-      <div className="text-sm text-gray-600" aria-live="polite">
+      <div className="text-sm text-foreground/60" aria-live="polite">
         Намерени са {results.length} резултат{results.length === 1 ? '' : 'а'}{' '}
         за &ldquo;{query}&rdquo;
       </div>
@@ -104,7 +104,7 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
                 role="listitem"
               >
                 <div className="flex items-start gap-3">
-                  <div className="text-gray-500 mt-1" aria-hidden="true">
+                  <div className="text-foreground/50 mt-1" aria-hidden="true">
                     {getTypeIcon(result.type)}
                   </div>
 
@@ -114,12 +114,12 @@ export default function SearchResults({ results, query }: SearchResultsProps) {
                     </h3>
 
                     {result.content && (
-                      <p className="text-gray-700 mb-2">
+                      <p className="text-foreground/70 mb-2">
                         {highlightText(result.content, query)}
                       </p>
                     )}
 
-                    <div className="flex flex-wrap gap-2 text-sm text-gray-500">
+                    <div className="flex flex-wrap gap-2 text-sm text-foreground/50">
                       {result.metadata?.author && (
                         <span>Автор: {result.metadata.author}</span>
                       )}

@@ -34,14 +34,14 @@ export default async function Search({ searchParams }: SearchPageProps) {
         {query ? (
           <SearchResults results={results} query={query} />
         ) : (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">
+          <section className="text-center py-12">
+            <p className="text-lg text-foreground/60">
               Въведете заявка за търсене в полето отгore
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-foreground/50 mt-2">
               Можете да търсите в книги, глави, молитви и мъдрости
             </p>
-          </div>
+          </section>
         )}
       </article>
     </>

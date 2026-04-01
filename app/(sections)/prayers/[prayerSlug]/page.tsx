@@ -75,25 +75,25 @@ export default async function Prayer({
             <PiHandsPraying /> {title}
           </h1>
 
-          <div className="space-y-6">
+          <section className="space-y-6">
             {formatParagraphs(content).map((paragraph, index) => (
               <p className="text-lg text-center!" key={index}>
                 {paragraph}
               </p>
             ))}
-          </div>
+          </section>
 
           {notes && (
-            <section className="flex flex-col ">
-              <h2 className="flex items-center gap-2 text-2xl mt-12 font-bold">
+            <section>
+              <h2 className="flex items-center gap-2 text-2xl font-bold">
                 <TfiPencil /> Бележки
               </h2>
 
-              <div className="space-y-6">
+              <section className="space-y-6">
                 {formatParagraphs(notes).map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
-              </div>
+              </section>
             </section>
           )}
         </section>

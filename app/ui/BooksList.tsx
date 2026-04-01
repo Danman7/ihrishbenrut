@@ -22,12 +22,14 @@ export default function BooksList({
               exit={{ opacity: 0, scale: 0.95 }}
             >
               <Card href={`/books/${book.id}`}>
-                <h2 className="text-2xl">{book.title}</h2>
-                <p>{book.author}</p>
+                <section>
+                  <h2 className="text-2xl">{book.title}</h2>
+                  <p>{book.author}</p>
 
-                {book.shortNotes && (
-                  <div className="text-sm font-light">{book.shortNotes}</div>
-                )}
+                  {book.shortNotes && (
+                    <p className="text-sm font-light">{book.shortNotes}</p>
+                  )}
+                </section>
               </Card>
             </motion.div>
           )

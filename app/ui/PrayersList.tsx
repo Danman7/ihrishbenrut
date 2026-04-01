@@ -22,13 +22,15 @@ export default function PrayersList({
               exit={{ opacity: 0, scale: 0.95 }}
             >
               <Card href={`/prayers/${prayer.id}`}>
-                <div className="text-2xl mb-2 font-bold">{prayer.title}</div>
+                <section>
+                  <h2 className="text-2xl font-bold">{prayer.title}</h2>
 
-                <p className="text-sm font-light">
-                  {prayer.content.length > 120
-                    ? prayer.content.substring(0, 120) + '...'
-                    : prayer.content}
-                </p>
+                  <p className="text-sm font-light">
+                    {prayer.content.length > 120
+                      ? prayer.content.substring(0, 120) + '...'
+                      : prayer.content}
+                  </p>
+                </section>
               </Card>
             </motion.div>
           )

@@ -103,9 +103,9 @@ export default async function Chapter({
         </section>
 
         <section>
-          <p className="text-sm italic">{notes}</p>
+          {notes && <p className="text-sm italic">{notes}</p>}
 
-          {quote && <div className="lead">{quote}</div>}
+          {quote && <p className="lead">{quote}</p>}
 
           <Suspense fallback={<MultiLineSkeleton />}>
             <ChapterContent chapterId={chapterSlug} />
