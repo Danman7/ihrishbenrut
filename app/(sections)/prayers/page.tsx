@@ -45,23 +45,23 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
   return (
     <>
       <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-4 justify-center items-center font-bold my-16">
-          <PiHandsPraying /> Молитви
-        </h1>
+        <section>
+          <h1 className="flex gap-4 justify-center items-center font-bold my-16">
+            <PiHandsPraying /> Молитви
+          </h1>
 
-        <section className="py-4 text-lg">
           <p>
             Най-хубавото упражнение в живота на човека е молитвата. За сега, в
             света, по-хубаво упражнение от молитвата няма.
           </p>
           <p className="font-bold text-right!">Учителят</p>
+
+          <Filters configs={filterConfigs} />
+
+          <hr className="text-border" />
+
+          <PrayersList filteredPrayers={prayers} />
         </section>
-
-        <Filters configs={filterConfigs} />
-
-        <hr className="my-8 text-border" />
-
-        <PrayersList filteredPrayers={prayers} />
       </article>
     </>
   )

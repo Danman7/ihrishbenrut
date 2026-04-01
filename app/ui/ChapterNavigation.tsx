@@ -37,7 +37,7 @@ export default async function ChapterNavigation({
     currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null
 
   return (
-    <div className="w-full flex justify-between items-center py-4">
+    <div className="w-full flex justify-between items-center">
       <div>
         {previousChapter ? (
           <Link

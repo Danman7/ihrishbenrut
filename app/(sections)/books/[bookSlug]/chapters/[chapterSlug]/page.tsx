@@ -91,7 +91,7 @@ export default async function Chapter({
             </div>
           ) : null}
 
-          <h1 className="text-center">{title}</h1>
+          <h1>{title}</h1>
         </section>
 
         <section>

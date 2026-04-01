@@ -34,7 +34,7 @@ export default async function Search({ searchParams }: SearchPageProps) {
         {query ? (
           <SearchResults results={results} query={query} />
         ) : (
-          <section className="text-center py-12">
+          <section className="text-center">
             <p className="text-lg text-foreground/60">
               Въведете заявка за търсене в полето отгore
             </p>
