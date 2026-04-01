@@ -44,14 +44,6 @@ export async function generateMetadata({
   }
 }
 
-export async function generateStaticParams() {
-  const chapters = await prisma.chapter.findMany()
-
-  return chapters.map((chapter) => ({
-    chapterSlug: chapter.id,
-  }))
-}
-
 export default async function Chapter({
   params,
 }: {
