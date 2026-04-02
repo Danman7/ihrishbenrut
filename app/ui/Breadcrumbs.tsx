@@ -13,6 +13,7 @@ export default function Breadcrumbs({
         <span key={crumb.href}>
           <Link
             href={crumb.href}
+            scroll
             className=""
             aria-current={idx === breadcrumbs.length - 1 ? 'page' : undefined}
           >

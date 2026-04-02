@@ -90,7 +90,7 @@ export default async function Book({
               <p key={index}>{paragraph}</p>
             ))}
 
-          <h2 className="flex items-center gap-4 font-bold">
+          <h2 className="flex-center font-bold">
             <GiBookmarklet /> Глави
           </h2>
 

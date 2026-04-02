@@ -11,11 +11,12 @@ export const Anchor: React.FC<{
 }> = ({ href, children, className = '', onClick }) => {
   const pathname = usePathname()
 
-  const isActive = pathname.endsWith(href)
+  const isActive = pathname.includes(href)
 
   return (
     <Link
       href={href}
+      scroll
       onClick={onClick}
       aria-current={isActive ? 'page' : undefined}
       className={`${className} ${isActive ? 'text-primary' : ''}`}

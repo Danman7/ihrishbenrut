@@ -16,7 +16,7 @@ export default async function BookChaptersList({ bookId }: { bookId: string }) {
   })
 
   return (
-    <div className="flex-list">
+    <div className="flex-list flex-col">
       {chapters.map((chapter) => (
         <Link
           key={chapter.id}

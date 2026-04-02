@@ -34,21 +34,13 @@ export default async function SectionsLayout({
   const segment = pathname.split('/').filter(Boolean)[0] ?? 'books'
 
   const config = SECTION_CONFIG[segment] ?? SECTION_CONFIG.books
-  const shouldShowDesktopSidebar =
-    segment === 'books' &&
-    /^\/books\/[^/]+(?:\/chapters\/[^/]+)?$/.test(pathname)
 
   const items = config.fetchTree
     ? await getRouteTreeForPath(config.baseUrl)
     : undefined
 
   return (
-    <SectionLayout
-      items={items}
-      title={config.title}
-      rootUrl={config.baseUrl}
-      showDesktopSidebar={shouldShowDesktopSidebar}
-    >
+    <SectionLayout items={items} title={config.title} rootUrl={config.baseUrl}>
       {children}
     </SectionLayout>
   )

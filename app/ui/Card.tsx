@@ -6,8 +6,14 @@ export const Card: React.FC<{
   children: ReactNode
   href: string
 }> = ({ title, children, href }) => (
-  <Link href={href} className="box w-full h-full flex-col">
-    <h2 className="lead">{title}</h2>
-    {children}
+  <Link
+    href={href}
+    className="box w-full h-full flex-col no-underline p-0 gap-0 items-start hover:shadow-md hover:scale-105 transition-all active:scale-100 active:shadow-sm"
+  >
+    <div className="h-1/2 p-4">
+      <p className="font-bold text-xl">{title}</p>
+    </div>
+
+    <div className="bg-surface p-4 h-1/2 w-full">{children}</div>
   </Link>
 )

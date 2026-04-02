@@ -50,11 +50,11 @@
 }
 
 @utility box {
-  @apply border bg-surface border-foreground/10 shadow-sm rounded p-4 space-y-4;
+  @apply shadow-sm rounded;
 }
 
 @utility lead {
-  @apply text-lg font-bold;
+  @apply text-[1.2rem] font-bold;
 }
 
 @utility skeleton {
@@ -62,8 +62,12 @@
 }
 
 @layer base {
-  body {
+  html {
     font-size: 18px;
+  }
+
+  body {
+    font-size: 1rem;
   }
 
   a {

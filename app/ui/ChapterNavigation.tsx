@@ -42,6 +42,7 @@ export default async function ChapterNavigation({
         {previousChapter ? (
           <Link
             href={`/books/${bookId}/chapters/${previousChapter.id}`}
+            scroll
             className="flex items-center  text-left"
           >
             <IoIosArrowBack aria-hidden="true" />
@@ -60,6 +61,7 @@ export default async function ChapterNavigation({
         {nextChapter ? (
           <Link
             href={`/books/${bookId}/chapters/${nextChapter.id}`}
+            scroll
             className="flex items-center  text-right"
           >
             <div>

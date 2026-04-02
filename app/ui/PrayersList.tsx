@@ -11,7 +11,7 @@ export default function PrayersList({
   filteredPrayers: Prayer[]
 }) {
   return (
-    <div className="grid md:grid-cols-2 gap-4">
+    <div className="grid-list">
       <AnimatePresence>
         {filteredPrayers.map((prayer) => {
           return (
@@ -23,9 +23,9 @@ export default function PrayersList({
             >
               <Card title={prayer.title} href={`/prayers/${prayer.id}`}>
                 <section>
-                  <p className="text-sm font-light">
-                    {prayer.content.length > 120
-                      ? prayer.content.substring(0, 120) + '...'
+                  <p>
+                    {prayer.content.length > 50
+                      ? prayer.content.substring(0, 50) + '...'
                       : prayer.content}
                   </p>
                 </section>

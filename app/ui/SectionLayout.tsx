@@ -1,5 +1,8 @@
+'use client'
+
 import { Header } from '@/app/ui/Header'
 import { SideNavigation } from '@/app/ui/SideNavigation'
+import { usePathname } from 'next/navigation'
 import type { RouteItem } from '@/lib/routes'
 
 interface SectionLayoutProps {
@@ -7,7 +10,6 @@ interface SectionLayoutProps {
   items?: RouteItem[]
   title: string
   rootUrl: string
-  showDesktopSidebar?: boolean
 }
 
 export function SectionLayout({
@@ -15,9 +17,10 @@ export function SectionLayout({
   items,
   title,
   rootUrl,
-  showDesktopSidebar = false,
 }: SectionLayoutProps) {
-  const hasDesktopSidebar = showDesktopSidebar && !!items?.length
+  const pathname = usePathname()
+  const hasDesktopSidebar =
+    !!items?.length && /^\/books\/[^/]+(?:\/chapters\/[^/]+)?$/.test(pathname)
 
   return (
     <div className="flex flex-col min-h-full">
@@ -32,7 +35,7 @@ export function SectionLayout({
           </aside>
         ) : null}
 
-        <main className="grow px-4 pt-8">
+        <main className="grow px-4 py-10">
           <article className="mx-auto max-w-3xl">{children}</article>
         </main>
       </div>
