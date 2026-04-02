@@ -43,26 +43,24 @@ export default async function Prayers({ searchParams }: PrayersPageProps) {
   ]
 
   return (
-    <>
-      <article className="max-w-4xl mx-auto">
-        <section>
-          <h1 className="flex gap-4 justify-center items-center font-bold my-16">
-            <PiHandsPraying /> Молитви
-          </h1>
+    <article>
+      <section>
+        <h1 className="flex-center">
+          <PiHandsPraying /> Молитви
+        </h1>
 
-          <p>
-            Най-хубавото упражнение в живота на човека е молитвата. За сега, в
-            света, по-хубаво упражнение от молитвата няма.
-          </p>
-          <p className="font-bold text-right!">Учителят</p>
+        <p>
+          Най-хубавото упражнение в живота на човека е молитвата. За сега, в
+          света, по-хубаво упражнение от молитвата няма.
+        </p>
+        <p className="font-bold text-right!">Учителят</p>
 
-          <Filters configs={filterConfigs} />
+        <Filters configs={filterConfigs} />
 
-          <hr className="text-border" />
+        <hr className="text-border" />
 
-          <PrayersList filteredPrayers={prayers} />
-        </section>
-      </article>
-    </>
+        <PrayersList filteredPrayers={prayers} />
+      </section>
+    </article>
   )
 }

@@ -37,7 +37,7 @@ export const SideNavigation = ({
 
   return (
     <nav
-      className={`blurred-surface divide-y divide-foreground/10 ${
+      className={`blurred-surface divide-y divide-foreground/20 ${
         isMobile
           ? 'edge-padding h-dvh overflow-y-auto pt-4'
           : 'px-4 pt-10 h-full w-72 overflow-y-auto'

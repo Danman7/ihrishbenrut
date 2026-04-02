@@ -44,28 +44,26 @@ export default async function Wisdom({ searchParams }: WisdomPageProps) {
   ]
 
   return (
-    <>
-      <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-2 justify-center items-center font-bold my-16">
-          <GiScrollUnfurled />
-          Мъдрости
-        </h1>
+    <article>
+      <h1 className="flex-center">
+        <GiScrollUnfurled />
+        Мъдрости
+      </h1>
 
-        <Filters configs={filterConfigs} />
+      <Filters configs={filterConfigs} />
 
-        <hr className="my-8 text-border" />
+      <hr className="my-8 text-border" />
 
-        <WisdomList filteredWisdom={wisdomResult.items} />
+      <WisdomList filteredWisdom={wisdomResult.items} />
 
-        <WisdomNavigation
-          hasNext={wisdomResult.hasNext}
-          hasPrev={wisdomResult.hasPrev}
-          nextCursor={wisdomResult.nextCursor}
-          prevCursor={wisdomResult.prevCursor}
-          selectedTopics={selectedTopics}
-          selectedAuthors={selectedAuthors}
-        />
-      </article>
-    </>
+      <WisdomNavigation
+        hasNext={wisdomResult.hasNext}
+        hasPrev={wisdomResult.hasPrev}
+        nextCursor={wisdomResult.nextCursor}
+        prevCursor={wisdomResult.prevCursor}
+        selectedTopics={selectedTopics}
+        selectedAuthors={selectedAuthors}
+      />
+    </article>
   )
 }

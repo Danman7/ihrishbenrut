@@ -18,7 +18,7 @@ export const FilterSelect = <T extends string | number>({
   getOptionLabel = (option) => String(option),
 }: FilterSelectProps<T>) => {
   return (
-    <fieldset className="border border-foreground p-4 rounded-md">
+    <fieldset className="border border-foreground/20 p-4 rounded-md">
       <legend className="text-lg">{title}</legend>
 
       <select
@@ -34,7 +34,7 @@ export const FilterSelect = <T extends string | number>({
             }
           }
         }}
-        className="w-full p-2 border rounded-md bg-background text-foreground border-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+        className="w-full p-2 border rounded-md bg-background text-foreground border-foreground/20 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
         aria-label={title}
       >
         <option value="">{placeholder}</option>

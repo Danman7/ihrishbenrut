@@ -18,7 +18,7 @@ export const Searchbar = ({
     className={`text-base! ${isFullWidth ? 'w-full mb-4 space-y-2' : 'ml-auto flex items-center justify-center gap-2 max-w-64'}`}
   >
     <input
-      className="rounded border border-foreground/50 px-2 py-1 focus:border-primary focus:outline focus:outline-primary w-full"
+      className="rounded border border-foreground/20 px-2 py-1 focus:border-primary focus:outline focus:outline-primary w-full"
       type="search"
       id="site-search"
       name="q"

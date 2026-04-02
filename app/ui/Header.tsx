@@ -83,7 +83,7 @@ export const Header = ({ sectionNav }: HeaderProps) => {
   return (
     <>
       <header
-        className={`blurred-surface edge-padding flex-center z-50 py-3 sticky top-0 border-b border-foreground/10 font-bold transition-transform duration-300 justify-between ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}
+        className={`blurred-surface edge-padding flex-center z-50 py-3 sticky top-0 border-b border-foreground/20 font-bold transition-transform duration-300 justify-between ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}
       >
         <section className="flex-list text-2xl">
           <button

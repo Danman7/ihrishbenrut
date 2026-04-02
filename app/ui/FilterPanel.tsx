@@ -36,7 +36,7 @@ export const FilterPanel = ({
         {hasFilters && (
           <button
             onClick={onClear}
-            className="text-red-500 flex items-center gap-2  cursor-pointer"
+            className="text-primary flex items-center gap-2  cursor-pointer"
             aria-label="Изчисти филтрите"
           >
             <IoMdClose />

@@ -36,7 +36,7 @@
 }
 
 @utility grid-list {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch;
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch;
 }
 
 @utility blurred-surface {
@@ -50,7 +50,7 @@
 }
 
 @utility box {
-  @apply shadow-sm rounded border border-foreground/10;
+  @apply shadow-sm rounded border border-foreground/20;
 }
 
 @utility lead {
@@ -58,7 +58,7 @@
 }
 
 @utility skeleton {
-  @apply bg-foreground/10 rounded;
+  @apply bg-foreground/20 rounded;
 }
 
 @layer base {
@@ -81,11 +81,11 @@
   }
 
   h1 {
-    @apply text-[2.986rem];
+    @apply text-3xl md:text-[2.986rem];
   }
 
   h2 {
-    @apply text-[2.488rem];
+    @apply text-xl md:text-[2.488rem];
   }
 
   h3 {
@@ -98,7 +98,7 @@
   }
 
   hr {
-    @apply border-foreground/10 w-full;
+    @apply border-foreground/20 w-full;
   }
 
   small {
@@ -106,7 +106,7 @@
   }
 
   blockquote {
-    @apply border-l-4 border-foreground/10 pl-4 text-foreground/80 text-sm space-y-4;
+    @apply border-l-4 border-foreground/20 pl-4 text-foreground/80 text-sm space-y-4;
   }
 
   main {

@@ -19,7 +19,7 @@ export default function WisdomList({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full border-2 border-border shadow-md rounded-2xl p-4 transition"
+              className="box p-4 "
             >
               <div className="text-lg">{wisdom.text}</div>
               <div className="text-right">{wisdom.source}</div>

@@ -35,9 +35,7 @@ export function SectionLayout({
           </aside>
         ) : null}
 
-        <main className="grow px-4 py-10">
-          <article className="mx-auto max-w-3xl">{children}</article>
-        </main>
+        <main className="grow px-4 py-10 mx-auto max-w-[70ch]">{children}</main>
       </div>
     </div>
   )

@@ -24,26 +24,22 @@ export default async function Search({ searchParams }: SearchPageProps) {
   const results = query ? await performSearch(query, selectedTypes) : []
 
   return (
-    <>
-      <article className="max-w-4xl mx-auto">
-        <h1 className="flex gap-2 justify-center items-center font-bold mt-8 mb-10">
-          <IoSearchOutline />
-          Търсене
-        </h1>
+    <article>
+      <h1 className="flex gap-2 justify-center items-center font-bold mt-8 mb-10">
+        <IoSearchOutline />
+        Търсене
+      </h1>
 
-        {query ? (
-          <SearchResults results={results} query={query} />
-        ) : (
-          <section className="text-center">
-            <p className="text-lg text-foreground/60">
-              Въведете заявка за търсене в полето отгore
-            </p>
-            <p className="text-sm text-foreground/50 mt-2">
-              Можете да търсите в книги, глави, молитви и мъдрости
-            </p>
-          </section>
-        )}
-      </article>
-    </>
+      {query ? (
+        <SearchResults results={results} query={query} />
+      ) : (
+        <section className="text-center">
+          <p className="text-lg">Въведете заявка за търсене в полето отгore</p>
+          <p className="text-sm mt-2">
+            Можете да търсите в книги, глави, молитви и мъдрости
+          </p>
+        </section>
+      )}
+    </article>
   )
 }

@@ -8,7 +8,7 @@ export const Card: React.FC<{
 }> = ({ title, children, href }) => (
   <Link
     href={href}
-    className="box w-full h-64 flex-col no-underline p-0 items-start hover:shadow-md hover:scale-105 transition-all active:scale-100 active:shadow-sm"
+    className="box w-full md:h-64 flex-col no-underline p-0 items-start hover:shadow-md hover:scale-105 transition-all active:scale-100 active:shadow-sm"
   >
     <div className="h-1/2 p-4">
       <p className="font-bold text-xl">{title}</p>

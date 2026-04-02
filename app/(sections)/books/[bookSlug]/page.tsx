@@ -71,18 +71,18 @@ export default async function Book({
 
   return (
     <>
-      <article className="max-w-3xl mx-auto">
+      <article>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
 
         <section>
           <h1>{title}</h1>
 
-          <div className="font-bold">{author}</div>
+          <p className="lead">{author}</p>
 
           {series.length ? (
-            <p className="text-lg italic">
+            <small className="block">
               <span>{series.join(', ')}</span>
-            </p>
+            </small>
           ) : null}
 
           {notes &&
@@ -90,11 +90,11 @@ export default async function Book({
               <p key={index}>{paragraph}</p>
             ))}
 
-          <h2 className="flex-center font-bold">
+          <hr />
+
+          <h2 className="flex-center">
             <GiBookmarklet /> Глави
           </h2>
-
-          <hr />
 
           <Suspense fallback={<ChapterListSkeleton />}>
             <BookChaptersList bookId={bookSlug} />

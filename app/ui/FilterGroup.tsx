@@ -18,7 +18,7 @@ export const FilterGroup = <T extends string | number>({
   idPrefix,
 }: FilterGroupProps<T>) => {
   return (
-    <fieldset className="border border-foreground p-4 rounded-md mt-4">
+    <fieldset className="border border-foreground/20 p-4 rounded-md mt-4">
       <legend id={`${idPrefix}-legend`} className="text-lg">
         {title}
       </legend>

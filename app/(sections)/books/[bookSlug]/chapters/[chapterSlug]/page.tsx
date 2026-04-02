@@ -73,7 +73,7 @@ export default async function Chapter({
         <PageProgressBar />
       </div>
 
-      <article className="max-w-3xl w-full mx-auto scroll-auto">
+      <article className="w-full mx-auto scroll-auto">
         <Suspense fallback={<BreadcrumbsSkeleton />}>
           <ChapterBreadcrumbs
             bookId={bookSlug}
@@ -84,20 +84,27 @@ export default async function Chapter({
         </Suspense>
 
         <section>
-          {number ? (
-            <div className="flex-center justify-center text-4xl">
-              <GiBookmarklet />
-              {number}
-            </div>
-          ) : null}
+          <h1>
+            {number ? (
+              <div className="flex-center lead mb-2">
+                <GiBookmarklet />
+                Глава {number}
+              </div>
+            ) : null}{' '}
+            {title}
+          </h1>
 
-          <h1>{title}</h1>
-        </section>
+          {notes && (
+            <>
+              <small className="block">{notes}</small> <hr />
+            </>
+          )}
 
-        <section>
-          {notes && <p className="text-sm italic">{notes}</p>}
-
-          {quote && <p className="lead">{quote}</p>}
+          {quote && (
+            <>
+              <p className="lead">{quote}</p> <hr />
+            </>
+          )}
 
           <Suspense fallback={<MultiLineSkeleton />}>
             <ChapterContent chapterId={chapterSlug} />
@@ -108,8 +115,6 @@ export default async function Chapter({
           </Suspense>
         </section>
       </article>
-
-      <div className="hidden xl:block w-full max-w-64"></div>
     </>
   )
 }
