@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { FaAsterisk } from 'react-icons/fa'
-import { IoTriangleOutline } from 'react-icons/io5'
 
 export const Anchor: React.FC<{
   children: React.ReactNode
@@ -20,11 +18,8 @@ export const Anchor: React.FC<{
       href={href}
       onClick={onClick}
       aria-current={isActive ? 'page' : undefined}
+      className={`${className} ${isActive ? 'text-primary' : ''}`}
     >
-      {isActive && (
-        <IoTriangleOutline focusable="false" className="text-primary text-xs" />
-      )}
-
       {children}
     </Link>
   )

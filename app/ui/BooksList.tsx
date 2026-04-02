@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 
-import Card from '@/app/ui/Card'
+import { Card } from '@/app/ui/Card'
 import { FilteredBook } from '@/app/types/book'
 
 export default function BooksList({
@@ -11,7 +11,7 @@ export default function BooksList({
   filteredBooks: FilteredBook[]
 }) {
   return (
-    <div className="grid md:grid-cols-2 gap-4">
+    <div className="grid-list">
       <AnimatePresence>
         {filteredBooks.map((book) => {
           return (
@@ -21,9 +21,8 @@ export default function BooksList({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
             >
-              <Card href={`/books/${book.id}`}>
+              <Card title={book.title} href={`/books/${book.id}`}>
                 <section>
-                  <h2 className="text-2xl">{book.title}</h2>
                   <p>{book.author}</p>
 
                   {book.shortNotes && (

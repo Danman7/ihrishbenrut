@@ -7,6 +7,7 @@ interface SectionLayoutProps {
   items?: RouteItem[]
   title: string
   rootUrl: string
+  showDesktopSidebar?: boolean
 }
 
 export function SectionLayout({
@@ -14,20 +15,25 @@ export function SectionLayout({
   items,
   title,
   rootUrl,
+  showDesktopSidebar = false,
 }: SectionLayoutProps) {
+  const hasDesktopSidebar = showDesktopSidebar && !!items?.length
+
   return (
     <div className="flex flex-col min-h-full">
       <Header sectionNav={items ? { items, title, rootUrl } : undefined} />
 
-      <div className="relative grow">
-        <aside className="hidden lg:block fixed left-0 top-12 bottom-0 z-30">
-          <SideNavigation
-            sectionNav={items ? { items, title, rootUrl } : undefined}
-          />
-        </aside>
+      <div className="flex relative grow">
+        {hasDesktopSidebar ? (
+          <aside className="hidden lg:block z-30 w-72 shrink-0 self-start sticky top-12 h-[calc(100dvh-3rem)] overflow-hidden">
+            <SideNavigation
+              sectionNav={items ? { items, title, rootUrl } : undefined}
+            />
+          </aside>
+        ) : null}
 
-        <main className="mx-auto max-w-[70ch] px-4 pt-8 pb-32">
-          <article>{children}</article>
+        <main className="grow px-4 pt-8">
+          <article className="mx-auto max-w-3xl">{children}</article>
         </main>
       </div>
     </div>

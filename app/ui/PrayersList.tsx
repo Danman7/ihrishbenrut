@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 
-import Card from '@/app/ui/Card'
+import { Card } from '@/app/ui/Card'
 import { Prayer } from '@/app/generated/prisma'
 
 export default function PrayersList({
@@ -21,10 +21,8 @@ export default function PrayersList({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
             >
-              <Card href={`/prayers/${prayer.id}`}>
+              <Card title={prayer.title} href={`/prayers/${prayer.id}`}>
                 <section>
-                  <h2 className="text-2xl font-bold">{prayer.title}</h2>
-
                   <p className="text-sm font-light">
                     {prayer.content.length > 120
                       ? prayer.content.substring(0, 120) + '...'

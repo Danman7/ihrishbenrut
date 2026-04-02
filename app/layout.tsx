@@ -32,9 +32,9 @@ export default function RootLayout({
       <body
         className={`${notoSerif.variable} ${notoSerifDisplay.variable} text-pretty leading-[1.6] font-medium antialiased h-full font-serif selection:bg-primary selection:text-background`}
       >
-        <main id="main-content" className="grow">
+        <div id="main-content" className="grow">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   )
