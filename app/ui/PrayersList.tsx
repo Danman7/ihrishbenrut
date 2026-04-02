@@ -24,8 +24,8 @@ export default function PrayersList({
               <Card title={prayer.title} href={`/prayers/${prayer.id}`}>
                 <section>
                   <p>
-                    {prayer.content.length > 50
-                      ? prayer.content.substring(0, 50) + '...'
+                    {prayer.content.length > 70
+                      ? prayer.content.substring(0, 70) + '...'
                       : prayer.content}
                   </p>
                 </section>

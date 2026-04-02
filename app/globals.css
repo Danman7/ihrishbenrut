@@ -36,7 +36,7 @@
 }
 
 @utility grid-list {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch;
 }
 
 @utility blurred-surface {
@@ -50,7 +50,7 @@
 }
 
 @utility box {
-  @apply shadow-sm rounded;
+  @apply shadow-sm rounded border border-foreground/10;
 }
 
 @utility lead {
