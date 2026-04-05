@@ -53,12 +53,12 @@
   @apply shadow-sm rounded border border-foreground/20;
 }
 
-@utility lead {
-  @apply text-[1.2rem] font-bold;
-}
-
 @utility skeleton {
   @apply bg-foreground/20 rounded;
+}
+
+@utility lead {
+  @apply text-lg font-bold;
 }
 
 @layer base {
@@ -74,22 +74,16 @@
     @apply flex-center hover:text-primary active:text-primary/70 transition-colors;
   }
 
-  h1,
-  h2,
-  h3 {
-    @apply tracking-[-0.022em] font-bold leading-[1.15] mt-9 mb-4 text-left;
-  }
-
   h1 {
-    @apply text-3xl md:text-[2.986rem];
+    @apply mb-6 text-3xl lg:text-4xl leading-tight font-bold;
   }
 
   h2 {
-    @apply text-xl md:text-[2.488rem];
+    @apply pt-7 mt-5 text-2xl lg:text-3xl font-semibold;
   }
 
   h3 {
-    @apply text-[2.074rem];
+    @apply text-xl lg:text-2xl font-semibold pt-3;
   }
 
   h2[id],
@@ -98,15 +92,15 @@
   }
 
   hr {
-    @apply border-foreground/20 w-full;
+    @apply border-foreground/10 w-full;
   }
 
   small {
-    @apply text-[0.833rem] font-light;
+    @apply block text-sm text-foreground/80;
   }
 
   blockquote {
-    @apply border-l-4 border-foreground/20 pl-4 text-foreground/80 text-sm space-y-4;
+    @apply border-l-4 border-foreground/10 pl-4 text-foreground/80 text-sm space-y-5;
   }
 
   main {
@@ -115,7 +109,7 @@
     }
 
     section {
-      @apply space-y-4;
+      @apply space-y-5;
     }
 
     ul,
@@ -133,6 +127,6 @@
   }
 
   .edge-padding {
-    @apply px-4 lg:px-8;
+    @apply px-6 lg:px-8;
   }
 }

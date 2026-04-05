@@ -18,23 +18,56 @@ type HeaderProps = {
     title: string
     rootUrl: string
   }
+  isMobileMenuOpen: boolean
+  onToggleMobileMenu: () => void
 }
 
-export const Header = ({ sectionNav }: HeaderProps) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+export const Header = ({
+  sectionNav,
+  isMobileMenuOpen,
+  onToggleMobileMenu,
+}: HeaderProps) => {
   const [lastPathname, setLastPathname] = useState<string | null>(null)
   const pathname = usePathname()
 
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY
+
+      if (isMobileMenuOpen) {
+        lastScrollY.current = currentY
+        return
+      }
+
+      const delta = currentY - lastScrollY.current
+
+      if (delta > 0 && currentY > 50) {
+        downScrollAccumulator.current += delta
+        if (downScrollAccumulator.current > 250) {
+          setIsHeaderVisible(false)
+        }
+      } else if (delta < 0) {
+        downScrollAccumulator.current = 0
+        setIsHeaderVisible(true)
+      }
+
+      lastScrollY.current = currentY
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [isMobileMenuOpen])
+
   // Close mobile menu when route changes
   if (pathname !== lastPathname && isMobileMenuOpen) {
-    setIsMobileMenuOpen(false)
+    onToggleMobileMenu()
     setLastPathname(pathname)
   } else if (pathname !== lastPathname) {
     setLastPathname(pathname)
   }
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen((prev) => !prev)
+    onToggleMobileMenu()
   }
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -104,7 +137,7 @@ export const Header = ({ sectionNav }: HeaderProps) => {
             aria-label="Go to homepage"
           >
             <IoTriangleOutline className="text-primary" />
-            <span>Само Твоята Воля</span>
+            <span className="hidden md:inline">Само Твоята Воля</span>
           </Link>
         </section>
 
@@ -124,13 +157,6 @@ export const Header = ({ sectionNav }: HeaderProps) => {
           />
         </nav>
       </header>
-
-      <div
-        id="mobile-navigation"
-        className={`fixed top-14 left-0 w-full max-w-82 h-[calc(100vh-3.5rem)] transition ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} z-40 lg:hidden`}
-      >
-        <SideNavigation sectionNav={sectionNav} isMobile />
-      </div>
     </>
   )
 }

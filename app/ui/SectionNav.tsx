@@ -25,7 +25,7 @@ export function SectionNav({ items, title }: Props) {
   return (
     <nav aria-label="Навигация по раздел" className="grow flex flex-col">
       <p className="lead">{bookItem?.title ?? title}</p>
-      <div className="mt-2 flex flex-col gap-2">
+      <div className="mt-2 flex flex-col gap-2 text-left">
         {chapterItems.map((item) => (
           <Anchor key={item.href} href={item.href}>
             {item.title}

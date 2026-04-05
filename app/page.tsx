@@ -23,7 +23,7 @@ const item = {
 export default function Page() {
   return (
     <main tabIndex={-1} className="edge-padding py-12">
-      <section className="max-w-3xl mx-auto space-y-20 h-dvh flex flex-col justify-around">
+      <section className="max-w-[70ch] mx-auto space-y-20 h-dvh flex flex-col justify-around">
         <div className="space-y-2 md:space-y-4 font-bold text-center font-display">
           <motion.div
             className="text-5xl md:text-8xl text-primary"
@@ -45,7 +45,7 @@ export default function Page() {
         </div>
 
         <div className="space-y-4">
-          <div className="flex-list justify-center text-xl font-bold">
+          <div className="flex-list justify-center text-xl">
             {ROOT_NAVIGATION_ITEMS.map((item, index) => (
               <motion.div
                 key={item.href}
