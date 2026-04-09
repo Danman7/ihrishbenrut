@@ -66,8 +66,8 @@ export default function Page() {
         <motion.section variants={container} initial="hidden" animate="show">
           <motion.div variants={item}>
             <p>
-              В живота търсѝ първо обвивката, после – обвитото, след това –
-              семката, и най-после – разумното.
+              Духът се ражда там, където е натрупан Огъня, там, където е
+              натрупана енергията.
             </p>
             <p className="font-bold text-right!">Учителят</p>
           </motion.div>
